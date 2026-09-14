@@ -35,10 +35,10 @@ The menu-bar chip itself is always an ad slot, never a dead end:
   public advertiser pitch. Zero earnings impact either way.
 
 1. **Left-click** the status item: the earnings popover opens —
-   - header row: cup icon, **☕ FreeCoffee** + "Menu-bar advertising · demo", status dot
-     **Earning** / **Waiting** / **Disabled**; below it the current slot —
-     `LIVE · Sponsor — tagline`, `Demo · Name (fictional)`, or
-     `No sponsors right now` plus an **✨ Advertise here** button;
+   - header row: brand tile (the app icon), **☕ FreeCoffee** + a dynamic
+     description line (live sponsor, `No sponsors available`, or the demo
+     sponsor — plus an **✨ Advertise here** button when the feed is empty),
+     status dot **Earning** / **Waiting** / **Disabled**;
    - **TOTAL BALANCE** (oversized mono figure) with right-aligned available/pending and the
      muted **"≈ N cups of coffee"** hint (1 cup = $5);
    - the caramel **"☕ 65% base share — always on"** boost line;
