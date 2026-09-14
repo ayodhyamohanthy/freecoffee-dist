@@ -26,9 +26,19 @@ in the repo; without them the build stays ad-hoc and step 6 says so.
 
 ## What it does
 
+The menu-bar chip itself is always an ad slot, never a dead end:
+
+- **No feed configured (demo):** the chip rotates fictional demo sponsors
+  (same cast as the web demo), clearly marked simulated — display only.
+- **Feed configured but empty:** the chip reads **✨ Your brand here**; the
+  popover and the right-click menu offer **Advertise here**, opening the
+  public advertiser pitch. Zero earnings impact either way.
+
 1. **Left-click** the status item: the earnings popover opens —
    - header row: cup icon, **☕ FreeCoffee** + "Menu-bar advertising · demo", status dot
-     **Earning** / **Waiting** / **Disabled**;
+     **Earning** / **Waiting** / **Disabled**; below it the current slot —
+     `LIVE · Sponsor — tagline`, `Demo · Name (fictional)`, or
+     `No sponsors right now` plus an **✨ Advertise here** button;
    - **TOTAL BALANCE** (oversized mono figure) with right-aligned available/pending and the
      muted **"≈ N cups of coffee"** hint (1 cup = $5);
    - the caramel **"☕ 65% base share — always on"** boost line;
