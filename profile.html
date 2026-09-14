@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profile — FreeCoffee</title>
+<meta name="description" content="FreeCoffee account profile — display name, email, coffee preference, payout account, connected Mac, and AI-agent setup prompt. Demo, simulated data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#F7F6F3">
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="stylesheet" href="assets/css/styles.css?v=113">
+</head>
+<body data-page="profile" class="theme-light">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <a class="side-logo" href="index.html" aria-label="FreeCoffee home">
+      <svg class="logo" width="22" height="22" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path d="M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z" fill="currentColor"/>
+        <path d="M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z" fill="currentColor"/>
+        <rect x="7" y="10.6" width="13.5" height="1.6" rx=".8" fill="currentColor"/>
+      </svg>
+      <span>FreeCoffee</span>
+      <span class="side-demo">Demo</span>
+    </a>
+
+    <nav class="side-nav" aria-label="Main">
+      <p class="side-label">Earn</p>
+      <a class="side-item" href="dashboard.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a class="side-item" href="payouts.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 8A2.5 2.5 0 0 1 6 5.5h12A2.5 2.5 0 0 1 20.5 8v8a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 16z"/><path d="M15.5 11.5h5v3h-5a1.5 1.5 0 1 1 0-3z"/></svg>
+        Payouts
+      </a>
+      <a class="side-item" href="referrals.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 3.8a3.2 3.2 0 0 1 0 8.4"/><path d="M17.6 15.4c1.9.8 2.9 2.4 2.9 4.6"/></svg>
+        Referrals
+      </a>
+      <p class="side-label">Advertise</p>
+      <a class="side-item" href="campaigns.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11l16-6v14L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+        Campaigns
+      </a>
+      <a class="side-item" href="agents.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="7" width="16" height="12" rx="2.5"/><path d="M12 7V3.5"/><circle cx="12" cy="2.6" r="1.1"/><circle cx="9" cy="13" r="1.2"/><circle cx="15" cy="13" r="1.2"/><path d="M9.2 16.2h5.6"/></svg>
+        Agents (MCP)
+      </a>
+      <p class="side-label">Account</p>
+      <a class="side-item active" href="profile.html" aria-current="page">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+        Profile
+      </a>
+      <a class="side-item" href="model.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h8M18 7h2M4 17h3M13 17h7"/><circle cx="15" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg>
+        Payout model
+      </a>
+    </nav>
+
+    <!-- user chip -->
+    <a class="user-chip" href="profile.html" aria-label="Account profile">
+      <span class="user-tile" aria-hidden="true">FC</span>
+      <span class="user-meta">
+        <span class="user-name">Demo User</span><br>
+        <span class="user-mail">demo@freecoffee.local</span>
+      </span>
+    </a>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="shell-main">
+
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a class="crumb" href="index.html">Account</a>
+        <span class="crumb-sep" aria-hidden="true">›</span>
+        <span class="crumb current" aria-current="page">Profile</span>
+      </nav>
+      <div class="topbar-mid">
+        <p class="promo-pill">Everything here stays in your browser — nothing is uploaded</p>
+      </div>
+      <div class="topbar-tools">
+        <a class="topbar-link" href="index.html#faq">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false" style="vertical-align:-2px;margin-right:5px"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2 1-1.2 1.9"/><path d="M12 16.6h.01"/></svg>
+          Support
+        </a>
+        <a class="topbar-icon-btn" href="profile.html" aria-label="Account profile">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <main id="main" class="shell-content">
+
+      <div class="dash-head">
+        <div>
+          <h1>Profile</h1>
+          <p class="dash-sub">Demo account · changes are saved to this browser only (localStorage key
+            <code>freecoffee:v1</code>) — nothing is uploaded.</p>
+        </div>
+      </div>
+
+      <div class="dash-cols" style="grid-template-columns: 1.7fr 1fr">
+
+        <!-- ============ ACCOUNT FORM ============ -->
+        <section class="card" id="account" aria-label="Account">
+          <h2 style="font-size:1.15rem">Account</h2>
+          <p class="section-sub" style="margin-bottom:20px">How your demo account appears locally.</p>
+
+          <form id="profileForm" novalidate>
+            <div class="field">
+              <label class="field-label" for="displayName">Display name</label>
+              <input class="input" type="text" id="displayName" name="displayName"
+                     value="Demo User" placeholder="Demo User" autocomplete="nickname">
+            </div>
+            <div class="field">
+              <label class="field-label" for="email">Email</label>
+              <input class="input" type="email" id="email" name="email"
+                     value="demo@freecoffee.local" placeholder="you@example.com" autocomplete="email">
+              <p class="footnote" style="margin-top:6px">Demo only — this address never leaves your browser.</p>
+            </div>
+            <div class="field">
+              <label class="field-label" for="coffeePref">Coffee preference</label>
+              <select class="select" id="coffeePref" name="coffeePref">
+                <option value="flat-white" selected>Flat white</option>
+                <option value="espresso">Espresso</option>
+                <option value="filter">Filter / batch brew</option>
+                <option value="cold-brew">Cold brew</option>
+                <option value="decaf">Decaf (why?)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="adFeedUrl">Ad feed URL <span class="pill pill-gold" style="margin-left:6px">real advertisers</span></label>
+              <div class="linkbox" style="margin-top:8px">
+                <input class="input" type="url" id="adFeedUrl" name="adFeedUrl"
+                       placeholder="https://example.com/freecoffee-feed.json" spellcheck="false"
+                       aria-describedby="adFeedUrlHint">
+                <button type="button" class="btn btn-ghost" id="testFeedBtn">Test</button>
+              </div>
+              <p class="footnote" id="adFeedUrlHint" style="margin-top:6px">Optional — plug in a real ad campaign feed
+                (affiliate network, offerwall, direct sponsor): an HTTPS URL returning a JSON array of campaigns.
+                See the <a href="advertisers.html">feed contract</a>. Leave empty to stay on the fictional demo sponsors.
+                Live campaigns display with a LIVE marker and never add to the simulated ledger.</p>
+            </div>
+            <div class="field">
+              <label class="field-label" for="backendUrl">BACKEND API URL <span class="pill pill-gold" style="margin-left:6px">real money</span></label>
+              <div class="linkbox" style="margin-top:8px">
+                <input class="input" type="url" id="backendUrl" name="backendUrl"
+                       placeholder="https://freecoffee-backend.your-subdomain.workers.dev" spellcheck="false"
+                       aria-describedby="backendUrlHint">
+                <button type="button" class="btn btn-ghost" id="testBackendBtn">Test</button>
+              </div>
+              <p class="footnote" id="backendUrlHint" style="margin-top:6px">Optional — the production backend
+                (Cloudflare Worker, <code>backend/README.md</code>) that settles <strong>real</strong> earnings
+                server-side. When set, the dashboard reports verified impressions once a minute and shows a separate
+                REAL EARNINGS (backend) panel; the simulated ledger is never touched. Leave empty to stay 100%
+                offline demo.</p>
+            </div>
+            <div class="field">
+              <label class="field-label" for="minCpm">MIN CPM FLOOR ($)</label>
+              <input class="input" type="number" id="minCpm" name="minCpm" inputmode="decimal"
+                     style="width:90px" placeholder="none" step="0.5" min="0" max="100"
+                     aria-describedby="minCpmHint">
+              <p class="footnote" id="minCpmHint" style="margin-top:6px">Only show campaigns paying at least this much
+                per 1,000 verified minutes. Campaigns below the floor are hidden everywhere (menu bar, dashboard rows,
+                banner). Highest CPM always wins the placement.</p>
+            </div>
+            <div class="field">
+              <span class="field-label" id="emailPrefsLabel">Email preferences</span>
+              <div class="prefs-row" role="group" aria-labelledby="emailPrefsLabel">
+                <label class="pref">
+                  <input type="checkbox" id="prefWeekly" checked>
+                  <span>Weekly earnings digest<span class="pref-sub">Mondays, one email</span></span>
+                </label>
+                <label class="pref">
+                  <input type="checkbox" id="prefPayout" checked>
+                  <span>Payout confirmations<span class="pref-sub">when a payout settles</span></span>
+                </label>
+                <label class="pref">
+                  <input type="checkbox" id="prefProduct">
+                  <span>Product updates<span class="pref-sub">rare, no marketing</span></span>
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="saveProfile">Save changes</button>
+          </form>
+        </section>
+
+        <!-- ============ NARROW COLUMN ============ -->
+        <div class="dash-side">
+
+          <section class="card" id="payoutAccount" aria-label="Payout account">
+            <h2 style="font-size:1.02rem">Payout account</h2>
+            <div class="act-row" style="margin-top:12px">
+              <span class="act-ic bad" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/></svg>
+              </span>
+              <span class="act-body">
+                <p class="act-title"><span class="pill pill-warn">Not set up</span></p>
+                <p class="act-sub">Cash out your balance once this is done.</p>
+              </span>
+            </div>
+            <a class="btn btn-primary" id="setupPayoutBtn" href="payouts.html" style="margin-top:12px">Set up</a>
+          </section>
+
+          <section class="card" id="connectedMac" aria-label="Connected Mac">
+            <h2 style="font-size:1.02rem">Connected Mac</h2>
+            <div class="act-row" style="margin-top:12px">
+              <span class="act-ic ok" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+              </span>
+              <span class="act-body">
+                <p class="act-title"><span class="pill pill-ok">Connected</span></p>
+                <p class="act-sub">This Mac · macOS 26</p>
+                <p class="act-sub">Device ID <code id="deviceIdCode">…</code>
+                  <button type="button" class="btn btn-ghost btn-sm" id="copyDeviceIdBtn" style="margin-left:8px">Copy</button></p>
+              </span>
+            </div>
+            <button type="button" class="btn btn-danger-outline" id="unlinkMacBtn" style="margin-top:12px">Unlink Mac</button>
+          </section>
+
+          <section class="card" id="agents" aria-label="AI agents">
+            <h2 style="font-size:1.02rem">AI agents</h2>
+            <p class="footnote" style="margin-top:4px">Paste this into your coding agent to let it read the
+              public demo pages and report your (simulated) earnings.</p>
+            <textarea class="promptbox" id="agentPrompt" readonly rows="8" aria-label="Agent setup prompt">You are helping me check my FreeCoffee demo earnings.
+
+FreeCoffee is a local demo — a static site served at http://127.0.0.1:8090 and a Mac menu-bar app that simulates menu-bar advertising earnings. All data is simulated; nothing is collected.
+
+Do this:
+1. Open http://127.0.0.1:8090/dashboard.html ( Earn › Overview ).
+2. Read the TOTAL BALANCE card: lifetime, available, pending, and the "≈ N cups" hint (1 cup = $5).
+3. Skim the ledger table: every row shows the winning bid and my exact 65% cut.
+4. Check referrals at http://127.0.0.1:8090/referrals.html.
+5. Report the numbers back to me. Do not modify anything — the demo stores its state only in my browser's localStorage under freecoffee:v1.
+
+Disclaimer: FreeCoffee demo — simulated data.</textarea>
+            <button type="button" class="btn btn-ghost btn-sm" id="copyAgentBtn" style="margin-top:12px">Copy setup prompt</button>
+          </section>
+
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="shell-foot">
+      <p><a href="advertisers.html">For advertisers</a> · <a href="model.html">Payout model</a></p>
+      <p class="disclaimer" style="border-top:0;padding-top:0">FreeCoffee demo — simulated data.</p>
+    </footer>
+  </div>
+</div>
+
+<div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
+
+<script src="assets/js/demo.js?v=113"></script>
+<script>
+/* Profile page — all state in freecoffee:v1. */
+(function () {
+  'use strict';
+  var KEY = 'freecoffee:v1';
+
+  function readState() {
+    try {
+      var s = JSON.parse(window.localStorage.getItem(KEY) || 'null');
+      return (s && typeof s === 'object') ? s : {};
+    } catch (e) { return {}; }
+  }
+  function writeState(patch) {
+    var s = readState();
+    for (var k in patch) s[k] = patch[k];
+    try { window.localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* non-fatal */ }
+  }
+
+  function $(id) { return document.getElementById(id); }
+
+  function toast(msg) {
+    var region = $('toastRegion');
+    if (!region) return;
+    var t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    region.appendChild(t);
+    window.setTimeout(function () { t.classList.add('show'); }, 10);
+    window.setTimeout(function () {
+      t.classList.remove('show');
+      window.setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 300);
+    }, 3800);
+  }
+
+  function copyText(text, okMsg) {
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) { /* non-fatal */ }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { toast(okMsg); }, fallback);
+    } else {
+      fallback();
+      toast(okMsg);
+    }
+  }
+
+  function init() {
+    var s = readState();
+    var p = s.profile || {};
+    $('displayName').value = p.displayName || 'Demo User';
+    $('email').value = p.email || 'demo@freecoffee.local';
+    $('coffeePref').value = p.coffeePref || 'flat-white';
+    $('adFeedUrl').value = p.adFeedUrl || '';
+    $('backendUrl').value = p.backendUrl || '';
+    // minCpm floor: empty string → 0 (no floor). Non-numeric/garbage → 0.
+    var minCpmNum = Number(p.minCpm);
+    $('minCpm').value = (p.minCpm === 0 || p.minCpm === '0' ||
+                         (isFinite(minCpmNum) && minCpmNum !== 0)) ? String(minCpmNum) : '';
+    $('prefWeekly').checked = p.prefWeekly !== false;
+    $('prefPayout').checked = p.prefPayout !== false;
+    $('prefProduct').checked = !!p.prefProduct;
+
+    // Device ID (used by /earnings/{deviceId} and the agents page).
+    var didEl = $('deviceIdCode');
+    if (didEl) {
+      var D0 = window.FreeCoffeeDemo;
+      var did = (D0 && typeof D0.deviceId === 'function') ? D0.deviceId() : '';
+      didEl.textContent = did || 'unavailable';
+    }
+
+    $('profileForm').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      // MIN CPM floor: empty string → 0; clamped 0–100 to match the cpm cap.
+      var minCpmVal = Number($('minCpm').value);
+      if (!isFinite(minCpmVal) || minCpmVal < 0) minCpmVal = 0;
+      if (minCpmVal > 100) minCpmVal = 100;
+      // Merge into the existing profile so keys written by other pages
+      // (e.g. payouts.html → payoutRail) survive a profile save.
+      var prev = readState().profile || {};
+      var backend = $('backendUrl').value.replace(/^\s+|\s+$/g, '').replace(/\/+$/, '');
+      if (backend && !/^https:\/\//i.test(backend)) {
+        toast('Backend URL must be an https:// URL (or empty for the offline demo).');
+        return;
+      }
+      var next = Object.assign({}, prev, {
+        displayName: $('displayName').value.trim() || 'Demo User',
+        email: $('email').value.trim() || 'demo@freecoffee.local',
+        coffeePref: $('coffeePref').value,
+        adFeedUrl: $('adFeedUrl').value.replace(/^\s+|\s+$/g, ''),
+        backendUrl: backend,
+        minCpm: minCpmVal,
+        prefWeekly: $('prefWeekly').checked,
+        prefPayout: $('prefPayout').checked,
+        prefProduct: $('prefProduct').checked,
+        savedTs: Date.now()
+      });
+      writeState({ profile: next });
+      toast('Profile saved — stored locally in freecoffee:v1. (demo)');
+    });
+
+    // Test the ad feed URL: fetch + strict-validate via the demo engine's
+    // fetchLiveCampaigns (never throws — always {campaigns, error}).
+    $('testFeedBtn').addEventListener('click', function () {
+      var D = window.FreeCoffeeDemo;
+      var url = $('adFeedUrl').value.replace(/^\s+|\s+$/g, '');
+      if (!url) { toast('Enter an https:// feed URL first.'); return; }
+      if (!D || typeof D.fetchLiveCampaigns !== 'function') {
+        toast('Feed testing unavailable (demo engine failed to load).');
+        return;
+      }
+      var btn = $('testFeedBtn');
+      btn.disabled = true;
+      D.fetchLiveCampaigns(url).then(function (res) {
+        btn.disabled = false;
+        if (res && !res.error && res.campaigns && res.campaigns.length) {
+          toast('Feed OK: ' + res.campaigns.length + ' campaign' +
+            (res.campaigns.length === 1 ? '' : 's') + ' — save changes to connect.');
+        } else {
+          toast('Feed error: ' + ((res && res.error) || 'unknown error'));
+        }
+      }).catch(function () {
+        btn.disabled = false;
+        toast('Feed test failed — network error or blocked URL.');
+      });
+    });
+
+    // Test the backend URL: GET /health → liveness. Any 200 body is
+    // accepted ({ok:true} expected from the FreeCoffee Worker).
+    $('testBackendBtn').addEventListener('click', function () {
+      var base = $('backendUrl').value.replace(/^\s+|\s+$/g, '').replace(/\/+$/, '');
+      if (!base) { toast('Enter the backend URL first (e.g. https://freecoffee-backend.you.workers.dev).'); return; }
+      if (!/^https:\/\//i.test(base)) { toast('Backend URL must be an https:// URL.'); return; }
+      var btn = $('testBackendBtn');
+      btn.disabled = true;
+      fetch(base + '/health', { mode: 'cors' }).then(function (res) {
+        btn.disabled = false;
+        if (res && res.ok) { toast('Backend OK'); }
+        else { toast('Backend error — HTTP ' + (res ? res.status : 'unknown')); }
+      }).catch(function () {
+        btn.disabled = false;
+        toast('Backend unreachable — check the URL, CORS, or the deployment (backend/README.md).');
+      });
+    });
+
+    var copyDidBtn = $('copyDeviceIdBtn');
+    if (copyDidBtn) copyDidBtn.addEventListener('click', function () {
+      var code = ($('deviceIdCode') && $('deviceIdCode').textContent) || '';
+      if (code && code !== 'unavailable') copyText(code, 'Device ID copied to the clipboard.');
+      else toast('No device ID available in this browser.');
+    });
+
+    $('unlinkMacBtn').addEventListener('click', function () {
+      var ok = window.confirm('Unlink this Mac from the FreeCoffee demo?\n\nThe menu-bar app will stop accruing simulated earnings until re-linked. (demo)');
+      if (ok) toast('Mac unlinked (demo) — nothing was actually changed.');
+      else toast('Unlink cancelled.');
+    });
+
+    $('copyAgentBtn').addEventListener('click', function () {
+      copyText($('agentPrompt').value, 'Setup prompt copied to the clipboard.');
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script>
+/* Service worker registration — shared inline snippet on all pages.
+   Skipped on file:// (no SW support there); failures are non-fatal. */
+if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+  try {
+    navigator.serviceWorker.register('sw.js').then(function (reg) {
+      console.info('FreeCoffee: service worker registered (scope ' + reg.scope + ')');
+    }).catch(function (err) {
+      console.info('FreeCoffee: service worker registration failed: ' + err);
+    });
+  } catch (err) {
+    console.info('FreeCoffee: service worker registration failed: ' + err);
+  }
+}
+</script>
+</body>
+</html>

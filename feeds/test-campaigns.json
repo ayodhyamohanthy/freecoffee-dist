@@ -1,0 +1,29 @@
+[
+  {
+    "id": "qa_camp_001",
+    "sponsor": "QA Roasters",
+    "tagline": "QA test campaign — real HTTPS feed check",
+    "clickUrl": "https://freecoffee.tech/advertisers.html",
+    "cpm": 6.0,
+    "logoText": "QA",
+    "accent": "#C98F4E"
+  },
+  {
+    "id": "qa_camp_002",
+    "sponsor": "Mug & Maven",
+    "tagline": "Second live test sponsor from the QA feed",
+    "clickUrl": "https://freecoffee.tech/advertisers.html",
+    "cpm": 4.5,
+    "logoText": "MM",
+    "accent": "#6FBF8B"
+  },
+  {
+    "id": "qa_camp_003",
+    "sponsor": "Lowball Labs",
+    "tagline": "Low bid — must sort last",
+    "clickUrl": "https://freecoffee.tech/advertisers.html",
+    "cpm": 0.75,
+    "logoText": "LB",
+    "accent": "#E57373"
+  }
+]

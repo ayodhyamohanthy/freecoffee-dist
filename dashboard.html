@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard — FreeCoffee</title>
+<meta name="description" content="FreeCoffee demo earnings dashboard — simulated data, stored locally in your browser.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#F7F6F3">
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="stylesheet" href="assets/css/styles.css?v=113">
+</head>
+<body data-page="dashboard" class="theme-light">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <a class="side-logo" href="index.html" aria-label="FreeCoffee home">
+      <svg class="logo" width="22" height="22" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path d="M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z" fill="currentColor"/>
+        <path d="M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z" fill="currentColor"/>
+        <rect x="7" y="10.6" width="13.5" height="1.6" rx=".8" fill="currentColor"/>
+      </svg>
+      <span>FreeCoffee</span>
+      <span class="side-demo">Demo</span>
+    </a>
+
+    <nav class="side-nav" aria-label="Main">
+      <p class="side-label">Earn</p>
+      <a class="side-item active" href="dashboard.html" aria-current="page">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a class="side-item" href="payouts.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 8A2.5 2.5 0 0 1 6 5.5h12A2.5 2.5 0 0 1 20.5 8v8a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 16z"/><path d="M15.5 11.5h5v3h-5a1.5 1.5 0 1 1 0-3z"/></svg>
+        Payouts
+      </a>
+      <a class="side-item" href="referrals.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 3.8a3.2 3.2 0 0 1 0 8.4"/><path d="M17.6 15.4c1.9.8 2.9 2.4 2.9 4.6"/></svg>
+        Referrals
+      </a>
+      <p class="side-label">Advertise</p>
+      <a class="side-item" href="campaigns.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11l16-6v14L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+        Campaigns
+      </a>
+      <a class="side-item" href="agents.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="7" width="16" height="12" rx="2.5"/><path d="M12 7V3.5"/><circle cx="12" cy="2.6" r="1.1"/><circle cx="9" cy="13" r="1.2"/><circle cx="15" cy="13" r="1.2"/><path d="M9.2 16.2h5.6"/></svg>
+        Agents (MCP)
+      </a>
+      <p class="side-label">Account</p>
+      <a class="side-item" href="profile.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+        Profile
+      </a>
+      <a class="side-item" href="model.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h8M18 7h2M4 17h3M13 17h7"/><circle cx="15" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg>
+        Payout model
+      </a>
+    </nav>
+
+    <!-- dismissible setup checklist -->
+    <section class="side-card" id="setupCard" aria-label="Setup guide">
+      <button type="button" class="side-dismiss" data-dismiss="setupCard" aria-label="Dismiss setup guide">✕</button>
+      <p class="micro">Setup guide</p>
+      <p class="check-count" id="setupCount">1 of 4 complete</p>
+      <span class="prog prog-thin" aria-hidden="true"><span class="prog-fill" style="width:25%"></span></span>
+      <div class="check-item" style="margin-top:10px">
+        <span class="check-box done" aria-hidden="true"></span>
+        <span><a href="index.html#download">Install the FreeCoffee app</a></span>
+      </div>
+      <div class="check-item">
+        <span class="check-box" aria-hidden="true"></span>
+        <span><a href="payouts.html">Connect a payout rail</a></span>
+      </div>
+      <div class="check-item">
+        <span class="check-box" aria-hidden="true"></span>
+        <span><a href="referrals.html">Share your referral link</a></span>
+      </div>
+      <div class="check-item">
+        <span class="check-box" aria-hidden="true"></span>
+        <span><a href="index.html#download">Keep the Mac awake to earn</a></span>
+      </div>
+    </section>
+
+    <!-- dismissible promo banner — dark card with amber progress -->
+    <section class="side-card promo-banner" id="promoCard" aria-label="Promotion">
+      <button type="button" class="side-dismiss" data-dismiss="promoCard" aria-label="Dismiss promotion">✕</button>
+      <p class="promo-title">Reach 70% base share 🚀</p>
+      <p class="promo-sub">Platform revenue is climbing — 65% today, 70% at $50k/mo.</p>
+      <span class="prog" aria-hidden="true"><span class="prog-fill" style="width:65%"></span></span>
+      <p class="prog-meta"><span>65% base share</span><span>target 70%</span></p>
+    </section>
+
+    <!-- user chip -->
+    <a class="user-chip" href="profile.html" aria-label="Account profile">
+      <span class="user-tile" aria-hidden="true">FC</span>
+      <span class="user-meta">
+        <span class="user-name">Demo User</span><br>
+        <span class="user-mail">demo@freecoffee.local</span>
+      </span>
+    </a>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="shell-main">
+
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a class="crumb" href="index.html">Earn</a>
+        <span class="crumb-sep" aria-hidden="true">›</span>
+        <span class="crumb current" aria-current="page">Overview</span>
+      </nav>
+      <div class="topbar-mid">
+        <p class="promo-pill">Ads running — you keep 65% of every winning bid</p>
+      </div>
+      <div class="topbar-tools">
+        <a class="topbar-link" href="index.html#faq">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false" style="vertical-align:-2px;margin-right:5px"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2 1-1.2 1.9"/><path d="M12 16.6h.01"/></svg>
+          Support
+        </a>
+        <a class="topbar-icon-btn" href="profile.html" aria-label="Account profile">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+        </a>
+        <button type="button" id="pauseToggle" class="toggle-btn" aria-pressed="false">
+          <span class="toggle-track" aria-hidden="true"><span class="toggle-knob"></span></span>
+          <span id="pauseToggleLabel">Pause ads</span>
+        </button>
+        <button type="button" id="installBtn" class="btn btn-ghost" hidden>Install app</button>
+        <span class="footnote install-hint" id="installHint" hidden>On iPhone: Share → Add to Home Screen</span>
+        <button type="button" id="payoutBtn" class="btn btn-primary" disabled>Simulate instant payout</button>
+      </div>
+    </header>
+
+    <main id="main" class="shell-content">
+
+      <div class="dash-head">
+        <div>
+          <h1>Overview</h1>
+          <p class="dash-sub">Demo account · simulated auction data · seeded deterministically (seed 42).
+            Stored only in this browser — nothing is uploaded.</p>
+        </div>
+        <p class="dash-status" id="dashStatus">Ads running — earning.</p>
+      </div>
+
+      <p class="storage-note" id="storageNote" hidden>
+        ⚠ LocalStorage is unavailable (private mode or blocked) — running in-memory. Your demo state resets on reload.
+      </p>
+
+      <!-- ============ BALANCE STAT CARD ============ -->
+      <section class="card balcard" aria-label="Balances">
+        <div class="balcard-top">
+          <div>
+            <p class="micro">Total balance</p>
+            <p class="balcard-total" id="statLifetime">$0.00</p>
+            <p class="cups-hint" id="statCups">≈ 0 cups of coffee</p>
+          </div>
+          <div style="text-align:right">
+            <p class="micro">Lifetime</p>
+            <p class="balfoot" id="statLifetimeFoot">0 rows in ledger</p>
+            <p class="balfoot">1 cup = $5.00</p>
+          </div>
+        </div>
+        <div class="balcard-divs">
+          <div class="balcell">
+            <p class="balcap">Available now</p>
+            <p class="balnum" id="statAvailable">$0.00</p>
+            <p class="balfoot">ready to pay out</p>
+          </div>
+          <div class="balcell">
+            <p class="balcap">Pending · 24h rail</p>
+            <p class="balnum" id="statPending">$0.00</p>
+            <p class="balfoot">clears within 24 hours</p>
+          </div>
+          <div class="balcell">
+            <p class="balcap">This week</p>
+            <p class="balnum" id="statWeek">$0.00</p>
+            <p class="balfoot">last 7 days, all types</p>
+          </div>
+          <div class="balcell">
+            <p class="balcap">Lifetime</p>
+            <p class="balnum" id="statLifetimeCell">$0.00</p>
+            <p class="balfoot">all time</p>
+          </div>
+        </div>
+        <div class="balprog-row">
+          <div class="balprog-head">
+            <p class="micro">Payout progress</p>
+            <span class="balprog-min" id="payoutProgLabel">$0.00 of $2.00 minimum</span>
+          </div>
+          <span class="prog" role="progressbar" aria-label="Progress toward the $2 payout minimum" aria-valuemin="0" aria-valuemax="100" id="payoutProgBar">
+            <span class="prog-fill" id="payoutProg" style="width:0%"></span>
+          </span>
+          <p class="prog-meta"><span>payout minimum $2.00</span><span id="payoutProgMin">$2.00</span></p>
+        </div>
+      </section>
+
+      <!-- ============ LIVE CAMPAIGN FEED BANNER (real-advertiser bridge) ============ -->
+      <div class="live-banner" id="liveBanner" hidden>
+        <p class="live-banner-text" id="liveBannerText"></p>
+        <button type="button" class="btn btn-ghost btn-sm" id="liveDisconnectBtn" hidden>Disconnect live feed</button>
+      </div>
+
+      <div class="dash-cols" style="margin-top:16px">
+
+        <!-- ============ CHART + LEDGER ============ -->
+        <div class="dash-main">
+          <section class="card" aria-label="Earnings, last 14 days">
+            <div class="chart-head">
+              <h2>Earnings · 14 days</h2>
+              <p class="chart-hint" id="chartHint">hover a point for the day's total</p>
+            </div>
+            <div class="chart-box" id="chartBox">
+              <!-- SVG injected by dashboard.js (area chart, slate-teal line, dotted markers) -->
+            </div>
+          </section>
+
+          <section class="card" aria-label="Earnings ledger">
+            <div class="ledger-head">
+              <h2>Ledger</h2>
+              <p class="ledger-hint">newest first · every row shows the winning bid and your exact cut · max 100 shown</p>
+            </div>
+            <div class="table-scroll ledger-scroll">
+              <table class="ledger-table" id="ledgerTable">
+                <thead>
+                  <tr>
+                    <th scope="col">Time</th>
+                    <th scope="col">Sponsor</th>
+                    <th scope="col">Type</th>
+                    <th scope="col" class="num">Winning bid</th>
+                    <th scope="col" class="num cut-col">Your cut</th>
+                    <th scope="col">Tier</th>
+                  </tr>
+                </thead>
+                <tbody id="ledgerBody">
+                  <!-- rows injected by dashboard.js -->
+                </tbody>
+              </table>
+            </div>
+            <p class="footnote" id="ledgerFoot"></p>
+          </section>
+        </div>
+
+        <!-- ============ SIDE PANELS ============ -->
+        <aside class="dash-side">
+          <section class="card" aria-label="Action required">
+            <h2 style="font-size:1.02rem">Action required</h2>
+            <div class="act-list">
+              <div class="act-row">
+                <span class="act-ic ok" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4 12.5l5 5L20 6.5"/></svg>
+                </span>
+                <span class="act-body">
+                  <p class="act-title">App installed</p>
+                  <p class="act-sub">FreeCoffee is earning on this Mac (simulated).</p>
+                </span>
+              </div>
+              <div class="act-row">
+                <span class="act-ic bad" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/></svg>
+                </span>
+                <span class="act-body">
+                  <p class="act-title">Payouts not set up</p>
+                  <p class="act-sub">Connect Stripe or Whop to cash out over $2.</p>
+                </span>
+                <a class="btn btn-primary btn-sm" href="payouts.html">Set up</a>
+              </div>
+              <div class="act-row">
+                <span class="act-ic info" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 2.5l7.5 3v6c0 4.8-3.2 8.4-7.5 10-4.3-1.6-7.5-5.2-7.5-10v-6z"/><path d="M9 12l2 2 4-4.5"/></svg>
+                </span>
+                <span class="act-body">
+                  <p class="act-title">Account status</p>
+                  <p class="act-sub">Demo account in good standing — nothing to fix.</p>
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <section class="card" aria-label="Recent sponsors">
+            <h2 style="font-size:1.02rem">Recent sponsors</h2>
+            <p class="footnote" style="margin-top:2px">your 7-day impression cut per sponsor</p>
+            <ul class="sp-list" id="sponsorList">
+              <!-- rows injected by dashboard.js -->
+            </ul>
+          </section>
+        </aside>
+      </div>
+
+      <!-- ============ REAL EARNINGS (platform backend) ============
+           Hidden until a backend URL is configured in Profile →
+           BACKEND API URL. Shows ONLY what the FreeCoffee Worker
+           actually recorded — never mixed with the simulated ledger.
+           Populated/updated by dashboard.js → initRealEarnings(). -->
+      <section class="card sim" id="realEarnPanel" aria-label="Real earnings, settled server-side" hidden>
+        <h2>REAL EARNINGS (backend)</h2>
+        <p class="section-sub">Live placements reported to the platform backend — real, settled
+          server-side, and entirely separate from the simulated ledger above.</p>
+        <div style="margin-bottom:6px">
+          <p class="micro">Settled total</p>
+          <p class="balcard-total" id="realEarnTotal">$0.00</p>
+        </div>
+        <div class="balcard-divs">
+          <div class="balcell">
+            <p class="balcap">Today</p>
+            <p class="balnum" id="realEarnToday">$0.00</p>
+          </div>
+          <div class="balcell">
+            <p class="balcap">This month</p>
+            <p class="balnum" id="realEarnMonthly">$0.00</p>
+          </div>
+          <div class="balcell">
+            <p class="balcap">Impressions</p>
+            <p class="balnum" id="realEarnImpressions">0</p>
+          </div>
+          <div class="balcell">
+            <p class="balcap">Clicks</p>
+            <p class="balnum" id="realEarnClicks">0</p>
+          </div>
+        </div>
+        <p class="footnote" id="realEarnNote" style="margin-top:14px">settles server-side via the platform backend — separate from the simulated ledger</p>
+      </section>
+
+      <!-- ============ PAYOUT SIMULATOR ============ -->
+      <section class="card sim" aria-label="Payout simulator">
+        <h2>Payout simulator</h2>
+        <p class="section-sub">Where do the levers get you? Drag — everything recomputes live.</p>
+
+        <div class="sim-grid">
+          <div class="sim-controls">
+            <div class="slider-row">
+              <label for="simMinutes">Active minutes / day <output id="simMinutesOut" for="simMinutes">300</output></label>
+              <input type="range" id="simMinutes" min="0" max="600" step="10" value="300">
+              <p class="slider-hint">each active minute = one minute-long placement</p>
+            </div>
+            <div class="slider-row">
+              <label for="simCpm">Average CPM <output id="simCpmOut" for="simCpm">$6.00</output></label>
+              <input type="range" id="simCpm" min="1" max="8" step="0.25" value="6">
+              <p class="slider-hint">Auction-settled placements settle at the winning CPM (live campaigns)</p>
+            </div>
+            <div class="slider-row">
+              <label for="simCtr">Click-through rate <output id="simCtrOut" for="simCtr">1.2%</output></label>
+              <input type="range" id="simCtr" min="0" max="3" step="0.1" value="1.2">
+              <p class="slider-hint">$0.05 per verified click — max 5/day, ≤25% of monthly impressions</p>
+            </div>
+            <div class="slider-row slider-row-toggle">
+              <label class="check-label" for="simStreak">
+                <input type="checkbox" id="simStreak" checked>
+                Maintain the streak <span class="hint-inline">(+1% per 5 active days, cap +10%)</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="sim-results">
+            <p class="panel-big"><span id="simMonthly">$0.00</span><span class="per">/mo projected</span></p>
+            <p class="sim-eta" id="simEta">first payout: —</p>
+            <table class="mini-table" aria-label="Projection breakdown">
+              <caption class="visually-hidden">Monthly projection breakdown</caption>
+              <tbody>
+                <tr><th scope="row">Base (65% of auction)</th><td class="num" id="simBase">$0.00</td></tr>
+                <tr><th scope="row">Click bonus <span id="simCapNote" class="hint-inline"></span></th><td class="num" id="simClick">$0.00</td></tr>
+                <tr><th scope="row">Streak bonus <span id="simStreakNote" class="hint-inline"></span></th><td class="num" id="simStreakBonus">$0.00</td></tr>
+                <tr class="mini-total"><th scope="row">Monthly total</th><td class="num" id="simTotal">$0.00</td></tr>
+              </tbody>
+            </table>
+            <p class="footnote">First-payout ETA assumes the same run rate until the $2 minimum is hit.
+              Impression floors: 1,000 impressions @ $6 CPM = $6.00 → you keep $3.90 base.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="shell-foot">
+      <p><a href="advertisers.html">For advertisers</a> · <a href="model.html">Payout model</a></p>
+      <p class="disclaimer" style="border-top:0;padding-top:0">FreeCoffee demo — simulated data. The REAL EARNINGS panel (when enabled) reports only what the platform backend records.</p>
+    </footer>
+  </div>
+</div>
+
+<div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
+
+<script src="assets/js/demo.js?v=113"></script>
+<script src="assets/js/dashboard.js?v=113"></script>
+<script>
+/* Sidebar dismiss cards — persisted per card in freecoffee:v1 (shellPrefs). */
+(function () {
+  'use strict';
+  function readPrefs() {
+    try {
+      var raw = window.localStorage.getItem('freecoffee:v1');
+      var s = raw ? JSON.parse(raw) : {};
+      return s && s.shellPrefs ? s.shellPrefs : {};
+    } catch (e) { return {}; }
+  }
+  function writePrefs(patch) {
+    try {
+      var raw = window.localStorage.getItem('freecoffee:v1');
+      var s = raw ? JSON.parse(raw) : {};
+      if (!s || typeof s !== 'object') s = {};
+      s.shellPrefs = s.shellPrefs || {};
+      for (var k in patch) s.shellPrefs[k] = patch[k];
+      window.localStorage.setItem('freecoffee:v1', JSON.stringify(s));
+    } catch (e) { /* non-fatal */ }
+  }
+  document.querySelectorAll('[data-dismiss]').forEach(function (btn) {
+    var id = btn.getAttribute('data-dismiss');
+    var card = document.getElementById(id);
+    if (!card) return;
+    if (readPrefs()[id] === 'dismissed') card.hidden = true;
+    btn.addEventListener('click', function () {
+      card.hidden = true;
+      var patch = {};
+      patch[id] = 'dismissed';
+      writePrefs(patch);
+    });
+  });
+})();
+</script>
+<script>FreeCoffeeDemo.initInstallUX();</script>
+<script>
+/* Service worker registration — shared inline snippet on all pages.
+   Skipped on file:// (no SW support there); failures are non-fatal. */
+if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+  try {
+    navigator.serviceWorker.register('sw.js').then(function (reg) {
+      console.info('FreeCoffee: service worker registered (scope ' + reg.scope + ')');
+    }).catch(function (err) {
+      console.info('FreeCoffee: service worker registration failed: ' + err);
+    });
+  } catch (err) {
+    console.info('FreeCoffee: service worker registration failed: ' + err);
+  }
+}
+</script>
+</body>
+</html>

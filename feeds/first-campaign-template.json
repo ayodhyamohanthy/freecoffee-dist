@@ -1,0 +1,11 @@
+[
+  {
+    "id": "camp_001",
+    "sponsor": "Your Brand",
+    "tagline": "One line — what the user sees on the menu-bar slide",
+    "clickUrl": "https://your-https-destination.example.com/",
+    "cpm": 2.0,
+    "logoText": "YB",
+    "accent": "#E0A93E"
+  }
+]

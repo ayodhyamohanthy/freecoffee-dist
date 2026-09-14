@@ -1,0 +1,28 @@
+[
+  {
+    "id": "camp_sample_001",
+    "sponsor": "Sample Roasters (SAMPLE)",
+    "tagline": "SAMPLE AD — demo creative, not a real campaign",
+    "clickUrl": "https://freecoffee.tech/advertisers.html",
+    "cpm": 6.0,
+    "logoText": "SR",
+    "accent": "#E0A93E"
+  },
+  {
+    "id": "camp_sample_002",
+    "sponsor": "Sample VPN (SAMPLE)",
+    "tagline": "SAMPLE AD — demo creative, not a real campaign",
+    "clickUrl": "https://freecoffee.tech/advertisers.html",
+    "cpm": 4.0,
+    "logoText": "SV",
+    "accent": "#6FBF8B"
+  },
+  {
+    "id": "camp_sample_003",
+    "sponsor": "Sample Studio (SAMPLE)",
+    "tagline": "SAMPLE AD — demo creative, not a real campaign",
+    "clickUrl": "https://freecoffee.tech/advertisers.html",
+    "cpm": 2.5,
+    "accent": "#C98F4E"
+  }
+]
