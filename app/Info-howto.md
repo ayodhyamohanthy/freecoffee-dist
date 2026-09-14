@@ -34,7 +34,9 @@ The menu-bar chip itself is always an ad slot, never a dead end:
   popover and the right-click menu offer **Advertise here**, opening the
   public advertiser pitch. Zero earnings impact either way.
 
-1. **Left-click** the status item: the earnings popover opens —
+1. **Left-click** the status item: the earnings popover opens — and stays
+   live while open (balance, chart, sponsor, and CTA states refresh in
+   place; the chip rotates sponsors every 60 s) —
    - header row: brand tile (the app icon), **☕ FreeCoffee** + a dynamic
      description line (live sponsor, `No sponsors available`, or the demo
      sponsor — plus an **✨ Advertise here** button when the feed is empty),
