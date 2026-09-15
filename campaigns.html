@@ -21,7 +21,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="assets/css/styles.css?v=1002004">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002006">
 </head>
 <body data-page="campaigns" class="theme-light">
 
@@ -128,7 +128,7 @@
 
       <!-- ============ STATS STRIP (honest zeros) ============ -->
       <section class="card" aria-label="Campaign stats" style="margin-bottom:16px">
-        <div class="balcard-divs">
+        <div class="balcard-divs cols-5">
           <div class="balcell">
             <p class="balcap">Active</p>
             <p class="balnum" id="campActive">0</p>
@@ -145,13 +145,20 @@
             <p class="balfoot">lifetime, all campaigns</p>
           </div>
           <div class="balcell">
-            <p class="balcap">Impressions</p>
-            <p class="balnum" id="campImpressions">0</p>
-            <p class="balfoot">verified minute-long placements</p>
+            <p class="balcap">Time served</p>
+            <p class="balnum" id="campHours">0 h</p>
+            <p class="balfoot" id="campMinutes">0 verified minutes</p>
+          </div>
+          <div class="balcell">
+            <p class="balcap">Devices reached</p>
+            <p class="balnum" id="campDevices">0</p>
+            <p class="balfoot">distinct installs served</p>
           </div>
         </div>
         <p class="footnote" id="campStatsNote" style="margin-top:14px">Honest zeros — no fabricated delivery
-          numbers. The demo ledger on the user side is simulated, and no advertiser money moves anywhere.</p>
+          numbers. Connect a backend (Profile → BACKEND API URL) and this strip reports live delivery:
+          time served, devices reached, and the surface/region mix behind each campaign. The demo ledger
+          on the user side is simulated, and no advertiser money moves anywhere.</p>
       </section>
 
       <!-- ============ FILTER TABS ============ -->
@@ -246,7 +253,11 @@
 </script>
 <script>
 /* Live delivery report — backend configured (Profile → BACKEND API URL) →
-   GET /stats (public, aggregate-only: no device data, no token needed).
+   GET /stats. Public and token-free, and counts-only by construction: the
+   endpoint emits minutes, percentages, and distinct-device COUNTS — never a
+   device id, a ledger row, or a per-device breakdown. Regions are
+   self-reported by each device (we never geo-locate an IP), so they are
+   labelled as reported rather than verified.
    Rows carry data-status="running" so the filter tabs above work unchanged;
    the empty state hides itself once rows exist. No backend → honest zeros. */
 (function () {
@@ -256,6 +267,109 @@
     var v = Math.round(Number(n) * 100) / 100;
     return '$' + (isFinite(v) ? v : 0).toFixed(2);
   }
+  /* 0 → "0 min" · 45 → "45 min" · 60 → "1 h" · 90 → "1 h 30 min" */
+  function duration(mins) {
+    var m = Math.max(0, Math.round(Number(mins) || 0));
+    if (m < 60) return m + ' min';
+    var h = Math.floor(m / 60), r = m % 60;
+    return r ? h + ' h ' + r + ' min' : h + ' h';
+  }
+  function hours(n) {
+    var v = Math.round((Number(n) || 0) * 100) / 100;
+    return (isFinite(v) ? v : 0) + ' h';
+  }
+  function pct(n) {
+    var v = Number(n);
+    if (!isFinite(v) || v <= 0) return '0%';
+    var r = Math.round(v * 10) / 10;
+    return (r === Math.floor(r) ? String(r) : r.toFixed(1)) + '%';
+  }
+  /* Top `max` entries, with everything past that folded into one remainder —
+     a campaign served in 40 countries still reads on a single line. */
+  function mix(list, key, max) {
+    var rows = (list && list.length) ? list : [];
+    var out = [], rest = 0;
+    for (var i = 0; i < rows.length; i++) {
+      var share = Number(rows[i] && rows[i].share) || 0;
+      if (i < max) out.push({ label: String(rows[i][key] || 'unknown'), share: share });
+      else rest += share;
+    }
+    if (rest > 0.05) out.push({ label: '+' + (rows.length - max) + ' more', share: rest });
+    return out;
+  }
+  function mixRow(label, list, key) {
+    var wrap = document.createElement('div');
+    wrap.className = 'deliv-mix-row';
+    var lbl = document.createElement('span');
+    lbl.className = 'deliv-mix-lbl';
+    lbl.textContent = label;
+    wrap.appendChild(lbl);
+    var items = mix(list, key, 3);
+    if (!items.length) {
+      var none = document.createElement('span');
+      none.className = 'mix-chip';
+      none.textContent = 'nothing served yet';
+      wrap.appendChild(none);
+      return wrap;
+    }
+    for (var i = 0; i < items.length; i++) {
+      var chip = document.createElement('span');
+      chip.className = 'mix-chip';
+      chip.appendChild(document.createTextNode(items[i].label + ' '));
+      var b = document.createElement('b');
+      b.textContent = pct(items[i].share);
+      chip.appendChild(b);
+      wrap.appendChild(chip);
+    }
+    return wrap;
+  }
+  function metric(label, value) {
+    var d = document.createElement('div');
+    d.className = 'deliv-metric';
+    var dt = document.createElement('dt');
+    dt.textContent = label;
+    var dd = document.createElement('dd');
+    dd.textContent = value;
+    d.appendChild(dt);
+    d.appendChild(dd);
+    return d;
+  }
+  function row(r) {
+    var el = document.createElement('div');
+    el.className = 'deliv-row';
+    el.setAttribute('data-status', 'running');
+
+    var head = document.createElement('div');
+    head.className = 'deliv-head';
+    var name = document.createElement('span');
+    name.className = 'deliv-name';
+    name.textContent = r.sponsor || r.id || 'campaign';
+    head.appendChild(name);
+    var cid = document.createElement('span');
+    cid.className = 'deliv-id';
+    cid.textContent = r.id || '';
+    head.appendChild(cid);
+    var spend = document.createElement('span');
+    spend.className = 'deliv-spend';
+    spend.textContent = money(r.spend) + ' user share';
+    head.appendChild(spend);
+    el.appendChild(head);
+
+    var nums = document.createElement('dl');
+    nums.className = 'deliv-nums';
+    nums.appendChild(metric('Time served', duration(r.impressions)));
+    nums.appendChild(metric('Devices', String(Number(r.devices) || 0)));
+    nums.appendChild(metric('Clicks', String(Number(r.clicks) || 0)));
+    el.appendChild(nums);
+
+    var mixes = document.createElement('div');
+    mixes.className = 'deliv-mix';
+    mixes.appendChild(mixRow('Surfaces', r.surfaces, 'surface'));
+    mixes.appendChild(mixRow('Regions', r.regions, 'region'));
+    el.appendChild(mixes);
+    return el;
+  }
+
   var base = '';
   try {
     var raw = window.localStorage.getItem('freecoffee:v1');
@@ -296,38 +410,29 @@
     if (!d || !d.totals) { finishFail(); return; }
     settled = true;
     if (timer) clearTimeout(timer);
+    var t = d.totals;
     var el;
     el = $('campActive'); if (el) el.textContent = String(d.served || 0);
-    el = $('campSpend'); if (el) el.textContent = money(d.totals.spend);
-    el = $('campImpressions'); if (el) el.textContent = String(d.totals.impressions || 0);
+    el = $('campSpend'); if (el) el.textContent = money(t.spend);
+    el = $('campHours'); if (el) el.textContent = hours(t.hours);
+    el = $('campMinutes'); if (el) el.textContent = (t.impressions || 0) + ' verified minutes';
+    el = $('campDevices'); if (el) el.textContent = String(t.devices || 0);
     var list = $('campList');
     if (!list) return;
+    // Idempotent: drop any rows a previous run painted before appending.
+    var stale = list.querySelectorAll('.deliv-row');
+    for (var q = 0; q < stale.length; q++) list.removeChild(stale[q]);
     var rows = (d.campaigns && d.campaigns.slice(0, 20)) || [];
-    if (list && rows.length) list.setAttribute('data-live-rows', String(rows.length));
-    for (var i = 0; i < rows.length; i++) {
-      var r = rows[i] || {};
-      var row = document.createElement('div');
-      row.className = 'sp-row';
-      row.setAttribute('data-status', 'running');
-      var meta = document.createElement('div');
-      var name = document.createElement('strong');
-      name.textContent = r.sponsor || r.id || 'campaign';
-      meta.appendChild(name);
-      var sub = document.createElement('div');
-      sub.className = 'balfoot';
-      sub.textContent = (r.impressions || 0) + ' verified minutes · ' +
-        (r.clicks || 0) + ' clicks · ' + money(r.spend) + ' user share paid';
-      meta.appendChild(sub);
-      row.appendChild(meta);
-      list.appendChild(row);
-    }
+    if (rows.length) list.setAttribute('data-live-rows', String(rows.length));
+    for (var i = 0; i < rows.length; i++) list.appendChild(row(rows[i] || {}));
     // Recount so the tabs + empty state reflect live rows.
     var all = document.querySelector('.camp-tab[data-filter="all"]');
     if (all) all.click();
     var note = $('campStatsNote');
     if (note && (rows.length || d.served)) {
-      note.textContent = 'Live numbers from your connected backend — aggregate delivery only, ' +
-        'no device data. Zero means zero.';
+      note.textContent = 'Live from your connected backend — aggregate counts only, public and ' +
+        'token-free. Time is verified minutes actually served, devices are distinct installs reached, ' +
+        'and surfaces/regions are reported by each device (we never geo-locate an IP). Zero means zero.';
     }
   }).catch(function () { finishFail(); /* zeros stay, note explains */ });
 })();
