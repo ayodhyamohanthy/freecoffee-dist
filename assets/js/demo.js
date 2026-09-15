@@ -880,6 +880,228 @@
   }
 
   /* ------------------------------------------------------------------
+     Flywheel — the loop, client side.
+
+     Every platform a user already lives on (the Mac app, the PWA, GitHub,
+     Homebrew, an AI agent, email, a DM) is a CAPTURE surface: it carries a
+     share link shaped
+
+       https://freecoffee.tech/index.html?ref=<code>&utm_source=<platform>
+
+     `ref` is a short random code the user owns and registers server-side
+     (POST {backend}/referral, action 'register'). It is deliberately NOT the
+     device id: the device id is the only identifier the platform holds and
+     GET /earnings/{deviceId} is public, so a share link must never carry it.
+
+     The three pieces are local-first and offline-safe:
+       referralCode()          the user's own code (localStorage, created once)
+       captureInboundRef()     read ?ref / ?utm_source on arrival, remember it,
+                               and claim it server-side when a backend is set
+       shareKit()              one attributed artifact per platform
+
+     Nothing here computes money — the server owns the 10% referral share,
+     the 60-verified-minute gate, and the 12-month term
+     (backend/src/worker.js).
+     ------------------------------------------------------------------ */
+  var REFCODE_KEY = 'freecoffee:refcode';
+  var REFCAPTURE_KEY = 'freecoffee:refcapture';
+  var REF_CODE_RE = /^[a-z0-9][a-z0-9-]{2,31}$/;
+
+  var DIST_REPO = 'https://github.com/ayodhyamohanthy/freecoffee-dist';
+  var DMG_URL = DIST_REPO + '/releases/latest/download/FreeCoffee.dmg';
+  var BREW_CMD = 'brew install --cask freecoffee';
+  var SHARE_TEXT = 'FreeCoffee: advertisers bid for minute-long placements in the empty stretch of your Mac menu bar. You keep 65%, cash out at $2 — and the network is still empty (day zero), so early users shape the auction.';
+  var HN_TEXT = 'FreeCoffee – your Mac menu bar pays for the coffee';
+
+  /* The user's own share code: 8 hex chars, generated once and kept locally.
+     Hex-only so it always satisfies the server's code rules. */
+  function referralCode() {
+    if (typeof window === 'undefined' || !window.localStorage) return '';
+    try {
+      var existing = window.localStorage.getItem(REFCODE_KEY);
+      if (existing && REF_CODE_RE.test(existing)) return existing;
+      var hex = '0123456789abcdef';
+      var code = '';
+      if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+        var bytes = new Uint8Array(8);
+        window.crypto.getRandomValues(bytes);
+        for (var i = 0; i < bytes.length; i++) code += hex[bytes[i] % 16];
+      } else {
+        for (var j = 0; j < 8; j++) code += hex[Math.floor(Math.random() * 16)];
+      }
+      window.localStorage.setItem(REFCODE_KEY, code);
+      return code;
+    } catch (e) { return ''; }
+  }
+
+  /* Where this visit is coming from — used as the `platform` field on every
+     placement report, so the public /stats mix is real rather than guessed. */
+  function currentPlatform() {
+    if (typeof window === 'undefined') return 'web';
+    try {
+      var nav = window.navigator || {};
+      if (nav.standalone === true) return 'pwa';
+      if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) return 'pwa';
+      var ua = nav.userAgent || '';
+      if (/iphone|ipad|ipod/i.test(ua)) return 'ios';
+      if (/android/i.test(ua)) return 'android';
+      if (/macintosh|mac os x/i.test(ua)) return 'web-mac';
+      if (/windows/i.test(ua)) return 'web-win';
+      if (/linux/i.test(ua)) return 'web-linux';
+    } catch (e) { /* fall through */ }
+    return 'web';
+  }
+
+  /* Attributed link: `ref` closes the loop, `utm_*` keeps the platform's own
+     analytics honest about where the click came from. */
+  function attributedUrl(code, platform, target) {
+    var base = target || 'https://freecoffee.tech/index.html';
+    var sep = base.indexOf('?') === -1 ? '?' : '&';
+    return base + sep +
+      'ref=' + encodeURIComponent(code || '') +
+      '&utm_source=' + encodeURIComponent(platform || 'share') +
+      '&utm_medium=share&utm_campaign=flywheel';
+  }
+
+  function defaultShareTarget() {
+    if (typeof window !== 'undefined' && window.location) {
+      try { return new URL('index.html', window.location.href).toString(); }
+      catch (e) { /* fall through */ }
+    }
+    return 'https://freecoffee.tech/index.html';
+  }
+
+  /* One attributed artifact per platform the user is already in. `href` opens
+     it; `cmd` is a copyable command that carries no URL semantics of its own. */
+  function shareKit(code, target) {
+    var c = code || referralCode();
+    var t = target || defaultShareTarget();
+    var enc = encodeURIComponent;
+    var emailBody = SHARE_TEXT + '\n\n' + attributedUrl(c, 'email', t);
+    return {
+      code: c,
+      link: attributedUrl(c, 'share', t),
+      text: SHARE_TEXT,
+      platforms: [
+        { id: 'mac', label: 'Mac app (.dmg)', href: attributedUrl(c, 'mac', DMG_URL) },
+        { id: 'brew', label: 'Homebrew', cmd: BREW_CMD },
+        { id: 'pwa', label: 'Web app (PWA)', href: attributedUrl(c, 'pwa', t) },
+        { id: 'github', label: 'GitHub', href: attributedUrl(c, 'github', DIST_REPO) },
+        { id: 'agent', label: 'AI agent (MCP)', href: attributedUrl(c, 'agent', 'https://freecoffee.tech/agents.html') },
+        { id: 'x', label: 'X', href: 'https://twitter.com/intent/tweet?url=' + enc(attributedUrl(c, 'x', t)) + '&text=' + enc(SHARE_TEXT) },
+        { id: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/?text=' + enc(SHARE_TEXT + '\n\n' + attributedUrl(c, 'whatsapp', t)) },
+        { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/sharing/share-offsite/?url=' + enc(attributedUrl(c, 'linkedin', t)) },
+        { id: 'reddit', label: 'Reddit', href: 'https://www.reddit.com/submit?url=' + enc(attributedUrl(c, 'reddit', t)) + '&title=' + enc(HN_TEXT) },
+        { id: 'hn', label: 'Hacker News', href: 'https://news.ycombinator.com/submitlink?u=' + enc(attributedUrl(c, 'hn', t)) + '&t=' + enc(HN_TEXT) },
+        { id: 'email', label: 'Email', href: 'mailto:?subject=' + enc('Your menu bar could buy your coffee') + '&body=' + enc(emailBody) }
+      ]
+    };
+  }
+
+  /* ------------------------------------------------------------------
+     Capture — read ?ref / ?utm_source on arrival, on ANY page.
+
+     The capture is stored locally first (so it survives a reload and so every
+     page works with no backend configured), then claimed server-side when a
+     backend URL is set. The claim is idempotent: the server keeps the FIRST
+     code a device ever claimed, so a later link can never steal a referral.
+
+     Returns the capture ({code, platform, at}) or null when the visit carried
+     no usable ref. Never throws, never blocks the page.
+     ------------------------------------------------------------------ */
+  function captureInboundRef() {
+    var code = '', platform = '';
+    try {
+      if (typeof window === 'undefined' || !window.location) return null;
+      var qs = new URLSearchParams(window.location.search);
+      code = (qs.get('ref') || '').replace(/^\s+|\s+$/g, '').toLowerCase();
+      platform = (qs.get('utm_source') || '').replace(/^\s+|\s+$/g, '').toLowerCase();
+    } catch (e) { return null; }
+    if (!REF_CODE_RE.test(code)) return null;          // nothing to claim
+    if (code === referralCode()) return null;          // the user's own link
+
+    var capture = { code: code, platform: platform, at: Date.now() };
+    try {
+      if (window.localStorage) window.localStorage.setItem(REFCAPTURE_KEY, JSON.stringify(capture));
+    } catch (e) { /* storage blocked — the claim below still runs */ }
+
+    var base = backendBase();
+    var dev = deviceId();
+    if (!base || !dev) return capture;                 // kept locally, unclaimed
+
+    try {
+      fetch(base + '/referral', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ deviceId: dev, code: code, action: 'claim' })
+      }).then(function (res) {
+        return (res && res.ok) ? res.json() : null;
+      }).then(function (d) {
+        if (!d || !d.claimed) return;
+        try {
+          if (window.localStorage) {
+            window.localStorage.setItem(REFCAPTURE_KEY, JSON.stringify({
+              code: code, platform: platform, at: capture.at, claimed: true
+            }));
+          }
+        } catch (e) { /* non-fatal */ }
+      }).catch(function () { /* best-effort — the capture stays local */ });
+    } catch (e) { /* best-effort */ }
+
+    return capture;
+  }
+
+  /* The last capture this browser saw (claimed or not) — for the flywheel page. */
+  function inboundRef() {
+    if (typeof window === 'undefined' || !window.localStorage) return null;
+    try {
+      var raw = window.localStorage.getItem(REFCAPTURE_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      return (parsed && REF_CODE_RE.test(String(parsed.code || ''))) ? parsed : null;
+    } catch (e) { return null; }
+  }
+
+  /* ANY page is a capture surface, not just the landing page: a share link can
+     point anywhere. This runs on load but does nothing at all unless the URL
+     actually carries a `ref` — and it never claims anything unless a backend
+     URL has been configured (Profile → BACKEND API URL), so a normal visit
+     still makes zero network calls. */
+  captureInboundRef();
+
+  /* Owner side: register the user's own code so their links can be claimed.
+     Called only by the pages that show the link (flywheel, referrals) — a user
+     who never shares therefore burns no request. */
+  function registerReferralCode() {
+    var base = backendBase();
+    var dev = deviceId();
+    var code = referralCode();
+    if (!base || !dev || !code) return null;
+    try {
+      return fetch(base + '/referral', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ deviceId: dev, code: code, action: 'register' })
+      }).then(function (res) {
+        return (res && res.ok) ? res.json() : null;
+      }).catch(function () { return null; });
+    } catch (e) { return null; }
+  }
+
+  /* The referrer's own aggregate view (anonymous 'referee N' rows, no device
+     ids) — or null when there is no backend to ask. */
+  function fetchReferrals(code) {
+    var base = backendBase();
+    var c = code || referralCode();
+    if (!base || !c) return Promise.resolve(null);
+    try {
+      return fetch(base + '/referrals/' + encodeURIComponent(c))
+        .then(function (res) { return (res && res.ok) ? res.json() : null; })
+        .catch(function () { return null; });
+    } catch (e) { return Promise.resolve(null); }
+  }
+
+  /* ------------------------------------------------------------------
      PWA install UX (index.html hero + dashboard header). The #installBtn
      markup is hidden by default; it appears when beforeinstallprompt
      fires (captured + preventDefault'd), prompt() runs on click, and
@@ -973,11 +1195,20 @@
     pickAd: pickAd,
     deviceId: deviceId,
     backendBase: backendBase,
+    /* flywheel — capture on any page, share from the flywheel page */
+    referralCode: referralCode,
+    currentPlatform: currentPlatform,
+    attributedUrl: attributedUrl,
+    shareKit: shareKit,
+    captureInboundRef: captureInboundRef,
+    inboundRef: inboundRef,
+    registerReferralCode: registerReferralCode,
+    fetchReferrals: fetchReferrals,
     cups: cups,
     initMenuBarDemo: initMenuBarDemo,
     initInstallUX: initInstallUX,
     fmtTime: fmtTime,
     fmtDay: fmtDay,
-    version: '2.1.0-demo'
+    version: '2.2.0-demo'
   };
 });

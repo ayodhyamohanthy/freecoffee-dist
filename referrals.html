@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Referrals — FreeCoffee</title>
 <meta name="description" content="FreeCoffee referral program — 10% of referee base earnings for 12 months, gated on 60 verified minutes. Demo, simulated data.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeCoffee">
+<meta property="og:title" content="Referrals — FreeCoffee">
+<meta property="og:description" content="Earn 10% of referee base earnings for 12 months, gated on 60 verified minutes.">
+<meta property="og:url" content="https://freecoffee.tech/referrals.html">
+<meta property="og:image" content="https://freecoffee.tech/assets/icons/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Referrals — FreeCoffee">
+<meta name="twitter:description" content="Earn 10% of referee base earnings for 12 months, gated on 60 verified minutes.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F6F3">
@@ -12,7 +21,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="assets/css/styles.css?v=123">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002004">
 </head>
 <body data-page="referrals" class="theme-light">
 
@@ -45,6 +54,10 @@
       <a class="side-item active" href="referrals.html" aria-current="page">
         <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 3.8a3.2 3.2 0 0 1 0 8.4"/><path d="M17.6 15.4c1.9.8 2.9 2.4 2.9 4.6"/></svg>
         Referrals
+      </a>
+      <a class="side-item" href="flywheel.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.2 12a8.2 8.2 0 1 1-2.4-5.8"/><path d="M20.4 3.6v4.2h-4.2"/><path d="M12 8.4V12l3 1.8"/></svg>
+        Flywheel <span class="pill pill-ok" style="margin-left:6px">share kit</span>
       </a>
       <p class="side-label">Advertise</p>
       <a class="side-item" href="campaigns.html">
@@ -121,9 +134,24 @@
                    value="https://freecoffee.local/r/demo-user" aria-label="Referral URL">
             <button type="button" class="btn btn-primary" id="copyLinkBtn">Copy</button>
           </div>
-          <p class="footnote" style="margin-top:12px">Your referees so far: <strong>astra.dev</strong> (verified,
-            74 minutes) and <strong>quill@mac</strong> (41 of 60 gate minutes). Both accrue daily against the
-            seeded ledger — see the table below.</p>
+          <div class="share-row" style="margin-top:10px">
+            <a class="btn btn-ghost btn-sm" id="shareXBtn" href="https://twitter.com/intent/tweet" rel="noopener">X</a>
+            <a class="btn btn-ghost btn-sm" id="shareWaBtn" href="https://wa.me/" rel="noopener">WhatsApp</a>
+            <a class="btn btn-ghost btn-sm" id="shareLiBtn" href="https://www.linkedin.com/sharing/share-offsite/" rel="noopener">LinkedIn</a>
+            <button type="button" class="btn btn-ghost btn-sm" id="shareNativeBtn" hidden>Share…</button>
+          </div>
+          <p class="footnote" id="refRealNote" hidden style="margin-top:12px"></p>
+          <p class="footnote" style="margin-top:12px">Link mechanics: the code is generated in your
+            browser and is <strong>not</strong> your device id — the device id is the only identifier
+            the platform holds, so a share link must never carry it. Anyone arriving through this link
+            is bound to you server-side, and their 10% is <strong>held until they log 60 verified
+            minutes inside 30 days</strong>. Release, term and voiding are computed in
+            <code>backend/src/worker.js</code> — not here. Every platform artifact for this same code
+            lives on the <a href="flywheel.html">flywheel</a> page.</p>
+          <p class="footnote" style="margin-top:12px">Demo referees below (seeded ledger):
+            <strong>astra.dev</strong> (verified, 74 minutes) and <strong>quill@mac</strong> (41 of 60
+            gate minutes). The real numbers live in the line above, and they only appear once a
+            backend URL is configured.</p>
         </section>
 
         <!-- ============ REWARDS (1/3) ============ -->
@@ -200,7 +228,7 @@
 
 <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
 
-<script src="assets/js/demo.js?v=123"></script>
+<script src="assets/js/demo.js?v=1002004"></script>
 <script>
 /* Referrals — verify the displayed stats against the seeded ledger. */
 (function () {
@@ -241,6 +269,65 @@
   }
 
   function init() {
+    var D = window.FreeCoffeeDemo;
+
+    /* The real, attributed link for this browser's own code. The seeded demo
+       numbers further down stay seeded — this only changes WHERE the link
+       points. Real referee numbers appear in their own line, and only when a
+       backend URL is configured (nothing is sent anywhere before that). */
+    var kit = (D && typeof D.shareKit === 'function') ? D.shareKit() : null;
+    if (kit && kit.code) $('referralLink').value = kit.link;
+
+    /* Share surfaces — prefilled composers from the shared kit (same URLs
+       the flywheel page uses), plus the native sheet where supported. */
+    (function wireShare() {
+      if (!kit || !kit.platforms) return;
+      function href(id) {
+        for (var i = 0; i < kit.platforms.length; i++) {
+          if (kit.platforms[i].id === id) return kit.platforms[i].href;
+        }
+        return null;
+      }
+      var x = href('x'), wa = href('whatsapp'), li = href('linkedin');
+      if (x && $('shareXBtn')) $('shareXBtn').href = x;
+      if (wa && $('shareWaBtn')) $('shareWaBtn').href = wa;
+      if (li && $('shareLiBtn')) $('shareLiBtn').href = li;
+      var native = $('shareNativeBtn');
+      if (native && navigator.share) {
+        native.hidden = false;
+        native.addEventListener('click', function () {
+          navigator.share({ title: 'FreeCoffee', text: kit.text, url: kit.link })
+            .catch(function () { /* dismissed — non-fatal */ });
+        });
+      }
+    })();
+
+    function money(n) {
+      var v = Number(n) || 0;
+      return '$' + (Math.round(v * 100) / 100).toFixed(2);
+    }
+
+    function loadReal() {
+      var q = D.fetchReferrals(kit.code);
+      if (!q || typeof q.then !== 'function') return;
+      q.then(function (d) {
+        if (!d || !d.totals) return;
+        var note = $('refRealNote');
+        note.textContent = 'REAL (backend) for code "' + kit.code + '": ' +
+          d.totals.referees + ' referee' + (d.totals.referees === 1 ? '' : 's') + ' · ' +
+          d.totals.gated + ' past the 60-minute gate · ' + d.totals.minutes +
+          ' verified minutes · released ' + money(d.totals.accrued) +
+          ' · still gated ' + money(d.totals.held) + ' (held credit is never paid early).';
+        note.hidden = false;
+      });
+    }
+
+    if (kit && kit.code && D.backendBase()) {
+      var reg = D.registerReferralCode();
+      if (reg && typeof reg.then === 'function') reg.then(function () { loadReal(); });
+      loadReal();
+    }
+
     $('copyLinkBtn').addEventListener('click', function () {
       copyText($('referralLink').value, 'Referral link copied to the clipboard.');
     });

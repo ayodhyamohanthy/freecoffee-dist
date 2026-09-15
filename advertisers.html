@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Advertise — FreeCoffee</title>
 <meta name="description" content="Put your brand in the menu bar — minute-long verified placements on real Macs. Self-serve campaign feeds over HTTPS, auction CPM, $15 minimum campaign spend. Demo, simulated data.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeCoffee">
+<meta property="og:title" content="Advertise — FreeCoffee">
+<meta property="og:description" content="Put your brand in the menu bar: auction CPM, $15 minimum, human review.">
+<meta property="og:url" content="https://freecoffee.tech/advertisers.html">
+<meta property="og:image" content="https://freecoffee.tech/assets/icons/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Advertise — FreeCoffee">
+<meta name="twitter:description" content="Put your brand in the menu bar: auction CPM, $15 minimum, human review.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F6F3">
@@ -12,7 +21,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="assets/css/styles.css?v=123">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002004">
 </head>
 <body data-page="advertisers" class="theme-light">
 
@@ -45,6 +54,10 @@
       <a class="side-item" href="referrals.html">
         <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 3.8a3.2 3.2 0 0 1 0 8.4"/><path d="M17.6 15.4c1.9.8 2.9 2.4 2.9 4.6"/></svg>
         Referrals
+      </a>
+      <a class="side-item" href="flywheel.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.2 12a8.2 8.2 0 1 1-2.4-5.8"/><path d="M20.4 3.6v4.2h-4.2"/><path d="M12 8.4V12l3 1.8"/></svg>
+        Flywheel
       </a>
       <p class="side-label">Advertise</p>
       <a class="side-item" href="campaigns.html">
@@ -184,6 +197,48 @@
             by <code>id</code>, and capped at 20 campaigns. The same contract is implemented in the web app
             (<code>assets/js/demo.js → fetchLiveCampaigns</code>) and the Mac menu-bar app
             (<code>config.json → adFeedURL</code>).</p>
+        </div>
+      </section>
+
+      <!-- ============ SUBMIT A CAMPAIGN (open auction entry) ============ -->
+      <section aria-labelledby="submit-h" style="margin:34px 0 10px">
+        <h2 id="submit-h" style="font-size:1.3rem">Submit a campaign — open auction</h2>
+        <p class="section-sub" style="margin-bottom:12px">Anyone can bid for a slot: one campaign per
+          submission, highest CPM wins the minute, nothing serves without human review (≤ 48 h).
+          Minimum bid $1 CPM · https destination required · 5 submissions/day per network.
+          No bids at all? The apps show their fictional demo sponsors — never an empty bar.</p>
+        <div class="card">
+          <form id="submitForm" novalidate>
+            <div class="field">
+              <label class="field-label" for="subId">Campaign ID</label>
+              <input class="input" type="text" id="subId" name="subId" maxlength="40"
+                     placeholder="e.g. acme-launch-01" aria-describedby="subIdHint">
+              <p class="footnote" id="subIdHint" style="margin-top:6px">Unique, max 40 chars. Leave blank
+                for an auto-generated one.</p>
+            </div>
+            <div class="field">
+              <label class="field-label" for="subSponsor">Brand name (required)</label>
+              <input class="input" type="text" id="subSponsor" name="subSponsor" maxlength="40"
+                     placeholder="Acme Coffee Co." required>
+            </div>
+            <div class="field">
+              <label class="field-label" for="subTagline">Tagline</label>
+              <input class="input" type="text" id="subTagline" name="subTagline" maxlength="90"
+                     placeholder="Single-origin beans — 20% off first bag">
+            </div>
+            <div class="field">
+              <label class="field-label" for="subClickUrl">Destination URL — https only (required)</label>
+              <input class="input" type="url" id="subClickUrl" name="subClickUrl" inputmode="url"
+                     placeholder="https://advertiser.example/offer?utm_source=freecoffee" required>
+            </div>
+            <div class="field">
+              <label class="field-label" for="subCpm">Bid — CPM in USD (required, min $1)</label>
+              <input class="input" type="number" id="subCpm" name="subCpm" inputmode="decimal"
+                     min="1" max="100" step="0.5" placeholder="6.0" required>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Submit for review →</button>
+            <p class="footnote" id="submitNote" role="status" style="margin-top:12px"></p>
+          </form>
         </div>
       </section>
 
@@ -377,7 +432,7 @@
 
 <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
 
-<script src="assets/js/demo.js?v=123"></script>
+<script src="assets/js/demo.js?v=1002004"></script>
 <script>
 /* Advertisers page — copy the feed spec (same clipboard pattern as referrals). */
 (function () {
@@ -499,6 +554,74 @@
   } else {
     init();
   }
+})();
+</script>
+<script>
+/* Open-auction submit — POSTs one campaign to the production backend's
+   public /submit (no token). Server enforces: id+sponsor, https
+   destination, $1 CPM floor, no duplicate ids, 5/day per IP, queue cap.
+   Approval is human (≤48 h); the note below reports the outcome honestly. */
+(function () {
+  'use strict';
+  var BACKEND = 'https://freecoffee-backend.ayodhya-711.workers.dev';
+  function $(id) { return document.getElementById(id); }
+  var form = $('submitForm');
+  if (!form || typeof fetch !== 'function') return;
+
+  function note(msg, ok) {
+    var el = $('submitNote');
+    if (el) {
+      el.textContent = msg;
+      el.style.color = ok ? 'var(--text)' : '';
+    }
+  }
+
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var id = String(($('subId') && $('subId').value) || '').replace(/^\s+|\s+$/g, '').slice(0, 40);
+    if (!id) {
+      id = 'adv-' + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36);
+    }
+    var sponsor = String(($('subSponsor') && $('subSponsor').value) || '').replace(/^\s+|\s+$/g, '').slice(0, 40);
+    var tagline = String(($('subTagline') && $('subTagline').value) || '').replace(/^\s+|\s+$/g, '').slice(0, 90);
+    var clickUrl = String(($('subClickUrl') && $('subClickUrl').value) || '').replace(/^\s+|\s+$/g, '');
+    var cpm = Number(($('subCpm') && $('subCpm').value));
+    if (!sponsor) { note('Brand name is required.', false); return; }
+    if (!/^https:\/\//i.test(clickUrl)) { note('Destination must be an https:// URL.', false); return; }
+    if (!isFinite(cpm) || cpm < 1 || cpm > 100) { note('Bid must be a number between $1 and $100 CPM.', false); return; }
+    var btn = $('submitBtn');
+    if (btn) btn.disabled = true;
+    note('Submitting for human review…', true);
+
+    var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var timer = setTimeout(function () {
+      if (ctrl) { try { ctrl.abort(); } catch (e) { /* noop */ } }
+    }, 15000);
+    var opts = { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id, sponsor: sponsor, tagline: tagline, clickUrl: clickUrl, cpm: cpm }) };
+    if (ctrl) opts.signal = ctrl.signal;
+    fetch(BACKEND + '/submit', opts).then(function (res) {
+      clearTimeout(timer);
+      return res.json().then(function (d) { return { status: res.status, body: d }; });
+    }).then(function (out) {
+      if (btn) btn.disabled = false;
+      var b = out.body || {};
+      if (out.status === 200 && b.ok) {
+        note('Received as "' + b.id + '" — pending human review (≤ 48 h). Watch the live feed; nothing serves until approved.', true);
+        form.reset();
+      } else if (out.status === 409) {
+        note('Not accepted: ' + (b.error || 'duplicate id') + ' — change the Campaign ID and resubmit.', false);
+      } else if (out.status === 429) {
+        note('Not accepted: ' + (b.error || 'limit reached') + '.', false);
+      } else {
+        note('Not accepted: ' + (b.error || ('HTTP ' + out.status)) + '.', false);
+      }
+    }).catch(function () {
+      clearTimeout(timer);
+      if (btn) btn.disabled = false;
+      note('Backend unreachable — check your connection or try again later. Nothing was submitted.', false);
+    });
+  });
 })();
 </script>
 <script>

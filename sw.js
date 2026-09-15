@@ -17,13 +17,16 @@
    Version bump CACHE on any content change — activate() deletes old caches.
    Bump ASSET_V in lockstep with the ?v= in every page's asset URLs, or the
    precache stores URLs nothing ever requests and an offline first load gets
-   no CSS/JS at all. test.sh check 7 guards this pairing.
+   no CSS/JS at all. test.sh check 7 guards this pairing. ASSET_V is an
+   integer compared against the DMG version as major*1e6+minor*1e3+patch
+   (build.sh computes it; 1.2.3 → 1002003): manual bumps use any larger
+   integer, test.sh check 8 guards the floor.
    ========================================================================== */
 /* eslint-disable no-restricted-globals */
 'use strict';
 
-var ASSET_V = '123';                  // must match ?v= in the HTML asset URLs
-var CACHE = 'freecoffee-v123';
+var ASSET_V = '1002004';                  // must match ?v= in the HTML asset URLs
+var CACHE = 'freecoffee-v1002004';
 
 var PRECACHE = [
   './',
@@ -36,6 +39,7 @@ var PRECACHE = [
   './campaigns.html',
   './profile.html',
   './referrals.html',
+  './flywheel.html',
   './advertisers.html',
   './app/Info-howto.md',
   './manifest.webmanifest',

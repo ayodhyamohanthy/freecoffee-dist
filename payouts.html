@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Payouts — FreeCoffee</title>
 <meta name="description" content="FreeCoffee payouts — choose Stripe or Whop as your payout rail, check your balance, and track withdrawals. Demo: rail connections are simulated until the platform backend is live.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeCoffee">
+<meta property="og:title" content="Payouts — FreeCoffee">
+<meta property="og:description" content="Choose Stripe or Whop, check your balance, track withdrawals. Demo.">
+<meta property="og:url" content="https://freecoffee.tech/payouts.html">
+<meta property="og:image" content="https://freecoffee.tech/assets/icons/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Payouts — FreeCoffee">
+<meta name="twitter:description" content="Choose Stripe or Whop, check your balance, track withdrawals. Demo.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F6F3">
@@ -12,7 +21,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="assets/css/styles.css?v=123">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002004">
 </head>
 <body data-page="payouts" class="theme-light">
 
@@ -45,6 +54,10 @@
       <a class="side-item" href="referrals.html">
         <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 3.8a3.2 3.2 0 0 1 0 8.4"/><path d="M17.6 15.4c1.9.8 2.9 2.4 2.9 4.6"/></svg>
         Referrals
+      </a>
+      <a class="side-item" href="flywheel.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.2 12a8.2 8.2 0 1 1-2.4-5.8"/><path d="M20.4 3.6v4.2h-4.2"/><path d="M12 8.4V12l3 1.8"/></svg>
+        Flywheel
       </a>
       <p class="side-label">Advertise</p>
       <a class="side-item" href="campaigns.html">
@@ -217,7 +230,7 @@
 
 <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
 
-<script src="assets/js/demo.js?v=123"></script>
+<script src="assets/js/demo.js?v=1002004"></script>
 <script>
 /* Payouts page — rail connection state + balance + withdrawal history.
    All state in freecoffee:v1 (the same store dashboard.js owns):
@@ -242,7 +255,10 @@
   }
 
   function $(id) { return document.getElementById(id); }
-  function money(n) { return '$' + Number(n).toFixed(2); }
+  function money(n) {
+    var v = Number(n);
+    return '$' + (isFinite(v) ? v : 0).toFixed(2);   // corrupted rows can never render $NaN
+  }
 
   function toast(msg) {
     var region = $('toastRegion');

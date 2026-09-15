@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agents — FreeCoffee</title>
 <meta name="description" content="FreeCoffee ships an MCP-compatible HTTP API — let your AI agent create campaigns, read performance, and fund the coffee money. Demo.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeCoffee">
+<meta property="og:title" content="Agents — FreeCoffee">
+<meta property="og:description" content="Drive FreeCoffee from any MCP-capable AI agent: campaigns, earnings, delivery.">
+<meta property="og:url" content="https://freecoffee.tech/agents.html">
+<meta property="og:image" content="https://freecoffee.tech/assets/icons/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agents — FreeCoffee">
+<meta name="twitter:description" content="Drive FreeCoffee from any MCP-capable AI agent: campaigns, earnings, delivery.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F6F3">
@@ -12,7 +21,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="assets/css/styles.css?v=123">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002004">
 </head>
 <body data-page="agents" class="theme-light">
 
@@ -45,6 +54,10 @@
       <a class="side-item" href="referrals.html">
         <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 3.8a3.2 3.2 0 0 1 0 8.4"/><path d="M17.6 15.4c1.9.8 2.9 2.4 2.9 4.6"/></svg>
         Referrals
+      </a>
+      <a class="side-item" href="flywheel.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.2 12a8.2 8.2 0 1 1-2.4-5.8"/><path d="M20.4 3.6v4.2h-4.2"/><path d="M12 8.4V12l3 1.8"/></svg>
+        Flywheel
       </a>
       <p class="side-label">Advertise</p>
       <a class="side-item" href="campaigns.html">
@@ -118,8 +131,7 @@
           <p class="section-sub" style="margin-bottom:10px">Publish a validated campaign array to the
             live ad feed. Same feed contract the web app speaks: https-only click URLs, cpm clamped
             0–100, deduped by <code>id</code>, capped at 20 campaigns.</p>
-          <p><span class="agent-endpoint">POST /admin/feed</span><span class="agent-endpoint">GET /feed.json</span></p>
-          <p class="footnote" style="margin-bottom:0">Admin routes require a bearer token
+                    <p><span class="agent-endpoint">POST /admin/feed</span><span class="agent-endpoint">GET /feed.json</span></p>          <p class="footnote" style="margin-bottom:0">Admin routes require a bearer token
             (<code>Authorization: Bearer …</code>) — set it as an encrypted Worker secret, never in
             the agent's prompt.</p>
         </section>
@@ -128,7 +140,7 @@
           <h2 style="font-size:1.05rem">Read performance</h2>
           <p class="section-sub" style="margin-bottom:10px">Every amount is computed server-side from
             the served feed — the agent (and everyone else) sees the same numbers the ledger keeps.</p>
-          <p><span class="agent-endpoint">GET /earnings/{deviceId}</span><span class="agent-endpoint">GET /health</span></p>
+          <p><span class="agent-endpoint">GET /earnings/{deviceId}</span><span class="agent-endpoint">GET /stats</span><span class="agent-endpoint">GET /health</span></p>
           <p class="footnote" style="margin-bottom:0">The deviceId is the random UUID this browser
             already uses — no account, no email, no PII. See <a href="profile.html#connectedMac">Profile › Connected Mac</a> to
             find yours.</p>
@@ -158,6 +170,23 @@
   "name": "freecoffee",
   "description": "Menu-bar advertising on FreeCoffee — create campaigns, read earnings.",
   "tools": [
+    {
+      "name": "freecoffee_submit_campaign",
+      "description": "Submit ONE campaign to the open auction (no token). Lands in the human-review queue; serves only after approval. Highest CPM wins the minute.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id":       { "type": "string", "maxLength": 40 },
+          "sponsor":  { "type": "string", "maxLength": 40 },
+          "tagline":  { "type": "string", "maxLength": 90 },
+          "clickUrl": { "type": "string", "pattern": "^https://" },
+          "cpm":      { "type": "number", "minimum": 1, "maximum": 100 },
+          "logoText": { "type": "string", "maxLength": 2 },
+          "accent":   { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }
+        },
+        "required": ["id", "sponsor", "clickUrl", "cpm"]
+      }
+    },
     {
       "name": "freecoffee_publish_feed",
       "description": "Replace the current ad feed with a validated campaign array (max 20).",
@@ -194,6 +223,11 @@
         },
         "required": ["deviceId"]
       }
+    },
+    {
+      "name": "freecoffee_delivery_stats",
+      "description": "Public aggregate delivery report: per-campaign verified minutes, reported clicks, user-share spend, network totals. No token, no device data.",
+      "inputSchema": { "type": "object", "properties": {} }
     },
     {
       "name": "freecoffee_health",
@@ -262,7 +296,7 @@
 
 <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
 
-<script src="assets/js/demo.js?v=123"></script>
+<script src="assets/js/demo.js?v=1002004"></script>
 <script>
 /* Agents page — Copy buttons (same pattern as referrals.html). */
 (function () {

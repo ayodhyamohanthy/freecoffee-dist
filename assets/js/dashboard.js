@@ -92,7 +92,10 @@
 
   function $(id) { return document.getElementById(id); }
 
-  function money(n) { return '$' + Number(n).toFixed(2); }
+  function money(n) {
+    var v = Number(n);
+    return '$' + (isFinite(v) ? v : 0).toFixed(2);   // corrupted rows can never render $NaN
+  }
 
   function fmtClock(ts) {
     var d = new Date(ts);
@@ -663,7 +666,12 @@
         backendFetch(base + '/track', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ deviceId: dev, type: 'impression', campaignId: trackedCampaignId, minutes: 1 })
+          body: JSON.stringify({
+            deviceId: dev, type: 'impression', campaignId: trackedCampaignId, minutes: 1,
+            /* which platform this placement happened on (mac | pwa | web-mac …) —
+               the public /stats mix is built from this field */
+            platform: (typeof D.currentPlatform === 'function') ? D.currentPlatform() : 'web'
+          })
         }).catch(function () { /* best-effort — silent */ });
       } catch (e) { /* best-effort — silent */ }
     }

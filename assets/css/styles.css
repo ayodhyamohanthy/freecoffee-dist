@@ -1441,3 +1441,46 @@ body.theme-light .codeblock { background: #FAFAF9; border-color: var(--line); }
   color: var(--text);
 }
 .code-block .copy-btn { position: absolute; top: 8px; right: 8px; }
+/* ---------- flywheel.html — the loop + the platform capture surfaces ---------- */
+.loop {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px; margin-top: 18px; counter-reset: loop;
+}
+.loop-step {
+  position: relative; padding: 14px 12px 12px;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--panel);
+}
+.loop-step::before {
+  counter-increment: loop; content: counter(loop);
+  display: inline-flex; width: 20px; height: 20px;
+  align-items: center; justify-content: center; border-radius: 999px;
+  background: var(--gold-dim); color: var(--gold-bright);
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700;
+  margin-bottom: 8px;
+}
+.loop-step h3 { margin: 0 0 4px; font-size: 0.86rem; }
+.loop-step p { margin: 0; font-size: 0.76rem; color: var(--text-dim); }
+.loop-back {
+  margin: 14px 0 0; font-size: 0.8rem; color: var(--text-faint);
+  border-left: 2px solid var(--gold-dim); padding-left: 10px;
+}
+.loop-back strong { color: var(--gold-bright); }
+
+.plat-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px; margin-top: 16px;
+}
+.plat-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.plat-head h3 { margin: 0; font-size: 1rem; }
+.plat-art { display: flex; gap: 8px; align-items: stretch; margin-top: 10px; flex-wrap: wrap; }
+.plat-art .input { flex: 1; min-width: 170px; font-family: var(--mono); font-size: 0.8rem; }
+.plat-art .code-block { flex: 1; min-width: 170px; margin-top: 0; }
+.plat-art .code-block pre { padding: 10px 12px; font-size: 0.78rem; }
+.plat-live { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px; }
+
+@media (max-width: 960px) {
+  .loop { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .plat-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) { .loop { grid-template-columns: 1fr; } }
