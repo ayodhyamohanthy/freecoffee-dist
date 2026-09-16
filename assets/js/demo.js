@@ -11,7 +11,7 @@
    epoch (ANCHOR_TS = 2026-09-06T00:00:00Z), never to Date.now() — so
    generateHistory(42) returns byte-identical JSON on every call.
 
-   Ledger unit: one row = one verified *flight* of minute-long menu-bar
+   Ledger unit: one row = one verified *flight* of minute-long Mac status area
    placements for a sponsor (10–25 impressions), settled at the winning
    CPM bid. cut = count × bid × 65% ÷ 1000. This keeps every number on
    the CPM scale used by the payout model ($6 CPM ⇒ $3.90 base per
@@ -576,7 +576,7 @@
   }
 
   /* ------------------------------------------------------------------
-     Browser-only: menu-bar cycler + live clock + balance ticker for the
+     Browser-only: Mac status area cycler + live clock + balance ticker for the
      landing hero, plus the popover web mock (totals + 7-day bars).
      Respects prefers-reduced-motion; pauses when document.hidden;
      freezes when the demo is paused.
@@ -796,7 +796,7 @@
           note.appendChild(dot);
           note.appendChild(document.createTextNode(' LIVE — ' + liveCampaigns.length +
             ' live campaign' + (liveCampaigns.length === 1 ? '' : 's') +
-            ' connected: this mock menu bar rotates your real feed.'));
+            ' connected: this mock Mac status area rotates your real feed.'));
         }
         var foot = demoBox ? demoBox.querySelector('.menubar-footnote') : null;
         if (foot) {
@@ -910,8 +910,8 @@
   var DIST_REPO = 'https://github.com/ayodhyamohanthy/freecoffee-dist';
   var DMG_URL = DIST_REPO + '/releases/latest/download/FreeCoffee.dmg';
   var BREW_CMD = 'brew install --cask freecoffee';
-  var SHARE_TEXT = 'FreeCoffee: advertisers bid for minute-long placements in the empty stretch of your Mac menu bar. You keep 65%, cash out at $2 — and the network is still empty (day zero), so early users shape the auction.';
-  var HN_TEXT = 'FreeCoffee – your Mac menu bar pays for the coffee';
+  var SHARE_TEXT = 'FreeCoffee: advertisers bid for minute-long placements in the empty stretch of your Mac status area. You keep 65%, cash out at a low threshold — and the network is still empty (day zero), so early users shape the auction.';
+  var HN_TEXT = 'FreeCoffee – your Mac status area pays for the coffee';
 
   /* The user's own share code: 8 hex chars, generated once and kept locally.
      Hex-only so it always satisfies the server's code rules. */
@@ -993,7 +993,7 @@
         { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/sharing/share-offsite/?url=' + enc(attributedUrl(c, 'linkedin', t)) },
         { id: 'reddit', label: 'Reddit', href: 'https://www.reddit.com/submit?url=' + enc(attributedUrl(c, 'reddit', t)) + '&title=' + enc(HN_TEXT) },
         { id: 'hn', label: 'Hacker News', href: 'https://news.ycombinator.com/submitlink?u=' + enc(attributedUrl(c, 'hn', t)) + '&t=' + enc(HN_TEXT) },
-        { id: 'email', label: 'Email', href: 'mailto:?subject=' + enc('Your menu bar could buy your coffee') + '&body=' + enc(emailBody) }
+        { id: 'email', label: 'Email', href: 'mailto:?subject=' + enc('Your Mac status area could buy your coffee') + '&body=' + enc(emailBody) }
       ]
     };
   }

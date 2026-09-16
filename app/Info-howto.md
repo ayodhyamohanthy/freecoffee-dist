@@ -1,4 +1,4 @@
-# FreeCoffee menu-bar app — install & run
+# FreeCoffee Mac status area app — install & run
 
 ## Install the .app (DMG)
 
@@ -10,7 +10,7 @@
    plain double-click the first time. If you've already tripped the "cannot be
    opened" dialog, clear it via System Settings → Privacy & Security → scroll to
    the Security section → **Open Anyway**.
-4. A "☕ FreeCoffee" status item appears at the top-right of your menu bar.
+4. A "☕ FreeCoffee" status item appears at the top-right of your Mac status area.
 
 **Honest note:** the signature is ad-hoc, so it is *not* notarized — there is no
 developer identity behind it. Gatekeeper will require right-click→Open (or the
@@ -26,7 +26,7 @@ in the repo; without them the build stays ad-hoc and step 6 says so.
 
 ## What it does
 
-The menu-bar chip itself is always an ad slot, never a dead end:
+The Mac status area chip itself is always an ad slot, never a dead end:
 
 - **No feed configured (demo):** the chip rotates fictional demo sponsors
   (same cast as the web demo), clearly marked simulated — display only.
@@ -46,7 +46,7 @@ The menu-bar chip itself is always an ad slot, never a dead end:
    - the caramel **"☕ 65% base share — always on"** boost line;
    - **Earnings · 7 days** inset bar chart — weekday letters M T W T F S S with value labels,
      drawn from the app's persisted per-day history;
-   - the gray **"Tip: Hold ⌘ and drag menu-bar items to rearrange them."** line;
+   - the gray **"Tip: Hold ⌘ and drag Mac status area items to rearrange them."** line;
     - footer buttons: **Settings** (opens the demo dashboard), **Snooze** (pause 30 min with a
       live countdown on the button — 2 hours and 6 hours are in the right-click menu), **Disable** (persisted earning toggle — the button becomes
      **Enable**), **Account** (opens the demo profile page).
@@ -86,7 +86,7 @@ The app keeps itself current, with zero telemetry:
 
 Run from the bundle, the app has a menu toggle:
 
-> menu bar → right-click ☕ FreeCoffee → **Launch at Login** (checkmark = on)
+> Mac status area → right-click ☕ FreeCoffee → **Launch at Login** (checkmark = on)
 
 It uses SMAppService (macOS 13+). First time you switch it on, macOS may ask you
 to approve the entry — System Settings → General → Login Items & Extensions, where
@@ -131,7 +131,7 @@ Behavior once configured:
   (https-only `clickUrl`, trimmed/capped strings, `cpm` clamped 0–100, deduped by `id`, cap 20), and
   the last-good list is cached to `campaigns-cache.json` next to `config.json` — so the chip still
   shows campaigns offline, and deleting the cache file resets it.
-- The menu-bar chip shows the current live sponsor; the popover header gains a
+- The Mac status area chip shows the current live sponsor; the popover header gains a
   **`LIVE · Sponsor — tagline`** line and the status line gains a **LIVE** marker. Campaigns rotate
   every 60 s.
 - The right-click menu gains **Sponsor: … — LIVE** (opens the campaign's https `clickUrl` — https

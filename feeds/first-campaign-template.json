@@ -2,7 +2,7 @@
   {
     "id": "camp_001",
     "sponsor": "Your Brand",
-    "tagline": "One line — what the user sees on the menu-bar slide",
+    "tagline": "One line — what the user sees on the Mac status area slide",
     "clickUrl": "https://your-https-destination.example.com/",
     "cpm": 2.0,
     "logoText": "YB",

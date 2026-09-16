@@ -14,7 +14,7 @@
   --bg-raised: #191411;
   --panel: #1A140F;          /* sidebar / raised panels */
   --panel-2: #221A13;        /* cards */
-  --pop: #241C15;            /* menu-bar popover panel */
+  --pop: #241C15;            /* Mac status area popover panel */
   --line: #38291D;           /* borders */
   --line-strong: #4A3626;
   --input-bg: #0F0B08;       /* inset inputs */
@@ -237,7 +237,7 @@ code {
 .earn-panel .footnote { margin: 0; font-size: 0.74rem; }
 .earn-note { margin-top: 10px; }
 
-/* ---------- menu-bar demo ---------- */
+/* ---------- Mac status area demo ---------- */
 .menubar-demo {
   max-width: 620px; margin: 0 auto 8px;
   background: var(--panel-2); border: 1px solid var(--line);
@@ -294,7 +294,7 @@ code {
 }
 .menubar-footnote { text-align: center; font-size: 0.74rem; color: var(--text-faint); margin: 0; }
 
-/* ---------- menu-bar popover (web mock of the native NSPopover) ---------- */
+/* ---------- Mac status area popover (web mock of the native NSPopover) ---------- */
 .pop-panel {
   position: relative; width: 300px; margin: 14px 18px 2px auto;
   background: var(--pop); border: 1px solid var(--input-line);

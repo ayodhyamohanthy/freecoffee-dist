@@ -184,7 +184,7 @@
                      style="width:90px" placeholder="none" step="0.5" min="0" max="100"
                      aria-describedby="minCpmHint">
               <p class="footnote" id="minCpmHint" style="margin-top:6px">Only show campaigns paying at least this much
-                per 1,000 verified minutes. Campaigns below the floor are hidden everywhere (menu bar, dashboard rows,
+                per 1,000 verified minutes. Campaigns below the floor are hidden everywhere (Mac status area, dashboard rows,
                 banner). Highest CPM always wins the placement.</p>
             </div>
             <div class="field">
@@ -247,7 +247,7 @@
               public demo pages and report your (simulated) earnings.</p>
             <textarea class="promptbox" id="agentPrompt" readonly rows="8" aria-label="Agent setup prompt">You are helping me check my FreeCoffee demo earnings.
 
-FreeCoffee is a local demo — a static site served at http://127.0.0.1:8090 and a Mac menu-bar app that simulates menu-bar advertising earnings. All data is simulated; nothing is collected.
+FreeCoffee is a local demo — a static site served at http://127.0.0.1:8090 and a Mac status area app that simulates Mac status area advertising earnings. All data is simulated; nothing is collected.
 
 Do this:
 1. Open http://127.0.0.1:8090/dashboard.html ( Earn › Overview ).
@@ -434,7 +434,7 @@ Disclaimer: FreeCoffee demo — simulated data.</textarea>
     });
 
     $('unlinkMacBtn').addEventListener('click', function () {
-      var ok = window.confirm('Unlink this Mac from the FreeCoffee demo?\n\nThe menu-bar app will stop accruing simulated earnings until re-linked. (demo)');
+      var ok = window.confirm('Unlink this Mac from the FreeCoffee demo?\n\nThe Mac status area app will stop accruing simulated earnings until re-linked. (demo)');
       if (ok) toast('Mac unlinked (demo) — nothing was actually changed.');
       else toast('Unlink cancelled.');
     });

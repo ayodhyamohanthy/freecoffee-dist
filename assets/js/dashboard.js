@@ -788,7 +788,7 @@
       state.balanceOffset = Math.round((state.balanceOffset + 0.01) * 100) / 100;
       renderBalances();
     }, 12000); // demo cadence: a cent every 12 s so the dashboard feels live
-    // (the real menu-bar app earns at the documented $0.01/90 s while awake)
+    // (the real Mac status area app earns at the documented $0.01/90 s while awake)
   }
 
   function stopTicker() {
