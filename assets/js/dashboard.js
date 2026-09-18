@@ -157,7 +157,7 @@
       (state.paidOut.length ? money(paidOutTotal()) + ' paid out so far' : 'nothing paid out yet');
     $('statCups').textContent = '≈ ' + D.cups(t.lifetime + offset) + ' cups of coffee';
 
-    // Payout progress toward the $2.00 minimum.
+    // Payout progress toward the $10.00 minimum.
     var min = D.MODEL.PAYOUT_MINIMUM;
     var pct = Math.min(100, (avail / min) * 100);
     $('payoutProg').style.width = pct.toFixed(1) + '%';
@@ -765,7 +765,7 @@
     var t = computeTotals();
     var amount = Math.round((t.available - paidOutTotal() + (state.balanceOffset || 0)) * 100) / 100;
     if (!(amount >= D.MODEL.PAYOUT_MINIMUM)) {
-      toast('Need at least $2.00 available to pay out — you have ' + money(Math.max(0, amount)) + '.');
+      toast('Need at least $10.00 available to pay out — you have ' + money(Math.max(0, amount)) + '.');
       return;
     }
     state.paidOut.push({ ts: Date.now(), amount: amount });
