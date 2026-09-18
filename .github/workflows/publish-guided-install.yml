@@ -1,0 +1,38 @@
+name: Publish guided pilot install
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Write reviewed install assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s' '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' | base64 -d | gzip -d > 'install-guide.html'
+          printf '%s' 'H4sIAAAAAAAC/5VWbW/bNhD+rl9x1YKyLSIrVvOeukOappuxJQ5spytQdAUtUhERiWRJyomb5r/vKMmxYqQo5i+mpbuHz70959+exTMh4+82Dyx3EPFKgRaaZ1QUwcfT8WQ4Oh+Qfi/pbZPg/dkfXyd/Hic7uwOS7CR8lvb3+gcZYzvbM7p3sLU929ra30n5QX9vr7+/+/ogS5I0eb01S2nyup9mO32+RZODrf0022/QLsd/D8LcOW0P4/hKuLya9VJVxnShWL6gpcqpdPkizgznqcoyziMmrIsNLzi13MZM3chCURbPN+5auvfxB7Q+qa17rLwKg+OLiwGJj7UuREqdUNJ2TajWJPhnNP5rEG68KK8dLzVEDMKNu+nZxfvh+DCKXanvuxyEtI4WRe9T/QlfhsHZ6PJ8igAeJy5VJV0YpMhRVvrFS7iDnInKiQIYdzTNEbx2CCH6VgnMe/I2Znwey6oo4McPcKbiR2BKiEwGDWh4BPeBM1RDCwunn4ZTGJ5PYXo6PgswMHjzhpyPpsOTUxKs4gPK5lSmnGFdC+Wg5R4E01xYmFWiYIAHyqJcpWDFlURTKhlINPY54xGeqBHfOetB7WRTI7SDOTciE9yCy3mghfSObWEgzXl6bauyRsIM40WSFXwTUqW9i5LFAh4XAZwKHhVp0wNLhCzVHF2wL7xZwXvfKmqwL4TkkBlVohkG7xE8qudIXTBbaGqxQ5oQiMVwTEkLyISxLlIagW+okUJeQaYMQgh/g16Ayrq8ME0LzYHf0tQVi0MYAsbBEQLjCppkB4ZTBsRwXSx+fwsk+PwZa1b/DGEwANL1IfDli6/wHWgjpAMycUprn9lzhRyQTVsffESO8F7hoO9Lj9GXPpfRHNLKFNBpmOfPofN22Wk/NUgV477M8LjnloyiKgEy5tiXButZ0nQ0wcqoAlvEcCiFtchyjZsnFEVeM/CrUE398KiNcgrIoJ5wgg9cYecoJnhSldOVa5t7fWLxcasOYYCJr2jhZ9Pm1HdURAEV6GeeP4DeXAO5a4LZ6N8TnM66Ig1QXZIGvpGycK0iPv7wZNm+GG9JXZr34PRW89RhSjq+m3CFQ7JE7qakvGbCPIx5sCwKde34P8kdB21m1A2OT+R7qp6RqBYTrTy1NdUIJqPL8cnpoH28pml11LWONWZPxUnWJhBnoC3wcrA4YLTrndj2TxTVCoAcI8Y5imZknRGpa17MlOWDZHV9IBjHmXULX8oVBpt3zLc7bJO3z/tYTYsZjyQQG/87QQfqKsMHcawfyrqEbWaNMlQx8lRJLyVfVtAugQ5h5d4NEflY7GDPlOEqrApnoZ7yJb34REmHjjYeykyFcPLhXa1vk1wZ97HxnmAy5BXSbKTvq2D/H29Ys0ORNctwW2ptG7crL/QjHm48XNTkwgvmamn1GOpor+SymlHzqwzVzdBmJm6vxGQ9XAAPPLppoybNrQ+yEFrhnPqfT4R45jWl061hGxsOUuPh2b8iqDfl7jaQV3Vw6y9v93e/Nm9/EQl6CYdnLLc9bFEescarn+EfHySK/xOeVAP/AmjhK7bwjtbZHozrtQSIUq8UsKpZIu1ylBwzBGhhbgzej+opV9Jeb5reIxZMOJTKVfs3bIJbVAyDU2KeXn+tVcM1HD7gt6uZdVYZzJfdgioEXT8y8tvQB+JnvruBcZcqXF4t701A2XFdSL9R6ix4oWhWeH18J2SPBP8BN0tU6VwKAAA=' | base64 -d | gzip -d > 'freecoffee-install.sh'
+          chmod +x freecoffee-install.sh
+      - name: Validate install assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash -n freecoffee-install.sh
+          grep -Fq "not Apple-notarized" install-guide.html
+          grep -Fq "252ebc1719fdd54ba7904b0085ce917718639f22c230bca231cf51e0a2908cf8" install-guide.html
+          grep -Fq "Open Anyway" install-guide.html
+          test "$(grep -o 'class="shot"' install-guide.html | wc -l | tr -d ' ')" = 3
+          ! grep -qi "Homebrew" install-guide.html
+          grep -Fq 'xattr -dr com.apple.quarantine "$APP"' freecoffee-install.sh
+          ! grep -Fq "spctl --master-disable" freecoffee-install.sh
+      - name: Commit install assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add install-guide.html freecoffee-install.sh
+          git commit -m "Add honest guided pilot install"
+          git push origin HEAD:main
