@@ -1732,3 +1732,7 @@ body.theme-light .chart-area{fill:rgba(255,240,80,.12)}body.theme-light .chart-a
 body.theme-light .ledger-table th,body.theme-light .sim-results,body.theme-light .compare-table thead th,body.theme-light .lever-table thead th,body.theme-light .rail-table thead th{background:#0b0b0b}
 body.theme-light .status-pill.connected,body.theme-light .pill-ok{color:#fff;background:#111;border-color:#ddd}
 body.theme-light .status-pill.connected .status-dot{background:#fff050}
+body.theme-light .balcard-total{color:#fff!important}
+body.theme-light .dash-status{color:#000;background:#fff050;border-color:#fff050}
+body.theme-light .act-row{background:#f5f5f5;color:#000}body.theme-light .act-row .act-title{color:#000}body.theme-light .act-row .act-sub{color:#595959}
+body.theme-light .promo-banner .prog-fill{background:#fff050}
