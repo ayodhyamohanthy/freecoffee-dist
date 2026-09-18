@@ -1,0 +1,29 @@
+name: Finalize Promova design cache
+on:
+  push:
+    paths:
+      - '.github/workflows/promova-cache-bump.yml'
+permissions:
+  contents: write
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump shared asset version
+        shell: bash
+        run: |
+          set -euo pipefail
+          files=$(grep -rl 'styles.css?v=1002006' --include='*.html' .)
+          test -n "$files"
+          sed -i 's/styles.css?v=1002006/styles.css?v=1002007/g; s/assets\/js\/demo.js?v=1002006/assets\/js\/demo.js?v=1002007/g; s/assets\/js\/dashboard.js?v=1002006/assets\/js\/dashboard.js?v=1002007/g' $files
+          sed -i "s/var ASSET_V = '1002006'/var ASSET_V = '1002007'/; s/freecoffee-v1002006/freecoffee-v1002007/" sw.js
+          grep -q "var ASSET_V = '1002007'" sw.js
+      - name: Commit cache bump
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add '*.html' sw.js
+          git commit -m 'Bump Promova design assets' || exit 0
+          git push
