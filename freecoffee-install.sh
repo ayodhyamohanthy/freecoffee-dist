@@ -1,7 +1,7 @@
 #!/bin/zsh
 set -euo pipefail
 VERSION='1.2.4'
-DMG_SHA256='252ebc1719fdd54ba7904b0085ce917718639f22c230bca231cf51e0a2908cf8'
+DMG_SHA256='c85a07b444603a4a7851c1d0b0b6f94de28548c7037be4b8a77e89cf7fb820b7'
 DMG_URL="https://github.com/ayodhyamohanthy/freecoffee-dist/releases/download/v${VERSION}/FreeCoffee.dmg"
 APP='/Applications/FreeCoffee.app'
 WORK="$(mktemp -d "${TMPDIR:-/tmp}/freecoffee-install.XXXXXX")"
