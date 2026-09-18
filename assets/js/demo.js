@@ -69,7 +69,7 @@
     STREAK_BONUS_PER_STEP: 0.01,
     STREAK_CAP: 0.10,             // max +10%
     STREAK_MIN_MINUTES: 30,       // verified min/day to count as active
-    PAYOUT_MINIMUM: 2.0,          // $2 minimum
+    PAYOUT_MINIMUM: 10.0,         // $10 minimum
     PAYOUT_RAIL_HOURS: 24,        // standard rail
     CLAWBACK_DAYS: 90,            // fraud clawback window
     CUP_PRICE: CUP_PRICE,         // $5 per cup for the "≈ N cups" hint
