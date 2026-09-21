@@ -33,3 +33,11 @@ Midnight magazine with one yellow highlighter. The page is a near-black editoria
 - Use oversized editorial headings and generous black space.
 - Keep icons small and functional.
 - Product truth and accessibility beat visual mimicry. Error and success states may use text labels or standard semantic colors when needed for comprehension.
+
+## Notifications and alerts
+
+- Sponsorship never interrupts the user.
+- Queue payout-failure and consent-change alerts until a task boundary: app or window switch, task completion, idle, or explicit popover open.
+- Interrupt immediately only when waiting would cause harm.
+- Show queued alerts in the next user-opened FreeCoffee surface; keep the status-area sponsor placement passive.
+- Research basis: Adamczyk and Bailey, CHI 2004, https://www.interruptions.net/literature/Adamczyk-CHI04-p271-adamczyk.pdf
