@@ -1022,7 +1022,7 @@ input[type="range"]::-moz-range-thumb {
   .grid-3 { grid-template-columns: 1fr; }
   .earn-panel { grid-template-columns: 1fr; gap: 12px; }
   .balance-grid { grid-template-columns: repeat(2, 1fr); }
-  .dash-cols { grid-template-columns: 1fr; }
+  .dash-cols { grid-template-columns: 1fr !important; }
   .sim-grid { grid-template-columns: 1fr; gap: 20px; }
   .stat-grid { grid-template-columns: 1fr; }
   .prefs-row { grid-template-columns: 1fr; }
