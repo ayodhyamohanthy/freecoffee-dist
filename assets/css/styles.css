@@ -727,7 +727,8 @@ a.crumb:hover { color: var(--gold-bright); text-decoration: none; }
 
 /* layout */
 .dash-cols { display: grid; grid-template-columns: 1.9fr 1fr; gap: 16px; align-items: start; }
-.dash-main { display: grid; gap: 16px; }
+.dash-main { display: grid; gap: 16px; min-width: 0; }
+.dash-main > .card { min-width: 0; }
 .dash-side { display: grid; gap: 16px; }
 
 /* chart */
@@ -756,7 +757,7 @@ a.crumb:hover { color: var(--gold-bright); text-decoration: none; }
 
 /* ledger */
 .ledger-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.ledger-scroll { max-height: 420px; overflow-y: auto; margin-top: 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.ledger-scroll { max-height: 420px; overflow-y: auto; overflow-x: auto; margin-top: 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); }
 .ledger-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
 .ledger-table th {
   position: sticky; top: 0; background: var(--panel);
