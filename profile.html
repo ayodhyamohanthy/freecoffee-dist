@@ -187,6 +187,24 @@
                 per 1,000 verified minutes. Campaigns below the floor are hidden everywhere (Mac status area, dashboard rows,
                 banner). Highest CPM always wins the placement.</p>
             </div>
+            <div class="field" id="privacySettings">
+              <span class="field-label" id="privacyModeLabel">Ad privacy</span>
+              <p class="footnote" style="margin:6px 0 12px">Choose one clear mode. Personalization, when enabled, stays on this Mac.</p>
+              <div class="prefs-row" role="radiogroup" aria-labelledby="privacyModeLabel">
+                <label class="pref"><input type="radio" name="privacyMode" value="non-personalized" checked><span>Non-personalized<span class="pref-sub">Ads use campaign context, not local interests</span></span></label>
+                <label class="pref"><input type="radio" name="privacyMode" value="on-mac"><span>Personalized on this Mac<span class="pref-sub">Local signals shape ads; nothing leaves the device</span></span></label>
+                <label class="pref"><input type="radio" name="privacyMode" value="off"><span>Off<span class="pref-sub">Turn off sponsored placements</span></span></label>
+              </div>
+              <details id="privacyAdvanced" style="margin-top:12px">
+                <summary class="btn btn-ghost btn-sm">Advanced</summary>
+                <p class="footnote" style="margin:10px 0">Used only with “Personalized on this Mac”. These controls stay collapsed by default.</p>
+                <div class="prefs-row" role="group" aria-label="Advanced local personalization categories">
+                  <label class="pref"><input type="checkbox" id="privacyAppCategory" checked><span>App category<span class="pref-sub">Broad kind of app in use</span></span></label>
+                  <label class="pref"><input type="checkbox" id="privacyTimeContext" checked><span>Time context<span class="pref-sub">Time of day and weekday, processed locally</span></span></label>
+                  <label class="pref"><input type="checkbox" id="privacyAdHistory"><span>Ad history<span class="pref-sub">Recent sponsor views stored on this Mac</span></span></label>
+                </div>
+              </details>
+            </div>
             <div class="field">
               <span class="field-label" id="emailPrefsLabel">Email preferences</span>
               <div class="prefs-row" role="group" aria-labelledby="emailPrefsLabel">
@@ -340,6 +358,12 @@ Disclaimer: FreeCoffee demo — simulated data.</textarea>
     var minCpmNum = Number(p.minCpm);
     $('minCpm').value = (p.minCpm === 0 || p.minCpm === '0' ||
                          (isFinite(minCpmNum) && minCpmNum !== 0)) ? String(minCpmNum) : '';
+    var privacyMode = p.privacyMode || 'non-personalized';
+    var privacyChoice = document.querySelector('input[name="privacyMode"][value="' + privacyMode + '"]');
+    if (privacyChoice) privacyChoice.checked = true;
+    $('privacyAppCategory').checked = p.privacyAppCategory !== false;
+    $('privacyTimeContext').checked = p.privacyTimeContext !== false;
+    $('privacyAdHistory').checked = !!p.privacyAdHistory;
     $('prefWeekly').checked = p.prefWeekly !== false;
     $('prefPayout').checked = p.prefPayout !== false;
     $('prefProduct').checked = !!p.prefProduct;
@@ -373,6 +397,10 @@ Disclaimer: FreeCoffee demo — simulated data.</textarea>
         adFeedUrl: $('adFeedUrl').value.replace(/^\s+|\s+$/g, ''),
         backendUrl: backend,
         minCpm: minCpmVal,
+        privacyMode: (document.querySelector('input[name="privacyMode"]:checked') || {}).value || 'non-personalized',
+        privacyAppCategory: $('privacyAppCategory').checked,
+        privacyTimeContext: $('privacyTimeContext').checked,
+        privacyAdHistory: $('privacyAdHistory').checked,
         prefWeekly: $('prefWeekly').checked,
         prefPayout: $('prefPayout').checked,
         prefProduct: $('prefProduct').checked,
