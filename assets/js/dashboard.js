@@ -151,7 +151,14 @@
     var lifetimeCell = document.getElementById('statLifetimeCell');
     if (lifetimeCell) lifetimeCell.textContent = money(t.lifetime + offset);
     $('statAvailable').textContent = money(avail);
-    $('statPending').textContent = money(t.pending);
+    $('statPending').textContent = t.pending.toFixed(2) + ' credits';
+    var estimateLow = Math.max(0, Math.floor(t.pending * 0.98 * 100) / 100);
+    var estimateHigh = Math.max(estimateLow, t.pending);
+    var settlementTs = state.history.totals.anchorTs + D.MODEL.PAYOUT_RAIL_HOURS * 3600000;
+    var settlementDay = D.fmtDay(settlementTs);
+    $('pendingEstimate').textContent = 'Estimated to settle ' + estimateLow.toFixed(2) + '–' + estimateHigh.toFixed(2) + ' credits by ' + settlementDay + '.';
+    $('pendingEstimateWhy').textContent = 'Range: pending verification adjustments can reduce the total by up to 2%; timing assumes the 24-hour rail.';
+    $('pendingEstimateActual').textContent = 'Estimate vs actual: shown here after this pending window settles.';
     $('statWeek').textContent = money(t.week);
     $('statLifetimeFoot').textContent = t.rows + ' rows in ledger · ' +
       (state.paidOut.length ? money(paidOutTotal()) + ' paid out so far' : 'nothing paid out yet');
@@ -350,6 +357,14 @@
         : (row.type === 'referral' ? 'base ' + money(row.bid) : '—');
       tr.appendChild(tdBid);
 
+      var tdDerivation = document.createElement('td');
+      if (row.type === 'impression') tdDerivation.textContent = row.count + ' verified min × ' + money(row.bid) + ' CPM × 65% ÷ 1,000';
+      else if (row.type === 'click') tdDerivation.textContent = '1 verified click × ' + money(row.cut);
+      else if (row.type === 'referral') tdDerivation.textContent = money(row.bid) + ' referee base × 10%';
+      else if (row.type === 'streak') tdDerivation.textContent = 'eligible 5-day block base × 1%';
+      else tdDerivation.textContent = row.note || 'See policy';
+      tr.appendChild(tdDerivation);
+
       var tdCut = document.createElement('td');
       tdCut.className = 'num cut-col';
       var cutStrong = document.createElement('strong');
@@ -357,15 +372,23 @@
       tdCut.appendChild(cutStrong);
       tr.appendChild(tdCut);
 
-      var tdTier = document.createElement('td');
-      tdTier.textContent = 'T' + row.tier;
-      tr.appendChild(tdTier);
+      var settlesAt = row.ts + D.MODEL.PAYOUT_RAIL_HOURS * 3600000;
+      var isSettled = settlesAt <= state.history.totals.anchorTs;
+      var tdSettlement = document.createElement('td');
+      tdSettlement.textContent = isSettled ? 'Available' : 'Pending · ' + fmtClock(settlesAt);
+      tdSettlement.title = isSettled ? 'Cleared after the 24-hour pending rail' : 'Clears 24 hours after the event';
+      tr.appendChild(tdSettlement);
+
+      var tdPolicy = document.createElement('td');
+      tdPolicy.textContent = 'EARN-2026.09 · T' + row.tier;
+      tdPolicy.title = '65% base share; 24-hour pending rail. See Payout model.';
+      tr.appendChild(tdPolicy);
 
       body.appendChild(tr);
     }
 
     $('ledgerFoot').textContent = 'Showing ' + shown + ' of ' + ledger.length +
-      ' rows · withdrawals reduce the available balance shown above. Tier floors: T1 $4.00 · T2 $2.50 · T3 $1.25 CPM-equivalent.';
+      ' rows · each entry records the event, rate, calculation, settlement timing, and policy version. Adjustments appear as their own rows. Policy EARN-2026.09 · 65% base share · 24-hour pending rail.';
   }
 
   /* ------------------------------------------------------------------
