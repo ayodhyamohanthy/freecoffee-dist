@@ -189,8 +189,10 @@
           </div>
           <div class="balcell">
             <p class="balcap">Pending · 24h rail</p>
-            <p class="balnum" id="statPending">$0.00</p>
-            <p class="balfoot">clears within 24 hours</p>
+            <p class="balnum" id="statPending">0.00 credits</p>
+            <p class="balfoot" id="pendingEstimate">First estimate: calculating settlement window…</p>
+            <p class="balfoot" id="pendingEstimateWhy">The range will show what can change before settlement.</p>
+            <p class="balfoot" id="pendingEstimateActual">Estimate vs actual appears after settlement.</p>
           </div>
           <div class="balcell">
             <p class="balcap">This week</p>
@@ -238,18 +240,20 @@
           <section class="card" aria-label="Earnings ledger">
             <div class="ledger-head">
               <h2>Ledger</h2>
-              <p class="ledger-hint">newest first · every row shows the winning bid and your exact cut · max 100 shown</p>
+              <p class="ledger-hint">newest first · every number shows its derivation, settlement timing, and policy version · max 100 shown</p>
             </div>
             <div class="table-scroll ledger-scroll">
               <table class="ledger-table" id="ledgerTable">
                 <thead>
                   <tr>
-                    <th scope="col">Time</th>
+                    <th scope="col">Ad shown</th>
                     <th scope="col">Sponsor</th>
-                    <th scope="col">Type</th>
-                    <th scope="col" class="num">Winning bid</th>
-                    <th scope="col" class="num cut-col">Your cut</th>
-                    <th scope="col">Tier</th>
+                    <th scope="col">Event</th>
+                    <th scope="col" class="num">Rate</th>
+                    <th scope="col">Derivation</th>
+                    <th scope="col" class="num cut-col">Your earnings</th>
+                    <th scope="col">Settlement</th>
+                    <th scope="col">Policy</th>
                   </tr>
                 </thead>
                 <tbody id="ledgerBody">
