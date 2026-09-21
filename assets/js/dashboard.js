@@ -787,10 +787,13 @@
   function doPayout() {
     var t = computeTotals();
     var amount = Math.round((t.available - paidOutTotal() + (state.balanceOffset || 0)) * 100) / 100;
+    var payoutError = $('payoutError');
     if (!(amount >= D.MODEL.PAYOUT_MINIMUM)) {
-      toast('Need at least $10.00 available to pay out — you have ' + money(Math.max(0, amount)) + '.');
-      return;
+      var shortfall = Math.max(0, D.MODEL.PAYOUT_MINIMUM - amount);
+      payoutError.textContent = 'Withdrawal is not ready. Build ' + shortfall.toFixed(2) + ' more credits to reach the 10-credit minimum; your current balance is preserved.';
+      payoutError.hidden = false; $('payoutBtn').setAttribute('aria-invalid', 'true'); payoutError.scrollIntoView({ block: 'nearest' }); return;
     }
+    payoutError.hidden = true; $('payoutBtn').setAttribute('aria-invalid', 'false');
     state.paidOut.push({ ts: Date.now(), amount: amount });
     state.balanceOffset = 0;
     saveState();
