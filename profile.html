@@ -129,7 +129,8 @@
           <h2 style="font-size:1.15rem">Account</h2>
           <p class="section-sub" style="margin-bottom:20px">How your demo account appears locally.</p>
 
-          <form id="profileForm" novalidate>
+          <form id="profileForm" novalidate aria-describedby="profileErrorSummary">
+            <div class="form-error-summary" id="profileErrorSummary" role="alert" tabindex="-1" hidden><strong>Check the highlighted fields.</strong><ul id="profileErrorList"></ul></div>
             <div class="field">
               <label class="field-label" for="displayName">Display name</label>
               <input class="input" type="text" id="displayName" name="displayName"
@@ -139,7 +140,7 @@
               <label class="field-label" for="email">Email</label>
               <input class="input" type="email" id="email" name="email"
                      value="demo@freecoffee.local" placeholder="you@example.com" autocomplete="email">
-              <p class="footnote" style="margin-top:6px">Demo only — this address never leaves your browser.</p>
+              <p class="footnote" style="margin-top:6px">Demo only — this address never leaves your browser.</p><p class="field-error" id="emailError" role="alert" hidden></p>
             </div>
             <div class="field">
               <label class="field-label" for="coffeePref">Coffee preference</label>
@@ -159,7 +160,7 @@
                        aria-describedby="adFeedUrlHint">
                 <button type="button" class="btn btn-ghost" id="testFeedBtn">Test</button>
               </div>
-              <p class="footnote" id="adFeedUrlHint" style="margin-top:6px">Optional — plug in a real ad campaign feed
+              <p class="field-error" id="adFeedUrlError" role="alert" hidden></p><p class="footnote" id="adFeedUrlHint" style="margin-top:6px">Optional — plug in a real ad campaign feed
                 (affiliate network, offerwall, direct sponsor): an HTTPS URL returning a JSON array of campaigns.
                 See the <a href="advertisers.html">feed contract</a>. Leave empty to stay on the fictional demo sponsors.
                 Live campaigns display with a LIVE marker and never add to the simulated ledger.</p>
@@ -172,7 +173,7 @@
                        aria-describedby="backendUrlHint">
                 <button type="button" class="btn btn-ghost" id="testBackendBtn">Test</button>
               </div>
-              <p class="footnote" id="backendUrlHint" style="margin-top:6px">Optional — the production backend
+              <p class="field-error" id="backendUrlError" role="alert" hidden></p><p class="footnote" id="backendUrlHint" style="margin-top:6px">Optional — the production backend
                 (Cloudflare Worker, <code>backend/README.md</code>) that settles <strong>real</strong> earnings
                 server-side. When set, the dashboard reports verified impressions once a minute and shows a separate
                 REAL EARNINGS (backend) panel; the simulated ledger is never touched. Leave empty to stay 100%
@@ -386,15 +387,25 @@ Disclaimer: FreeCoffee demo — simulated data.</textarea>
       // (e.g. payouts.html → payoutRail) survive a profile save.
       var prev = readState().profile || {};
       var backend = $('backendUrl').value.replace(/^\s+|\s+$/g, '').replace(/\/+$/, '');
-      if (backend && !/^https:\/\//i.test(backend)) {
-        toast('Backend URL must be an https:// URL (or empty for the offline demo).');
-        return;
+      var feed = $('adFeedUrl').value.replace(/^\s+|\s+$/g, '');
+      var email = $('email').value.trim();
+      var errors = [];
+      function fieldError(id, message) {
+        var input = $(id), error = $(id + 'Error'); input.setAttribute('aria-invalid', message ? 'true' : 'false');
+        if (error) { error.textContent = message || ''; error.hidden = !message; }
+        if (message) errors.push({ id: id, message: message });
       }
+      fieldError('email', email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'Enter a complete email address, such as name@example.com.' : '');
+      fieldError('adFeedUrl', feed && !/^https:\/\//i.test(feed) ? 'Use an https:// campaign-feed URL, or leave this field empty.' : '');
+      fieldError('backendUrl', backend && !/^https:\/\//i.test(backend) ? 'Use an https:// backend URL, or leave this field empty.' : '');
+      var summary = $('profileErrorSummary'), list = $('profileErrorList'); list.textContent = '';
+      for (var ei = 0; ei < errors.length; ei++) { var li = document.createElement('li'), link = document.createElement('a'); link.href = '#' + errors[ei].id; link.textContent = errors[ei].message; li.appendChild(link); list.appendChild(li); }
+      summary.hidden = errors.length === 0; if (errors.length) { summary.focus(); return; }
       var next = Object.assign({}, prev, {
         displayName: $('displayName').value.trim() || 'Demo User',
-        email: $('email').value.trim() || 'demo@freecoffee.local',
+        email: email || 'demo@freecoffee.local',
         coffeePref: $('coffeePref').value,
-        adFeedUrl: $('adFeedUrl').value.replace(/^\s+|\s+$/g, ''),
+        adFeedUrl: feed,
         backendUrl: backend,
         minCpm: minCpmVal,
         privacyMode: (document.querySelector('input[name="privacyMode"]:checked') || {}).value || 'non-personalized',
