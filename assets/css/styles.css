@@ -729,6 +729,8 @@ a.crumb:hover { color: var(--gold-bright); text-decoration: none; }
 .dash-cols { display: grid; grid-template-columns: 1.9fr 1fr; gap: 16px; align-items: start; }
 .dash-main { display: grid; gap: 16px; min-width: 0; }
 .dash-main > .card { min-width: 0; }
+.dash-side { min-width: 0; }
+.dash-side > .card { min-width: 0; }
 .dash-side { display: grid; gap: 16px; }
 
 /* chart */
