@@ -63,6 +63,20 @@ The Mac status area chip itself is always an ad slot, never a dead end:
    update check — neither ever sends data back.
 7. All data is simulated. FreeCoffee demo — no real campaigns, no real payouts.
 
+## Accessibility and privacy controls (shipping requirement)
+
+VoiceOver completeness is a release gate for the Mac status area app:
+
+- Every visible and interactive item must be reachable, focusable, and operable with VoiceOver only.
+- The status item exposes a concise label out of context, with state/value separate: **“FreeCoffee, earning active, X credits pending.”** Never expose wallet values as `$` or `USD`.
+- Controls use concise labels: **Pause earning**, **Privacy Options**, **Payout status**, and **Quit FreeCoffee**. State is separate from the label.
+- The privacy entry point pairs the words **Privacy Options** with a blue stylized toggle icon; never ship an unlabeled shield, gear, dollar sign, or abstract icon.
+- Decorative images are ignored. Charts have a text alternative with the same seven-day values and trend.
+- Test VoiceOver-only: read status, open popover, inspect balance and chart alternative, pause/resume, open Privacy Options, inspect payout state, check updates, and quit.
+- Sponsorship remains passive and never steals VoiceOver focus. Alerts follow `DESIGN.md`.
+
+Evidence: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria/ and https://www.privacyassistant.org/media/publications/chi21-toggles.pdf
+
 ## Updates
 
 The app keeps itself current, with zero telemetry:
