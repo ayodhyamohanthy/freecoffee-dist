@@ -734,8 +734,8 @@ a.crumb:hover { color: var(--gold-bright); text-decoration: none; }
 .chart-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .chart-head h2, .ledger-head h2 { margin: 0; }
 .chart-hint, .ledger-hint { font-size: 0.78rem; color: var(--text-faint); margin: 0; }
-.chart-box { position: relative; margin-top: 16px; }
-.chart { width: 100%; height: auto; display: block; }
+.chart-box { position: relative; margin-top: 16px; min-width: 0; width: 100%; max-width: 100%; overflow: hidden; }
+.chart { width: 100%; max-width: 100%; height: auto; display: block; }
 .chart-grid { stroke: var(--line); stroke-width: 1; }
 .chart-ylabel { fill: var(--text-faint); font-size: 10px; font-family: var(--mono); }
 .chart-xlabel { fill: var(--text-dim); font-size: 10.5px; }
