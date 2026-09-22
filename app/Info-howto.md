@@ -88,6 +88,9 @@ VoiceOver completeness is a release gate for the Mac status area app:
 - Decorative images are ignored. Charts have a text alternative with the same seven-day values and trend.
 - Test VoiceOver-only: read status, open popover, inspect balance and chart alternative, pause/resume, open Privacy Options, inspect payout state, check updates, and quit.
 - Sponsorship remains passive and never steals VoiceOver focus. Alerts follow `DESIGN.md`.
+- Async earning, settlement, and payout updates never open the menu-bar popover and never move keyboard or VoiceOver focus. Keep the visible ledger and any already-open views current in place.
+- Post AppKit `NSAccessibility.Notification.announcementRequested` announcements for user-requested results, payout success or failure, and meaningful milestones. Coalesce or suppress routine per-impression earning ticks so they do not become announcement noise.
+- Error announcements name the action that failed and the next step, for example: **“Payout request failed. Review payout details and try again.”** Keep the same actionable text visible in the ledger or payout state.
 - Honor macOS **Reduce Motion**: stop sponsor rotation and all decorative motion; no parallax, animated blur, spinning, scaling, or multi-axis movement. Preserve meaning with instant update, dissolve, highlight fade, or color shift.
 - Never use color alone for earning, settlement, pause, or errors. Pair text and distinct symbols; meet 4.5:1 normal and 3:1 large/bold contrast in light, dark, and Increase Contrast.
 - Controls are at least 20×20 pt, preferably 28×28 pt, spaced and keyboard-operable; no gesture-only task.
@@ -104,7 +107,7 @@ Evidence: https://developer.apple.com/help/app-store-connect/manage-app-accessib
 - Fail closed if analysis, required pause, audio, or transformed hash validation fails. Serve safe static fallback so the slot remains non-empty.
 - Test the final transformed asset under normal playback, Reduce Motion, Dim Flashing Lights, VoiceOver, and global pause.
 
-Evidence: https://www.w3.org/WAI/WCAG22/Understanding/three-flashes-or-below-threshold.html ; https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html ; https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html ; https://developer.apple.com/documentation/MediaAccessibility/responding-to-changes-in-the-flashing-lights-setting
+Evidence: https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html ; https://developer.apple.com/documentation/appkit/nsaccessibility/notification/1530633-announcementrequested ; https://www.w3.org/WAI/WCAG22/Understanding/three-flashes-or-below-threshold.html ; https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html ; https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html ; https://developer.apple.com/documentation/MediaAccessibility/responding-to-changes-in-the-flashing-lights-setting
 
 ## Updates
 
