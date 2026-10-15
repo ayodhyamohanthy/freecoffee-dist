@@ -1,7 +1,524 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Advertise — FreeCoffee</title><meta name="description" content="Submit a compact creative, bid for an hour, and receive verified proof of play."><link rel="stylesheet" href="assets/css/styles.css?v=1002010"><style>#pilot-form{display:grid;gap:16px}#pilot-form label{display:grid;gap:7px;font-weight:700}#pilot-form input,#pilot-form textarea{width:100%;min-height:44px;padding:11px 12px;border:1px solid #746a60;border-radius:8px;background:#fff;color:#17110d;font:inherit}#pilot-form textarea{min-height:120px;resize:vertical}#pilot-form button{justify-self:start;border:0;cursor:pointer}#pilot-form button:disabled{opacity:.6;cursor:wait}#pilot-status{min-height:1.5em;margin:0;font-weight:700}@media(max-width:900px){#pilot-interest{grid-template-columns:1fr!important}#pilot-form{width:100%}}</style></head><body class="fc-public"><a class="skip-link" href="#main">Skip to content</a><div class="fc-announce"><span>Built in public · launch access opening in stages</span><a href="advertisers.html">Ad slots open →</a></div><header class="fc-nav"><a class="fc-wordmark" href="index.html">freecoffee.tech</a><button class="fc-menu" aria-label="Open menu" onclick="this.parentElement.classList.toggle('open')">Menu</button><nav><a href="index.html#earn">Earn</a><a href="advertisers.html">Advertise</a><a href="agents.html">Agents</a><a href="install-guide.html">Download</a><a href="index.html#faq">FAQ</a><a class="fc-pill" href="profile.html">Sign in</a></nav></header><main id="main"><section class="fc-hero fc-adhero"><div><p class="fc-eye">HOUR-LONG MAC AD SLOTS</p><h1>Your brand, in a <em>quieter place.</em></h1><p>Reach Mac users through compact ad slots they chose to see.</p><div class="fc-actions"><a class="fc-primary" href="#pilot-interest">Join the founding pilot</a><a href="#slots">Browse slots</a></div><div class="fc-auction"><small>NEXT AUCTION</small><p>Inventory opens in stages. Reserve and close time appear only when a real slot is available.</p></div></div><div class="fc-adunit"><span class="fc-logo">FC</span><p><b>One clear headline</b><small>One quiet line of useful context</small></p><i></i></div></section>
-<section class="fc-dark fc-split" id="slots"><div><p class="fc-eye">FOUNDER-REVIEWED PILOT</p><h2>Start with a conversation.</h2><p>Tell us what you want to promote. Every submission enters human review. Nothing is approved or shown automatically.</p></div><dl class="fc-ledger"><span>Slot <b>60 minutes</b></span><span>Auction <b>Maximum proxy bid</b></span><span>Winner pays <b>Clearing price</b></span><span>Revenue split <b>70% viewers · 30% FreeCoffee</b></span><span>Losing holds <b>Released</b></span></dl></section>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Advertise — FreeCoffee</title><meta name="description" content="Submit a compact creative, bid on a four-hour block, and receive verified proof of play."><link rel="stylesheet" href="assets/css/styles.css?v=1002013"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#000000"><link rel="apple-touch-icon" href="assets/icons/icon-192.png"></head><body class="fc-public theme-light"><a class="skip-link" href="#main">Skip to content</a><div class="fc-announce"><span>Built in public · launch access opening in stages</span><a href="advertisers.html">Ad slots open →</a></div><header class="fc-nav"><a class="fc-wordmark" href="index.html">freecoffee.tech</a><button class="fc-menu" aria-label="Open menu" onclick="this.parentElement.classList.toggle('open')">Menu</button><nav><a href="index.html#earn">Earn</a><a href="advertisers.html">Advertise</a><a href="agents.html">Agents</a><a href="install-guide.html">Download</a><a href="index.html#faq">FAQ</a><a class="fc-pill" href="profile.html">Sign in</a></nav></header><main id="main"><section class="fc-hero fc-adhero"><div><p class="fc-eye">FOUR-HOUR MAC AD SLOTS</p><h1>Your brand, in a <em>quieter place.</em></h1><p>Reach Mac users through compact ad slots they chose to see.</p><div class="fc-actions"><a class="fc-primary" href="campaigns.html">Submit an ad</a><a href="#picker">Browse slots</a></div><div class="fc-auction"><small>NEXT AUCTION</small><p>Inventory opens in stages. Reserve and close time appear only when a real slot is available.</p></div></div><div class="fc-adunit"><span class="fc-logo">FC</span><p><b>One clear headline</b><small>One quiet line of useful context</small></p><i></i></div></section>
+<section class="fc-dark fc-split" id="slots"><div><p class="fc-eye">SLOT AUCTION</p><h2>How a slot works.</h2><p>Every day is six four-hour blocks, in UTC. Set your CPM on the blocks you want — the highest bid on a block takes every impression in it.</p></div><dl class="fc-ledger"><span>Slot <b>4 hours · 6 per day, UTC</b></span><span>Auction <b>Highest CPM wins</b></span><span>Winner pays <b>Their winning bid</b></span><span>Tie-break <b>Earliest bid wins</b></span><span>Minimum bid <b>$2 CPM</b></span><span>Revenue split <b>70% viewers · platform-funded 10% launch boost</b></span></dl></section>
+<section class="fc-flow" id="picker">
+  <p class="fc-eye">LIVE INVENTORY</p>
+  <h2>Pick your blocks.</h2>
+  <p class="section-sub">Every day is six four-hour blocks in UTC. Pick as many as you like across any month, set one CPM for the batch, and see exactly where you stand on every block. The highest bid on a block takes all of its impressions.</p>
+  <div class="card">
+    <div class="slot-bar">
+      <div class="slot-nav">
+        <button class="slot-nav-btn" id="slotPrev" type="button" aria-label="Previous month">&lsaquo;</button>
+        <span class="slot-month" id="slotMonth" aria-live="polite">&nbsp;</span>
+        <button class="slot-nav-btn" id="slotNext" type="button" aria-label="Next month">&rsaquo;</button>
+      </div>
+      <span class="slot-tz">All times UTC</span>
+      <span class="slot-count" id="slotCount">Loading&hellip;</span>
+    </div>
+    <div class="slot-cal" id="slotCal" role="group" aria-label="Blocks by day"></div>
+    <div class="slot-legend">
+      <span><i class="slot-key"></i>Open</span>
+      <span><i class="slot-key is-bid"></i>Has bids</span>
+      <span><i class="slot-key is-picked"></i>Picked</span>
+      <span><i class="slot-key is-past"></i>Closed</span>
+    </div>
+    <div class="slot-editor" id="slotEditor" hidden>
+      <div class="slot-editor-head">
+        <h3 id="slotDayHead">Blocks</h3>
+        <span class="slot-editor-sub" id="slotDaySub"></span>
+        <button class="slot-sum-clear" id="slotDayAll" type="button">Pick all 6</button>
+      </div>
+      <div class="slot-chips" id="slotChips"></div>
+    </div>
+    <div class="slot-sum">
+      <div class="slot-sum-head">
+        <h3>Your picks</h3>
+        <span class="slot-editor-sub" id="slotSumCount"></span>
+        <button class="slot-sum-clear" id="slotClear" type="button">Clear all</button>
+      </div>
+      <div class="slot-sum-list" id="slotSumList"></div>
+      <p class="slot-sum-empty" id="slotSumEmpty">No blocks picked yet &mdash; choose a day above.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Place your bid</h3>
+    <form id="slotForm" novalidate>
+      <div class="slot-fields">
+        <div class="field">
+          <label class="field-label" for="slotCampId">Campaign ID</label>
+          <input class="input" id="slotCampId" name="campaignId" required maxlength="40" placeholder="camp_001" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="field-label" for="slotSponsor">Brand name</label>
+          <input class="input" id="slotSponsor" name="sponsor" required maxlength="40" placeholder="Acme Coffee Co." autocomplete="organization">
+        </div>
+        <div class="field">
+          <label class="field-label" for="slotTagline">Tagline</label>
+          <input class="input" id="slotTagline" name="tagline" maxlength="90" placeholder="Single-origin beans &mdash; 20% off" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="field-label" for="slotClickUrl">Destination URL</label>
+          <input class="input" id="slotClickUrl" name="clickUrl" type="url" maxlength="300" placeholder="https://advertiser.example/offer" autocomplete="url">
+        </div>
+        <div class="field">
+          <label class="field-label" for="slotCpm">Your CPM (USD)</label>
+          <input class="input" id="slotCpm" name="cpm" type="number" min="2" max="100" step="0.5" value="6" required>
+        </div>
+        <div class="field">
+          <label class="field-label" for="slotBidder">Contact email</label>
+          <input class="input" id="slotBidder" name="bidder" type="email" maxlength="120" placeholder="you@company.com" autocomplete="email">
+        </div>
+      </div>
+      <div class="slot-submit">
+        <button class="btn btn-primary" id="slotBidBtn" type="submit">Place bid</button>
+        <p class="slot-note" id="slotNote" role="status"></p>
+      </div>
+    </form>
+    <div class="slot-results" id="slotResults"></div>
+  </div>
+  <p class="footnote">Bids are first-price: the highest CPM on a block takes it and pays what they bid. Ties go to the earliest bid. Your contact email is the only identifier we hold against a bid, and the public grid shows sponsors and CPMs &mdash; never bidders.</p>
+</section>
 <section class="fc-cream fc-split"><div><p class="fc-eye">THE CREATIVE</p><h2>One small ad. Perfectly composed.</h2><p>User-chosen category. Readable hierarchy. Reviewed destination.</p></div><div class="fc-receipt"><h3>What you provide</h3><p>Logo tile</p><p>Headline</p><p>One-line description</p><p>Approved HTTPS destination</p><p>Category and target region</p></div></section>
 <section class="fc-dark fc-split"><div><h2>We charge for what actually appeared.</h2><p>Uncertain delivery is excluded. Duplicate and invalid traffic is filtered.</p></div><div class="fc-count"><h3>Counted</h3><p>Active eligible surface</p><p>Category and coarse-region match</p><h3>Not counted</h3><p>Interrupted or uncertain display</p><p>Duplicate or invalid traffic</p></div></section>
-<section class="fc-flow"><h2>From interest to a reviewed pilot.</h2><ol class="fc-steps"><li><b>01</b><span>Share your product and contact</span></li><li><b>02</b><span>We review fit and safety</span></li><li><b>03</b><span>We contact you before any next step</span></li></ol></section>
-<section class="fc-cream fc-split"><div><h2>Every slot ends with proof.</h2><p>Verified airtime, privacy-safe reach, views versus forecast, coarse areas, clicks, spend, and the final 70/30 settlement.</p></div><div class="fc-receipt"><small>SAMPLE RECEIPT</small><h3>Completed</h3><p>Airtime and delivery</p><p>Aggregate eligible devices</p><p>Thresholded geography</p><p>Signed receipt version</p></div></section>
-<section class="fc-cream fc-split" id="pilot-interest"><div><p class="fc-eye">FOUNDING PILOT INTAKE</p><h2>Tell us what you want to promote.</h2><p>This submits an interest note for human review. It does not create, approve, fund, schedule, or serve a campaign.</p></div><form id="pilot-form" class="fc-receipt"><label>Your name<input name="name" autocomplete="name" maxlength="100" required></label><label>Work email<input name="email" type="email" autocomplete="email" maxlength="160" required></label><label>Company or product<input name="company" maxlength="100" required></label><label>HTTPS destination (optional)<input name="destination" type="url" maxlength="500" placeholder="https://"></label><label>What would you like to test?<textarea name="note" maxlength="1200" rows="5"></textarea></label><button class="fc-primary" type="submit">Send for review</button><p id="pilot-status" role="status" aria-live="polite"></p></form></section><section class="fc-faq" id="policy"><h2>Advertiser questions.</h2><details><summary>What does the ad contain?</summary><p>A logo tile, headline, one-line description, and reviewed destination.</p></details><details><summary>How does proxy bidding work?</summary><p>You set a maximum. The winner pays the clearing price under the published rules.</p></details><details><summary>What if I lose?</summary><p>Your hold is released and you are not charged.</p></details><details><summary>How is delivery verified?</summary><p>Only eligible, valid display contributes to the signed aggregate receipt.</p></details><details><summary>What happens on underdelivery?</summary><p>The receipt records it and the frozen policy determines a make-good or refund.</p></details></section><section class="fc-dark fc-close"><h2>See how your brand fits.</h2><p>Preview the real unit before you submit. Nothing reaches a device before review.</p><a class="fc-primary" href="#pilot-interest">Join the founding pilot</a></section></main><footer class="fc-footer"><a class="fc-wordmark" href="index.html">freecoffee.tech</a><p>A quieter ad slot for Mac. A transparent share for people who choose it.</p><nav><a href="index.html#earn">Earn</a><a href="advertisers.html">Advertise</a><a href="agents.html">Agents</a><a href="install-guide.html">Download</a><a href="index.html#faq">FAQ</a><a href="index.html#privacy">Privacy</a><a href="advertisers.html#policy">Ad policy</a><a href="mailto:hello@freecoffee.tech">Support</a></nav><small>Payout availability varies by region. Built in public.</small></footer><script>const PILOT_API='https://freecoffee-backend.ayodhya-711.workers.dev/pilot-interest';document.getElementById('pilot-form')?.addEventListener('submit',async e=>{e.preventDefault();const f=e.currentTarget,b=f.querySelector('button'),o=document.getElementById('pilot-status');b.disabled=true;o.textContent='Sending…';try{const r=await fetch(PILOT_API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(f)))});const j=await r.json();if(!r.ok)throw new Error(j.error||'Could not submit');o.textContent='Received for human review. Nothing goes live automatically.';f.reset()}catch(err){o.textContent=err.message+'. You can also email hello@freecoffee.tech.'}finally{b.disabled=false}});document.addEventListener('click',e=>{if(!e.target.closest('.fc-nav'))document.querySelector('.fc-nav')?.classList.remove('open')})</script></body></html>
+<section class="fc-flow"><h2>From creative to live in four moves.</h2><ol class="fc-steps"><li><b>01</b><span>Make the placement</span></li><li><b>02</b><span>Choose a slot and set your bid</span></li><li><b>03</b><span>Submit your creative</span></li><li><b>04</b><span>Win, run, receive proof</span></li></ol></section>
+<section class="fc-cream fc-split"><div><h2>Every slot ends with proof.</h2><p>Verified airtime, privacy-safe reach, views versus forecast, coarse areas, clicks, spend, and the final 65/35 settlement.</p></div><div class="fc-receipt"><small>SAMPLE RECEIPT</small><h3>Completed</h3><p>Airtime and delivery</p><p>Aggregate eligible devices</p><p>Thresholded geography</p><p>Signed receipt version</p></div></section>
+<section class="fc-cream fc-flow" id="contract">
+  <p class="fc-eye">THE FEED CONTRACT</p>
+  <h2>One URL. No rebuild.</h2>
+  <p class="section-sub">A feed is any HTTPS URL returning a JSON array of campaigns. Host the JSON anywhere &mdash; GitHub raw, your CDN, your own server &mdash; paste the URL into your <a href="profile.html">profile page</a>, and the campaigns appear in the Mac status area and dashboard.</p>
+  <pre class="codeblock" id="feedSpec" tabindex="0" aria-label="Campaign feed JSON spec">[ { "id": "camp_001", "sponsor": "Acme Coffee Co.", "tagline": "Single-origin beans — 20% off first bag", "clickUrl": "https://advertiser.example/offer", "cpm": 6.0, "logoText": "AC", "accent": "#C98F4E" } ]</pre>
+  <table class="rail-table" style="margin-top:18px">
+    <caption class="visually-hidden">Campaign feed field reference</caption>
+    <thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Rules</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">id</th><td>string</td><td>Unique per campaign, max 40 chars. Required when publishing through the backend &mdash; the id is the earnings pay-key, and duplicates are dropped.</td></tr>
+      <tr><th scope="row">sponsor</th><td>string</td><td>Brand name, max 40 chars. Required &mdash; entries without it are skipped.</td></tr>
+      <tr><th scope="row">tagline</th><td>string</td><td>One line, max 90 chars.</td></tr>
+      <tr><th scope="row">clickUrl</th><td>string</td><td>Must be <code>https://</code>. Anything else is stripped before the campaign is accepted.</td></tr>
+      <tr><th scope="row">cpm</th><td>number</td><td>Clamped to 0&ndash;100. This is the rate a verified minute is paid against.</td></tr>
+      <tr><th scope="row">logoText</th><td>string</td><td>Up to 2 characters, used for the tile.</td></tr>
+      <tr><th scope="row">accent</th><td>string</td><td>Hex colour for the tile.</td></tr>
+    </tbody>
+  </table>
+</section>
+<section class="fc-dark fc-split" id="launchOffer">
+  <div>
+    <p class="fc-eye">LAUNCH OFFER</p>
+    <h2>First ten advertisers.</h2>
+    <p>No minimum spend, no platform cut on your first $100 of media, and a human review inside 48 hours. You bring a real product and an <code>https://</code> page &mdash; we bring the placement, the verification, and the public ledger math.</p>
+    <a class="fc-primary" href="mailto:advertisers@freecoffee.tech?subject=FreeCoffee%20launch%20offer%20—%20first%2010">Claim a launch slot &rarr;</a>
+    <p class="footnote">First 10 advertisers &middot; 0 claimed so far &mdash; this line changes by hand the day a campaign clears review, with a reference. No staged counters pretending the room is fuller than it is.</p>
+  </div>
+  <div class="fc-receipt">
+    <small>LAUNCH TERMS</small>
+    <h3>What is waived</h3>
+    <p>Minimum campaign spend <b>waived &rarr; $0 to start</b></p>
+    <p>Platform cut, first $100 <b>0%</b></p>
+    <p>Viewer share, unchanged <b>70% + 10% launch boost</b></p>
+    <p>Review turnaround <b>&le; 48 hours</b></p>
+    <p>After the first $100 <b>$15 min &middot; standard share</b></p>
+  </div>
+</section>
+<section class="fc-faq" id="policy"><h2>Advertiser questions.</h2><details><summary>What does the ad contain?</summary><p>A logo tile, headline, one-line description, and reviewed destination.</p></details><details><summary>How does bidding work?</summary><p>You set a CPM on each four-hour block you want. The highest CPM on a block takes every impression in it and pays the bid they set. Ties go to whoever bid first.</p></details><details><summary>What if I lose?</summary><p>Nothing is charged. You only pay for the blocks you win, at the CPM you bid.</p></details><details><summary>How is delivery verified?</summary><p>Only eligible, valid display contributes to the signed aggregate receipt.</p></details><details><summary>What happens on underdelivery?</summary><p>The receipt records it and the frozen policy determines a make-good or refund.</p></details></section><section class="fc-dark fc-close"><h2>See how your brand fits.</h2><p>Preview the real unit before you submit. Campaigns sent through the open queue are reviewed by a human before they serve. A winning slot bid enters the serving list directly — so bid on creative you would stand behind in public.</p><a class="fc-primary" href="campaigns.html">Submit an ad</a></section></main><footer class="fc-footer"><a class="fc-wordmark" href="index.html">freecoffee.tech</a><p>A quieter ad slot for Mac. A transparent share for people who choose it.</p><nav><a href="index.html#earn">Earn</a><a href="advertisers.html">Advertise</a><a href="agents.html">Agents</a><a href="install-guide.html">Download</a><a href="index.html#faq">FAQ</a><a href="index.html#privacy">Privacy</a><a href="advertisers.html#policy">Ad policy</a><a href="mailto:hello@freecoffee.tech">Support</a></nav><small>Payout availability varies by region. Built in public.</small></footer><script>
+/* Slot-auction picker — GET /slots?month=YYYY-MM to read inventory,
+   POST /slots/bid to place one bid across any number of picked blocks.
+
+   Three invariants worth keeping if you edit this:
+     1. Toggling a chip repaints it in place (paintChip) rather than rebuilding
+        the list, so keyboard focus is never detached by your own click.
+     2. The bid response is folded back into `known`, so a verdict stays
+        truthful for blocks in a month that is not currently on screen.
+     3. A verdict is deleted the moment its block is unpicked, so no stale
+        win/lose badge can survive a selection change. */
+(function () {
+  var PROD_BACKEND = 'https://freecoffee-backend.ayodhya-711.workers.dev';
+  var STORE_KEY = 'freecoffee:slotCampaign';
+  var MAX_AHEAD = 400;                    // mirrors SLOT_MAX_AHEAD_DAYS
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* Same override the app shell uses (Profile → BACKEND API URL, persisted in
+     freecoffee:v1 → profile.backendUrl). A visitor who has pointed the app at
+     their own backend should have the public grid read from it too.
+
+     https is required for any real host, because a bid is a money-adjacent
+     write. http://localhost and http://127.0.0.1 are allowed as well: the
+     WHATWG spec classes them as secure contexts, and without the exception the
+     grid cannot be exercised against a local worker at all. */
+  function backendBase() {
+    try {
+      var raw = localStorage.getItem('freecoffee:v1');
+      var s = raw ? JSON.parse(raw) : null;
+      var url = (s && s.profile && typeof s.profile.backendUrl === 'string')
+        ? s.profile.backendUrl.trim() : '';
+      var ok = /^https:\/\//i.test(url) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(url);
+      if (ok) return url.replace(/\/+$/, '');
+    } catch (e) { /* unreadable storage → fall through to production */ }
+    return PROD_BACKEND;
+  }
+  var BACKEND = backendBase();
+
+  var cal = $('slotCal');
+  if (!cal || !window.fetch) return;
+  var monthEl = $('slotMonth'), countEl = $('slotCount'), prevBtn = $('slotPrev'), nextBtn = $('slotNext'),
+      editor = $('slotEditor'), dayHead = $('slotDayHead'), daySub = $('slotDaySub'), dayAll = $('slotDayAll'),
+      chipsEl = $('slotChips'), sumList = $('slotSumList'), sumEmpty = $('slotSumEmpty'), sumCount = $('slotSumCount'),
+      clearBtn = $('slotClear'), form = $('slotForm'), note = $('slotNote'), results = $('slotResults'),
+      bidBtn = $('slotBidBtn'), inId = $('slotCampId'), inSponsor = $('slotSponsor'), inTagline = $('slotTagline'),
+      inUrl = $('slotClickUrl'), inCpm = $('slotCpm'), inBidder = $('slotBidder');
+
+  var today = new Date();
+  var view = { y: today.getUTCFullYear(), m: today.getUTCMonth() + 1 };
+  var blocksPerDay = 6, blockHours = 4;
+  var known = {};      // slotId -> slot, merged across every month fetched
+  var picked = {};     // slotId -> true
+  var focusDay = '';
+  var loading = false;
+  var ourId = '';
+
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function mKey(v) { return v.y + '-' + pad2(v.m); }
+  function dKey(y, m, d) { return y + '-' + pad2(m) + '-' + pad2(d); }
+  function when(slotId) {
+    var p = slotId.split('#'), dp = p[0].split('-'), b = +p[1];
+    var d = new Date(Date.UTC(+dp[0], +dp[1] - 1, +dp[2]));
+    return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+  }
+  function span(b) { return pad2(b * blockHours) + ':00–' + pad2(((b + 1) * blockHours) % 24) + ':00'; }
+  function money(n) { return '$' + (Math.round(n * 100) / 100).toFixed(2); }
+
+  function load() {
+    try {
+      var saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+      if (saved && saved.id) {
+        ourId = saved.id;
+        if (inId) inId.value = saved.id || '';
+        if (inSponsor) inSponsor.value = saved.sponsor || '';
+        if (inTagline) inTagline.value = saved.tagline || '';
+        if (inUrl) inUrl.value = saved.clickUrl || '';
+        if (inCpm && saved.cpm) inCpm.value = saved.cpm;
+        if (inBidder) inBidder.value = saved.bidder || '';
+      }
+    } catch (e) {}
+  }
+  function save(id) {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({
+        id: id, sponsor: inSponsor.value.trim(), tagline: inTagline.value.trim(),
+        clickUrl: inUrl.value.trim(), cpm: Number(inCpm.value) || 6, bidder: inBidder.value.trim()
+      }));
+    } catch (e) {}
+  }
+
+  /* ---------------- verdict for one block ---------------- */
+  function verdict(id) {
+    var s = known[id];
+    if (!s) return { text: 'not loaded', cls: '' };
+    if (s.state === 'past') return { text: 'closed', cls: '' };
+    if (s.topCpm == null) return { text: 'no bids yet', cls: '' };
+    var mine = (s.topCampaignId && s.topCampaignId === ourId) || s.mine === true;
+    return mine ? { text: 'winning · ' + money(s.topCpm), cls: 'is-win' }
+                : { text: 'outbid · top ' + money(s.topCpm), cls: 'is-lose' };
+  }
+
+  /* ---------------- calendar ---------------- */
+  function renderCalendar() {
+    cal.innerHTML = '';
+    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(function (d) {
+      var h = document.createElement('div');
+      h.className = 'slot-dow'; h.textContent = d;
+      cal.appendChild(h);
+    });
+    var first = new Date(Date.UTC(view.y, view.m - 1, 1)).getUTCDay();
+    var days = new Date(Date.UTC(view.y, view.m, 0)).getUTCDate();
+    var tNow = Date.now();
+    for (var i = 0; i < first; i++) {
+      var blank = document.createElement('div');
+      blank.className = 'slot-day is-blank';
+      cal.appendChild(blank);
+    }
+    for (var d = 1; d <= days; d++) {
+      var day = dKey(view.y, view.m, d);
+      var cell = document.createElement('button');
+      cell.type = 'button';
+      cell.dataset.day = day;
+      cell.className = 'slot-day';
+      var openCount = 0, pickCount = 0, allPast = true;
+      var dots = document.createElement('span');
+      dots.className = 'slot-dots';
+      for (var b = 0; b < blocksPerDay; b++) {
+        var id = day + '#' + b, s = known[id];
+        var dot = document.createElement('i');
+        dot.className = 'slot-dot';
+        if (picked[id]) { dot.className += ' is-picked'; pickCount++; }
+        else if (s && s.topCpm != null) dot.className += ' is-bid';
+        if (!s || s.state === 'past') dot.className += ' is-past';
+        else { allPast = false; if (s.state === 'open') openCount++; }
+        dots.appendChild(dot);
+      }
+      if (allPast) cell.className += ' is-past';
+      if (openCount) cell.className += ' is-open';
+      if (pickCount) cell.className += ' is-picked';
+      if (day === dKey(today.getUTCFullYear(), today.getUTCMonth() + 1, today.getUTCDate())) {
+        cell.className += ' is-today';
+      }
+      if (day === focusDay) cell.setAttribute('aria-current', 'true');
+      var num = document.createElement('span');
+      num.className = 'slot-daynum'; num.textContent = String(d);
+      cell.appendChild(num);
+      cell.appendChild(dots);
+      cal.appendChild(cell);
+    }
+  }
+
+  /* ---------------- block editor for the focused day ---------------- */
+  function paintChip(chip, id) {
+    var s = known[id], b = +id.split('#')[1];
+    var started = !s || s.state !== 'open' || s.startsAt <= Date.now();
+    var isPick = !!picked[id];
+    var taken = !!(s && s.topCpm != null);
+    var mine = !!(s && ((s.topCampaignId && s.topCampaignId === ourId) || s.mine === true));
+    chip.className = 'slot-chip' + (isPick ? ' is-picked' : '') + (taken && !isPick ? ' is-taken' : '');
+    chip.disabled = started;
+    chip.setAttribute('aria-pressed', isPick ? 'true' : 'false');
+    var h = chip.querySelector('.slot-chip-h'), p = chip.querySelector('.slot-chip-p');
+    if (h) h.textContent = span(b) + ' UTC';
+    if (p) {
+      if (started) p.textContent = s && s.state === 'active' ? 'running now' : 'closed';
+      else if (isPick) p.textContent = taken ? 'picked · top ' + money(s.topCpm) : 'picked';
+      else if (mine) p.textContent = 'you hold it · ' + money(s.topCpm);
+      else if (taken) p.textContent = 'top ' + money(s.topCpm) + (s.topSponsor ? ' · ' + s.topSponsor : '');
+      else p.textContent = 'open · no bids';
+    }
+    chip.title = started ? 'This block has already started.' :
+      (taken ? 'Someone currently holds the top bid. You can outbid it.' : 'No bids yet — the floor is $2 CPM.');
+  }
+  function renderEditor() {
+    if (!focusDay) { editor.hidden = true; return; }
+    editor.hidden = false;
+    var picks = 0;
+    for (var b = 0; b < blocksPerDay; b++) if (picked[focusDay + '#' + b]) picks++;
+    dayHead.textContent = when(focusDay + '#0');
+    daySub.textContent = picks ? picks + ' of ' + blocksPerDay + ' picked' : blocksPerDay + ' blocks · 4 hours each';
+    dayAll.textContent = picks === blocksPerDay ? 'Clear this day' : 'Pick all 6';
+    if (chipsEl.dataset.day !== focusDay) {
+      chipsEl.dataset.day = focusDay;
+      chipsEl.innerHTML = '';
+      for (var i = 0; i < blocksPerDay; i++) {
+        var id = focusDay + '#' + i;
+        var chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'slot-chip';
+        chip.dataset.slot = id;
+        var h = document.createElement('span'); h.className = 'slot-chip-h';
+        var p = document.createElement('span'); p.className = 'slot-chip-p';
+        chip.appendChild(h); chip.appendChild(p);
+        chipsEl.appendChild(chip);
+      }
+    }
+    var all = chipsEl.querySelectorAll('.slot-chip');
+    for (var k = 0; k < all.length; k++) paintChip(all[k], all[k].dataset.slot);
+  }
+
+  /* ---------------- selection summary ---------------- */
+  function renderSum() {
+    var ids = Object.keys(picked).filter(function (k) { return picked[k]; }).sort();
+    sumList.innerHTML = '';
+    sumCount.textContent = ids.length ? ids.length + ' block' + (ids.length === 1 ? '' : 's') : '';
+    sumEmpty.hidden = ids.length > 0;
+    ids.forEach(function (id) {
+      var v = verdict(id);
+      var row = document.createElement('div');
+      row.className = 'slot-sum-row' + (v.cls ? ' ' + v.cls : '');
+      var w = document.createElement('span');
+      w.className = 'slot-sum-when';
+      w.textContent = when(id) + ' · ' + span(+id.split('#')[1]);
+      var t = document.createElement('span');
+      t.className = 'slot-sum-top';
+      t.textContent = v.text;
+      row.appendChild(w); row.appendChild(t);
+      sumList.appendChild(row);
+    });
+  }
+
+  function render() {
+    monthEl.textContent = new Date(Date.UTC(view.y, view.m - 1, 1))
+      .toLocaleDateString(undefined, { month: 'long', year: 'numeric', timeZone: 'UTC' });
+    var cur = { y: today.getUTCFullYear(), m: today.getUTCMonth() + 1 };
+    prevBtn.disabled = loading || (view.y === cur.y && view.m === cur.m);
+    var ahead = (view.y - cur.y) * 12 + (view.m - cur.m);
+    nextBtn.disabled = loading || ahead >= 13;
+    renderCalendar();
+    renderEditor();
+    renderSum();
+  }
+
+  /* ---------------- fetch one month ---------------- */
+  function fetchMonth() {
+    if (loading) return;
+    loading = true;
+    render();
+    var want = mKey(view);
+    countEl.textContent = 'Loading…';
+    fetch(BACKEND + '/slots?month=' + want, { headers: { accept: 'application/json' } })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !Array.isArray(d.slots)) throw new Error('unexpected payload');
+        loading = false;
+        blocksPerDay = d.blocksPerDay || blocksPerDay;
+        blockHours = d.blockHours || blockHours;
+        d.slots.forEach(function (s) {
+          // The server's current winner replaces any previous local verdict.
+          known[s.id] = s;
+        });
+        render();
+        var open = 0;
+        d.slots.forEach(function (s) { if (s.state === 'open') open++; });
+        countEl.textContent = d.slots.length + ' blocks · ' + open + ' still open';
+      })
+      .catch(function (e) {
+        loading = false;
+        render();
+        countEl.textContent = 'Inventory unavailable';
+        var msg = document.createElement('p');
+        msg.className = 'slot-note is-bad';
+        msg.textContent = 'Could not load ' + want + ' (' + e.message + '). If this is the live site, the ' +
+          'auction API may not be deployed yet — the grid needs GET /slots on the backend.';
+        cal.appendChild(msg);
+      });
+  }
+
+  function setNote(text, ok) {
+    note.textContent = text;
+    note.className = 'slot-note' + (ok === true ? ' is-ok' : ok === false ? ' is-bad' : '');
+  }
+  function renderResults(list, ok, rejected) {
+    results.innerHTML = '';
+    (list || []).forEach(function (p) {
+      var row = document.createElement('div');
+      row.className = 'slot-res ' + (p.top ? 'win' : 'lose');
+      var w = document.createElement('span'); w.className = 'when';
+      w.textContent = when(p.slot) + ' · ' + span(+p.slot.split('#')[1]);
+      var y = document.createElement('span'); y.className = 'why';
+      y.textContent = p.top ? 'you hold it at ' + money(p.topCpm)
+        : (p.topCpm != null ? 'outbid — top ' + money(p.topCpm) : 'no bids yet');
+      row.appendChild(w); row.appendChild(y);
+      results.appendChild(row);
+    });
+    (rejected || []).forEach(function (p) {
+      var row = document.createElement('div');
+      row.className = 'slot-res lose';
+      var w = document.createElement('span'); w.className = 'when';
+      w.textContent = p.slot;
+      var y = document.createElement('span'); y.className = 'why';
+      y.textContent = p.reason;
+      row.appendChild(w); row.appendChild(y);
+      results.appendChild(row);
+    });
+  }
+
+  /* ---------------- events ---------------- */
+  cal.addEventListener('click', function (e) {
+    var cell = e.target.closest ? e.target.closest('.slot-day') : null;
+    if (!cell || cell.classList.contains('is-blank') || !cell.dataset.day) return;
+    focusDay = cell.dataset.day;
+    render();
+  });
+  /* Delegated, and paintChip never detaches the node — so focus survives. */
+  chipsEl.addEventListener('click', function (e) {
+    var chip = e.target.closest ? e.target.closest('.slot-chip') : null;
+    if (!chip || chip.disabled) return;
+    var id = chip.dataset.slot;
+    if (picked[id]) { delete picked[id]; if (known[id]) delete known[id].won; }
+    else picked[id] = true;
+    paintChip(chip, id);
+    renderEditor();
+    renderSum();
+  });
+  dayAll.addEventListener('click', function () {
+    if (!focusDay) return;
+    var eligible = [];
+    for (var b = 0; b < blocksPerDay; b++) {
+      var id = focusDay + '#' + b, slot = known[id];
+      if (slot && slot.state === 'open' && slot.startsAt > Date.now()) eligible.push(id);
+      else delete picked[id];
+    }
+    var allPicked = eligible.every(function (id) { return !!picked[id]; });
+    eligible.forEach(function (id) {
+      if (allPicked) delete picked[id]; else picked[id] = true;
+    });
+    renderCalendar();
+    renderEditor();
+    renderSum();
+  });
+  clearBtn.addEventListener('click', function () {
+    picked = {};
+    renderEditor();
+    renderSum();
+  });
+  prevBtn.addEventListener('click', function () {
+    view.m--; if (view.m < 1) { view.m = 12; view.y--; }
+    render(); fetchMonth();
+  });
+  nextBtn.addEventListener('click', function () {
+    view.m++; if (view.m > 12) { view.m = 1; view.y++; }
+    render(); fetchMonth();
+  });
+
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var ids = Object.keys(picked).filter(function (k) { return picked[k]; });
+    var id = (inId.value || '').trim(), sponsor = (inSponsor.value || '').trim();
+    var url = (inUrl.value || '').trim(), bidder = (inBidder.value || '').trim();
+    var cpm = Number(inCpm.value);
+    if (!ids.length) return setNote('Pick at least one block first.', false);
+    if (!id) return setNote('Campaign ID is required.', false);
+    if (!sponsor) return setNote('Brand name is required.', false);
+    if (!/^https:\/\//i.test(url)) return setNote('Destination URL must start with https://', false);
+    if (!(cpm >= 2)) return setNote('The minimum bid is $2 CPM.', false);
+    if (!bidder) return setNote('A contact email is required — it is the only identifier we hold against a bid.', false);
+
+    bidBtn.disabled = true;
+    setNote('Placing bid on ' + ids.length + ' block' + (ids.length === 1 ? '' : 's') + '…', null);
+    fetch(BACKEND + '/slots/bid', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        bidder: bidder,
+        campaign: { id: id, sponsor: sponsor, tagline: (inTagline.value || '').trim(), clickUrl: url, cpm: cpm },
+        slots: ids
+      })
+    })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d || {} }; }); })
+      .then(function (res) {
+        bidBtn.disabled = false;
+        var d = res.d;
+        if (!res.ok || !d.ok) {
+          setNote(d.error || 'The bid was rejected.', false);
+          renderResults([], false, d.rejected || []);
+          return;
+        }
+        ourId = d.campaignId || id;
+        /* Fold the response into known[] so off-screen months stay truthful. */
+        (d.slots || []).forEach(function (p) {
+          if (!known[p.slot]) known[p.slot] = { id: p.slot, state: 'open', topCpm: null, topCampaignId: null };
+          if (p.topCpm != null) { known[p.slot].topCpm = p.topCpm; known[p.slot].topSponsor = p.topSponsor; }
+          known[p.slot].mine = !!p.top;
+          known[p.slot].topCampaignId = p.top ? ourId : null;
+          known[p.slot].bidCount = (known[p.slot].bidCount || 0) + 1;
+        });
+        save(ourId);
+        setNote(d.note || 'Bid placed.', d.winning === d.placed);
+        renderResults(d.slots || [], true, d.rejected || []);
+        render();
+      })
+      .catch(function (e) {
+        bidBtn.disabled = false;
+        setNote('Could not reach the auction API (' + e.message + ').', false);
+      });
+  });
+
+  load();
+  render();
+  fetchMonth();
+})();
+</script>
+<script>document.addEventListener('click',e=>{if(!e.target.closest('.fc-nav'))document.querySelector('.fc-nav')?.classList.remove('open')})</script><script>if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) { navigator.serviceWorker.register('sw.js').catch(function () {}); }</script></body></html>

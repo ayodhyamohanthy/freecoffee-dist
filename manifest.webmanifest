@@ -1,13 +1,13 @@
 {
   "name": "FreeCoffee — Your Mac status area buys the coffee",
   "short_name": "FreeCoffee",
-  "description": "Mac status area advertising demo: advertisers bid for minute-long placements, you keep 65%, and the balance reads in cups of coffee. Simulated data — free demo.",
+  "description": "Mac status area advertising demo: advertisers bid for minute-long placements, you keep a 70% share plus a 10% launch boost. Simulated data — free demo.",
   "start_url": "./index.html",
   "id": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#14100D",
-  "theme_color": "#14100D",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "icons": [
     {
       "src": "assets/icons/icon-192.png",

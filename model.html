@@ -4,24 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Payout model — FreeCoffee</title>
-<meta name="description" content="FreeCoffee's payout model in plain numbers: 65% base share, $0.05 verified clicks, tiered floors, referrals, streaks — and the sustainability math behind them.">
+<meta name="description" content="FreeCoffee's payout model in plain numbers: 70% base share, $0.05 verified clicks, tiered floors, referrals, streaks — and the sustainability math behind them.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeCoffee">
 <meta property="og:title" content="Payout model — FreeCoffee">
-<meta property="og:description" content="The payout model in plain numbers: 65% base share, click bonus, tier floors, referrals.">
+<meta property="og:description" content="The payout model in plain numbers: 70% base share, click bonus, tier floors, referrals.">
 <meta property="og:url" content="https://freecoffee.tech/model.html">
 <meta property="og:image" content="https://freecoffee.tech/assets/icons/icon-512.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Payout model — FreeCoffee">
-<meta name="twitter:description" content="The payout model in plain numbers: 65% base share, click bonus, tier floors, referrals.">
+<meta name="twitter:description" content="The payout model in plain numbers: 70% base share, click bonus, tier floors, referrals.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#F7F6F3">
+<meta name="theme-color" content="#000000">
 <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="assets/css/styles.css?v=1002010">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002013">
 </head>
 <body data-page="model" class="theme-light">
 
@@ -99,7 +99,7 @@
         <span class="crumb current" aria-current="page">Payout model</span>
       </nav>
       <div class="topbar-mid">
-        <p class="promo-pill">Launch rate $6 CPM observed (Sep 2026) — 65% base share, always on</p>
+        <p class="promo-pill">Demo economics · 70% base + platform-funded 10% launch boost</p>
       </div>
       <div class="topbar-tools">
         <a class="topbar-link" href="index.html#faq">
@@ -129,9 +129,9 @@
       <section aria-labelledby="market-h" style="margin:34px 0 10px">
         <h2 id="market-h" style="font-size:1.3rem">What a minute costs right now</h2>
         <div class="card">
-          <p class="micro">Live market price · recalculated from the connected feed</p>
+          <p class="micro">Demo bid · optional feed preview</p>
           <p class="panel-big" style="margin:6px 0 2px"><span id="marketCpm">$6.00</span><span class="per">CPM top bid</span></p>
-          <p class="footnote" id="marketNote">Current top bid · recalculated when you connect a feed. Sourced from your connected advertiser feed right now — highest CPM wins the minute.</p>
+          <p class="footnote" id="marketNote">Illustrative $6 CPM from fictional demo sponsors. No live market observation or earnings guarantee.</p>
           <p class="footnote">The rule competitors bury: their market price moves hourly with a floor and a
             per-hour cap — ours is simpler to verify because the auction is the price. Highest bid wins the
             minute, every minute, and the winning bid is printed on your ledger row.</p>
@@ -152,33 +152,33 @@
             </thead>
             <tbody>
               <tr>
-                <th scope="row">Base share — 65% of auction revenue, always on</th>
-                <td>65% of every winning bid. Publicly committed to 70% once platform revenue passes $50k/month.</td>
-                <td>A share that can change silently is a share you can't plan around. The number is fixed, the upgrade trigger is public, and both live on this page — not in a changelog.</td>
+                <th scope="row">Base share — 70% of auction revenue, always on</th>
+                <td>70% of auction revenue from eligible impressions. No revenue milestone is required.</td>
+                <td>The base share and promotional bonuses are separate ledger entries so each amount can be checked.</td>
               </tr>
               <tr>
-                <th scope="row">Click bonus — $0.05 per verified click</th>
-                <td>Verified = ≥10s after the impression, ≥2s dwell. Caps: max 5 per day, and clicks ≤25% of your verified monthly impressions.</td>
-                <td>Clicks are the fraud magnet, so verification is strict and the ceiling is hard. Honest users rarely notice the caps; click farms can't survive them.</td>
+                <th scope="row">Launch boost — 10% of auction revenue</th>
+                <td>During launch, the platform funds an additional 10 percentage points on top of the 70% base share.</td>
+                <td>A promotional boost, not a permanent increase to the base share. The simulator lets you turn it off.</td>
               </tr>
               <tr>
-                <th scope="row">Tiered earnings floor on user earnings</th>
-                <td>$4.00 CPM-equivalent Tier 1 (US, CA, UK, CH, EEA) · $2.50 Tier 2 (AU, NZ, JP, KR, SG, AE) · $1.25 Tier 3 (rest of world).</td>
-                <td>Geo-payout walls ("US-only") are the laziest fraud control in this industry. Tiered floors keep earning open to more countries while matching regional auction economics.</td>
+                <th scope="row">Payout setup and minimum</th>
+                <td>Setup unlocks at $5 in earnings, with no setup fee. Withdrawals require at least $10 available after five days pending.</td>
+                <td>Pending earnings cannot be withdrawn. Stripe and Whop are simulated choices in this preview.</td>
               </tr>
               <tr>
-                <th scope="row">Referrals — 10% of referee base earnings for 12 months</th>
-                <td>10% for a full year. Gated: the referee must log ≥60 verified minutes in their first 30 days, or nothing pays out.</td>
-                <td>Referral spam dies when the reward is gated on genuine use. Real users hit 60 minutes in their first day; farmed accounts never do.</td>
+                <th scope="row">Referrals — 5% to each person for the first 30 days</th>
+                <td>The referrer receives 5% of the referred user's base earnings; the referred user receives another 5%. Last-click attribution lasts 14 days.</td>
+                <td>Both bonuses are platform-funded, never deducted from the referred user's base. No earnings means no referral bonus.</td>
               </tr>
               <tr>
-                <th scope="row">Streak bonus — up to +10%</th>
-                <td>+1% per 5 consecutive active days (≥30 verified min/day each day). Caps at +10%.</td>
-                <td>Predictability for advertisers means predictable presence, and the streak bonus rewards exactly that — capped so it stays a garnish, never the meal.</td>
+                <th scope="row">Snooze on your schedule</th>
+                <td>30 minutes, 2 hours, 6 hours, or the rest of the day.</td>
+                <td>The demo pauses its sponsor rotation and earning animation, then resumes when the snooze expires.</td>
               </tr>
               <tr>
                 <th scope="row">Transparency — winning bid + your exact cut, every row</th>
-                <td>Every ledger row carries the auction's winning bid, your cut, the type, and the country tier. Your 65% is recomputable from your own data at any time.</td>
+                <td>Every ledger row carries the auction's winning bid, your cut, the type, and the country tier. Your 70% is recomputable from your own data at any time.</td>
                 <td>"Trust us" is not an audit trail. If the share is real, showing the bid costs nothing and proves everything.</td>
               </tr>
             </tbody>
@@ -193,17 +193,17 @@
           <div class="card">
             <h3>Claims we'll make</h3>
             <ul class="check-list">
-              <li>65% base share, publicly committed to 70% at $50k/mo platform revenue — vs their published 70% base (their FAQ, Sep 2026): an honest tie on paper, and our edge is the written ratchet.</li>
-              <li>Double the referral rate: 10% for 12 months (gated on 60 verified minutes) vs their 5% + 5% newcomer boost for 30 days.</li>
-              <li>$2 payout in 24 hours instead of $10 after a 5-day pending review.</li>
-              <li>Earn in more countries via tiered floors instead of payout-provider coverage walls.</li>
+              <li>70% base share plus a platform-funded 10% launch boost.</li>
+              <li>5% for the referrer and 5% for the referred user in their first 30 days; 14-day last-click attribution.</li>
+              <li>$10 minimum after a five-day pending period; setup unlocks at $5 in earnings.</li>
+              <li>All balances and withdrawals in this preview are simulated.</li>
               <li>See the winning bid and your cut on every impression.</li>
             </ul>
           </div>
           <div class="card">
             <h3>Claims we won't make</h3>
             <ul class="check-list not-list">
-              <li>We won't claim "we pay more than anyone" on base share — the claim is the written ratchet (65% today, 70% at $50k/mo platform revenue), not a bigger number.</li>
+              <li>We won't promise guaranteed earnings, permanent launch bonuses, or a live payout-provider connection in this demo.</li>
               <li>We won't quote competitor numbers we can't verify ourselves, or imply they've changed since we last checked.</li>
               <li>We won't promise payout rails we don't have — "rails subject to provider availability" is printed right on the payout table below.</li>
             </ul>
@@ -215,22 +215,22 @@
       <section aria-labelledby="sustain-h" style="margin:34px 0 10px">
         <h2 id="sustain-h" style="font-size:1.3rem">Sustainability: can this math hold?</h2>
         <p class="section-sub">
-          A payout model is only honest if the platform survives long enough to honor it. Here's the
-          same math we run internally, displayed as-is.
+          Bonuses come from the platform share. This example shows the remaining revenue before
+          operating costs, not a claimed profit margin or break-even forecast.
         </p>
 
         <div class="stat-grid">
           <div class="card stat-card">
-            <p class="stat-num">≈27%</p>
-            <p class="stat-label">platform margin at $6 CPM</p>
+            <p class="stat-num">70%</p>
+            <p class="stat-label">base share of auction revenue</p>
           </div>
           <div class="card stat-card">
-            <p class="stat-num">≈20%</p>
-            <p class="stat-label">platform margin at $2 CPM</p>
+            <p class="stat-num">10%</p>
+            <p class="stat-label">platform-funded launch boost</p>
           </div>
           <div class="card stat-card">
-            <p class="stat-num">≈$0.70</p>
-            <p class="stat-label">break-even CPM</p>
+            <p class="stat-num">5% + 5%</p>
+            <p class="stat-label">referral bonuses on base earnings</p>
           </div>
         </div>
 
@@ -238,14 +238,16 @@
           <h3>Worked example — 1,000 impressions</h3>
           <ol class="math-list">
             <li><span>1,000 impressions @ $6 CPM</span><span class="num">= $6.00</span></li>
-            <li><span>Your base (65%)</span><span class="num good">→ $3.90</span></li>
-            <li><span>Bounded bonuses (clicks + streak, caps applied)</span><span class="num">≤ $0.55</span></li>
-            <li><span>Platform keeps</span><span class="num">≥ ~$1.55</span></li>
+            <li><span>Your base (70%)</span><span class="num good">→ $4.20</span></li>
+            <li><span>Launch boost (10% of revenue)</span><span class="num">+ $0.60</span></li>
+            <li><span>Referred-user bonus (5% of base)</span><span class="num">+ $0.21</span></li>
+            <li><span>Referrer bonus (5% of base)</span><span class="num">$0.21</span></li>
+            <li><span>Platform remainder before costs</span><span class="num">$0.78</span></li>
           </ol>
           <p class="footnote">
-            The same shape holds at $2 CPM (≈20% margin) and stays positive down to ≈$0.70 CPM.
-            Tier floors and referral costs come out of the platform side — they're the reason the
-            margin is ≈27%, not ≈35%.
+            This example assumes an eligible referred user during launch and their first 30 days.
+            The user receives $5.01, the referrer $0.21, and the platform retains $0.78 before costs.
+            This is illustrative arithmetic, not a profit-margin or earnings guarantee.
           </p>
         </div>
       </section>
@@ -265,15 +267,14 @@
               inflate a balance that then has to be clawed back.</p>
           </div>
           <div class="card">
-            <h3>Click verification + caps</h3>
-            <p>≥10s after the impression, ≥2s dwell, max 5/day, ≤25% of verified monthly impressions.
-              Accidental clicks fail verification automatically; deliberate click-farming hits the caps
-              long before it becomes profitable.</p>
+            <h3>Pending review</h3>
+            <p>Earnings remain pending for five days. Only available funds count toward the $10 withdrawal
+              minimum. This preview uses a fixed demo clock and does not settle real funds.</p>
           </div>
           <div class="card">
-            <h3>Referral gating</h3>
-            <p>Referrals pay only after the referee logs ≥60 verified minutes in their first 30 days.
-              Signup-and-abandon farming produces nothing — there is no payout at zero activity.</p>
+            <h3>Referral eligibility</h3>
+            <p>Bonuses apply to base earnings in the referred user's first 30 days. Attribution follows the
+              last eligible click within 14 days. No activity means no base earnings or referral bonus.</p>
           </div>
           <div class="card">
             <h3>90-day clawback</h3>
@@ -305,28 +306,28 @@
             </thead>
             <tbody>
               <tr>
-                <th scope="row">Standard (24-hour rail)</th>
-                <td>$2</td>
-                <td>within 24 hours</td>
-                <td>$0</td>
+                <th scope="row">Stripe (simulated)</th>
+                <td>$10 available</td>
+                <td>5-day pending period before eligibility</td>
+                <td>No real transfer</td>
               </tr>
               <tr>
-                <th scope="row">Instant stablecoin</th>
-                <td>$2</td>
-                <td>seconds</td>
-                <td>$0</td>
+                <th scope="row">Whop (simulated)</th>
+                <td>$10 available</td>
+                <td>5-day pending period before eligibility</td>
+                <td>No real transfer</td>
               </tr>
             </tbody>
           </table>
         </div>
         <p class="footnote">
-          Rails subject to provider availability — if a provider can't serve your region, the other rail
-          still applies at the same $2 minimum and $0 fees.
+          Setup unlocks at $5 in earnings, not a $5 fee. These rail choices are simulations only.
+          Real availability, transfer timing, and fees require an actual provider integration.
         </p>
 
         <div class="card try-it">
           <h3>Try the model</h3>
-          <p>The dashboard seeds a deterministic demo ledger and simulates instant payouts, caps and all.</p>
+          <p>The dashboard uses a seeded demo ledger to simulate partial or maximum withdrawals, excluding pending funds.</p>
           <a class="btn btn-primary" href="dashboard.html">Open the demo dashboard</a>
         </div>
       </section>
@@ -340,7 +341,7 @@
   </div>
 </div>
 
-<script src="assets/js/demo.js?v=1002010"></script>
+<script src="assets/js/demo.js?v=1002013"></script>
 <script>
 /* Model page — proactive market-price card: top bid from the connected feed
    (or the seeded floor when offline). Display only; never touches a ledger. */
@@ -356,7 +357,7 @@
       el.textContent = '$' + Number(cpm).toFixed(2);
       if (note) note.textContent = live
         ? 'Live top bid from your connected feed — highest CPM wins the minute, recalculated on every fetch.'
-        : 'Current top bid · recalculated when you connect a feed. Sourced from your connected advertiser feed right now — highest CPM wins the minute.';
+        : 'Illustrative $6 CPM from fictional demo sponsors. No live market observation or earnings guarantee.';
     }
     var floor = 6.0, fellBack = true;
     try {
@@ -365,7 +366,7 @@
       }))[0];
       if (top && Number(top.cpm) > 0) { floor = Number(top.cpm); fellBack = false; }
     } catch (e) { /* floor stays */ }
-    paint(floor, !fellBack);
+    paint(floor, false);
     try {
       var raw = window.localStorage.getItem('freecoffee:v1');
       var s = raw ? JSON.parse(raw) : null;

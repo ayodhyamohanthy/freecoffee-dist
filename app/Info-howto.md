@@ -26,24 +26,24 @@ in the repo; without them the build stays ad-hoc and step 6 says so.
 
 ## What it does
 
-The Mac menu bar’s available horizontal stretch is the primary compact text ad slot; the status item/popover is fallback and control surface:
+The Mac status area chip itself is always an ad slot, never a dead end:
 
-- **No feed configured (demo):** the available menu-bar stretch shows a compact fictional demo sponsor label
+- **No feed configured (demo):** the chip rotates fictional demo sponsors
   (same cast as the web demo), clearly marked simulated — display only.
-- **Feed configured but empty:** the available menu-bar stretch reads **Your brand here**; the
+- **Feed configured but empty:** the chip reads **✨ Your brand here**; the
   popover and the right-click menu offer **Advertise here**, opening the
   public advertiser pitch. Zero earnings impact either way.
 
 1. **Left-click** the status item: the earnings popover opens — and stays
    live while open (balance, chart, sponsor, and CTA states refresh in
-   place; the compact placement refreshes only when the item becomes ineligible or its verified slot ends) —
+   place; the chip rotates sponsors every 60 s) —
    - header row: brand tile (the app icon), **☕ FreeCoffee** + a dynamic
      description line (live sponsor, `No sponsors available`, or the demo
      sponsor — plus an **✨ Advertise here** button when the feed is empty),
      status dot **Earning** / **Waiting** / **Disabled**;
    - **TOTAL BALANCE** (oversized mono figure) with right-aligned available/pending and the
      muted **"≈ N cups of coffee"** hint (1 cup = $5);
-   - the caramel **"☕ 65% base share — always on"** boost line;
+   - the caramel **"70% base + 10% launch share"** boost line (launch bonus funded by the platform);
    - **Earnings · 7 days** inset bar chart — weekday letters M T W T F S S with value labels,
      drawn from the app's persisted per-day history;
    - the gray **"Tip: Hold ⌘ and drag Mac status area items to rearrange them."** line;
@@ -62,52 +62,6 @@ The Mac menu bar’s available horizontal stretch is the primary compact text ad
    The only network traffic is the opt-in advertiser-feed fetch and the anonymous GitHub Releases
    update check — neither ever sends data back.
 7. All data is simulated. FreeCoffee demo — no real campaigns, no real payouts.
-
-## Founder-locked ad surface and category consent
-
-The primary sponsor surface is the unused stretch of the macOS menu bar. FreeCoffee renders a compact, text-first placement there, rather than a banner, floating window, notification, or attention-grabbing animation.
-
-- **Placement:** use only the menu bar's available horizontal stretch. Never cover another status item, force system items off-screen, wrap, marquee, pulse, or open a window. If space is insufficient, truncate usefully or fall back to the FreeCoffee status item/popover without claiming full delivery.
-- **Creative shape:** one short sponsor name or phrase, plain text first. An optional tiny static mark can support but never replace it. No autoplay audio, video, flashing, blinking, scrolling, or animated rotation.
-- **Category consent:** a campaign is eligible only when its normalized category is in the user's current chosen-category allowlist. No inferred category, look-alike expansion, hidden catch-all, or default opt-in. Empty allowlist means no paid personalized campaign is eligible; show safe house/meta inventory so the slot is never empty.
-- **Immediate control:** **Privacy Options** opens the chosen-category editor. Changes apply before the next selection and remove newly ineligible current inventory immediately. Persist locally and disclose only minimum category eligibility, never app/screen/file/window-title context.
-- **Explainability:** **Why this ad** names the exact chosen category, active privacy mode, sponsor, and inventory type (paid, house, affiliate, or meta). **Hide** immediately records a local sponsor/category exclusion without widening consent.
-- **Verification:** record a paid impression only after compact text was visibly rendered in available menu-bar space for the verified interval. Truncated/fallback display records the true surface and text; overlapped, off-screen, hidden, or suppressed creative earns nothing.
-- **Accessibility:** VoiceOver reads sponsor plus matching category; controls remain reachable from the popover/menu. Sponsorship never steals focus and respects Reduce Motion, Dim Flashing Lights, global animation pause, and task-boundary alerts.
-
-This founder direction replaces the older always-rotating chip framing.
-
-## Accessibility and privacy controls (shipping requirement)
-
-VoiceOver completeness is a release gate for the Mac status area app:
-
-- Every visible and interactive item must be reachable, focusable, and operable with VoiceOver only.
-- The status item exposes a concise label out of context, with state/value separate: **“FreeCoffee, earning active, X credits pending.”** Never expose wallet values as `$` or `USD`.
-- Controls use concise labels: **Pause earning**, **Privacy Options**, **Payout status**, and **Quit FreeCoffee**. State is separate from the label.
-- The privacy entry point pairs the words **Privacy Options** with a blue stylized toggle icon; never ship an unlabeled shield, gear, dollar sign, or abstract icon.
-- Decorative images are ignored. Charts have a text alternative with the same seven-day values and trend.
-- Test VoiceOver-only: read status, open popover, inspect balance and chart alternative, pause/resume, open Privacy Options, inspect payout state, check updates, and quit.
-- Sponsorship remains passive and never steals VoiceOver focus. Alerts follow `DESIGN.md`.
-- Async earning, settlement, and payout updates never open the menu-bar popover and never move keyboard or VoiceOver focus. Keep the visible ledger and any already-open views current in place.
-- Post AppKit `NSAccessibility.Notification.announcementRequested` announcements for user-requested results, payout success or failure, and meaningful milestones. Coalesce or suppress routine per-impression earning ticks so they do not become announcement noise.
-- Error announcements name the action that failed and the next step, for example: **“Payout request failed. Review payout details and try again.”** Keep the same actionable text visible in the ledger or payout state.
-- Honor macOS **Reduce Motion**: stop sponsor rotation and all decorative motion; no parallax, animated blur, spinning, scaling, or multi-axis movement. Preserve meaning with instant update, dissolve, highlight fade, or color shift.
-- Never use color alone for earning, settlement, pause, or errors. Pair text and distinct symbols; meet 4.5:1 normal and 3:1 large/bold contrast in light, dark, and Increase Contrast.
-- Controls are at least 20×20 pt, preferably 28×28 pt, spaced and keyboard-operable; no gesture-only task.
-- The seven-day chart exposes total, range, trend, and every point as accessible text, plus descriptors/audio graph where available.
-
-Evidence: https://developer.apple.com/help/app-store-connect/manage-app-accessibility/voiceover-evaluation-criteria/ and https://www.privacyassistant.org/media/publications/chi21-toggles.pdf
-
-## Ad creative accessibility and safety gates
-
-- Reject creative with more than three flashes in one second unless an approved analyzer verifies both general and red-flash thresholds; store result and creative hash. Pause is not mitigation.
-- Never autoplay audio. Future user-started audio over three seconds needs independent pause/stop/volume controls.
-- Moving, blinking, or scrolling creative over five seconds needs pause/stop/hide; auto-updating creative always does. Prefer one persistent, VoiceOver-exposed **Pause animated ads** control.
-- Honor macOS Dim Flashing Lights by dimming/replacing risky media as defense in depth, never instead of rejection.
-- Fail closed if analysis, required pause, audio, or transformed hash validation fails. Serve safe static fallback so the slot remains non-empty.
-- Test the final transformed asset under normal playback, Reduce Motion, Dim Flashing Lights, VoiceOver, and global pause.
-
-Evidence: https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html ; https://developer.apple.com/documentation/appkit/nsaccessibility/notification/1530633-announcementrequested ; https://www.w3.org/WAI/WCAG22/Understanding/three-flashes-or-below-threshold.html ; https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html ; https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html ; https://developer.apple.com/documentation/MediaAccessibility/responding-to-changes-in-the-flashing-lights-setting
 
 ## Updates
 
@@ -178,7 +132,8 @@ Behavior once configured:
   the last-good list is cached to `campaigns-cache.json` next to `config.json` — so the chip still
   shows campaigns offline, and deleting the cache file resets it.
 - The Mac status area chip shows the current live sponsor; the popover header gains a
-  **`LIVE · Sponsor — tagline`** line and the status line gains a **LIVE** marker. Campaigns change only when eligibility or the verified slot changes; consent is rechecked first.
+  **`LIVE · Sponsor — tagline`** line and the status line gains a **LIVE** marker. Campaigns rotate
+  every 60 s.
 - The right-click menu gains **Sponsor: … — LIVE** (opens the campaign's https `clickUrl` — https
   only, nothing else is ever opened) and **Reload campaigns** (⌘R) items.
 - Any failure (no config, malformed JSON, non-https URL, fetch error) falls back to the fictional

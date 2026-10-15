@@ -80,8 +80,7 @@
      State: deterministic seeded history + paid-out records + flags.
      Fields owned by other pages (profile, shellPrefs) survive the merge.
      ------------------------------------------------------------------ */
-  var state = loadState();
-  if (!state) state = {};
+  var state = D.normalizeState(loadState());
   if (!state.history) state.history = D.generateHistory(D.SEED); // seed 42, deterministic
   if (!state.paidOut) state.paidOut = [];   // [{ts, amount}]
   if (typeof state.paused !== 'boolean') state.paused = false;
@@ -104,8 +103,8 @@
     return day + ' · ' + (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm + ' UTC';
   }
 
-  var TYPE_LABEL = { impression: 'impression', click: 'click', streak: 'streak', referral: 'referral' };
-  var TYPE_CLASS = { impression: 't-impression', click: 't-click', streak: 't-streak', referral: 't-referral' };
+  var TYPE_LABEL = { impression: 'base', launch: 'launch boost', referred: 'new-user bonus', referral: 'referral' };
+  var TYPE_CLASS = { impression: 't-impression', launch: 't-streak', referred: 't-referral', referral: 't-referral' };
 
   /* ------------------------------------------------------------------
      Balances — computed FROM the ledger.
@@ -113,27 +112,7 @@
      split; we re-derive totals from the ledger rows to prove it).
      ------------------------------------------------------------------ */
   function computeTotals() {
-    var hist = state.history;
-    var ledger = hist.ledger;
-    var life = 0, pending = 0, week = 0;
-    var anchor = hist.totals.anchorTs;
-    var DAY = 86400000;
-    var i, row;
-    for (i = 0; i < ledger.length; i++) {
-      row = ledger[i];
-      life += row.cut;
-      if (row.ts >= anchor - DAY) pending += row.cut;
-      if (row.ts >= anchor - 7 * DAY) week += row.cut;
-    }
-    life = Math.round(life * 100) / 100;
-    pending = Math.round(pending * 100) / 100;
-    return {
-      lifetime: life,
-      pending: pending,
-      available: Math.round((life - pending) * 100) / 100,
-      week: Math.round(week * 100) / 100,
-      rows: ledger.length
-    };
+    return D.demoBalances(state);
   }
 
   function paidOutTotal() {
@@ -144,39 +123,34 @@
 
   function renderBalances() {
     var t = computeTotals();
-    var offset = state.balanceOffset || 0;
-    var avail = Math.max(0, t.available - paidOutTotal() + offset);
+    var offset = 0;
+    var avail = t.available;
 
     $('statLifetime').textContent = money(t.lifetime + offset);
     var lifetimeCell = document.getElementById('statLifetimeCell');
     if (lifetimeCell) lifetimeCell.textContent = money(t.lifetime + offset);
     $('statAvailable').textContent = money(avail);
-    $('statPending').textContent = t.pending.toFixed(2) + ' credits';
-    var estimateLow = Math.max(0, Math.floor(t.pending * 0.98 * 100) / 100);
-    var estimateHigh = Math.max(estimateLow, t.pending);
-    var settlementTs = state.history.totals.anchorTs + D.MODEL.PAYOUT_RAIL_HOURS * 3600000;
-    var settlementDay = D.fmtDay(settlementTs);
-    $('pendingEstimate').textContent = 'Estimated to settle ' + estimateLow.toFixed(2) + '–' + estimateHigh.toFixed(2) + ' credits by ' + settlementDay + '.';
-    $('pendingEstimateWhy').textContent = 'Range: pending verification adjustments can reduce the total by up to 2%; timing assumes the 24-hour rail.';
-    $('pendingEstimateActual').textContent = 'Estimate vs actual: shown here after this pending window settles.';
+    $('statPending').textContent = money(t.pending);
     $('statWeek').textContent = money(t.week);
     $('statLifetimeFoot').textContent = t.rows + ' rows in ledger · ' +
       (state.paidOut.length ? money(paidOutTotal()) + ' paid out so far' : 'nothing paid out yet');
     $('statCups').textContent = '≈ ' + D.cups(t.lifetime + offset) + ' cups of coffee';
 
-    // Payout progress toward the $10.00 minimum.
     var min = D.MODEL.PAYOUT_MINIMUM;
     var pct = Math.min(100, (avail / min) * 100);
     $('payoutProg').style.width = pct.toFixed(1) + '%';
     $('payoutProgLabel').textContent = money(avail) + ' of ' + money(min) + ' minimum — ' +
-      (pct >= 100 ? 'ready to pay out ☕' : Math.round(pct) + '% there');
+      (pct >= 100 ? 'available for demo withdrawal' : Math.round(pct) + '% there');
+    if ($('payoutProgBar')) $('payoutProgBar').setAttribute('aria-valuenow', pct.toFixed(1));
 
-    // Payout button enabled only when available ≥ $2.
-    var canPay = avail >= min;
+    var rail = state.profile.payoutRail;
+    var canPay = avail >= min && (rail === 'stripe' || rail === 'whop');
     $('payoutBtn').disabled = !canPay;
-    $('payoutBtn').textContent = canPay
-      ? 'Simulate instant payout'
-      : 'Simulate instant payout (min $2)';
+    $('payoutBtn').textContent = canPay ? 'Simulate withdrawal' : 'Demo withdrawal unavailable';
+    if ($('payoutAmount')) $('payoutAmount').max = avail.toFixed(2);
+    if ($('payoutSetupStatus')) $('payoutSetupStatus').textContent = rail === 'stripe' || rail === 'whop'
+      ? (rail === 'stripe' ? 'Stripe' : 'Whop') + ' selected for simulation — no provider connected.'
+      : 'Choose a simulated rail on Payouts. Setup unlocks at $5; withdrawals require $10 available.';
     return t;
   }
 
@@ -219,9 +193,6 @@
 
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 ' + w + ' ' + hgt);
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    svg.setAttribute('width', '100%');
-    svg.setAttribute('height', 'auto');
     svg.setAttribute('class', 'chart');
     svg.setAttribute('role', 'img');
     svg.setAttribute('aria-label', 'Area chart of earnings for the last 14 days');
@@ -360,14 +331,6 @@
         : (row.type === 'referral' ? 'base ' + money(row.bid) : '—');
       tr.appendChild(tdBid);
 
-      var tdDerivation = document.createElement('td');
-      if (row.type === 'impression') tdDerivation.textContent = row.count + ' verified min × ' + money(row.bid) + ' CPM × 65% ÷ 1,000';
-      else if (row.type === 'click') tdDerivation.textContent = '1 verified click × ' + money(row.cut);
-      else if (row.type === 'referral') tdDerivation.textContent = money(row.bid) + ' referee base × 10%';
-      else if (row.type === 'streak') tdDerivation.textContent = 'eligible 5-day block base × 1%';
-      else tdDerivation.textContent = row.note || 'See policy';
-      tr.appendChild(tdDerivation);
-
       var tdCut = document.createElement('td');
       tdCut.className = 'num cut-col';
       var cutStrong = document.createElement('strong');
@@ -375,23 +338,15 @@
       tdCut.appendChild(cutStrong);
       tr.appendChild(tdCut);
 
-      var settlesAt = row.ts + D.MODEL.PAYOUT_RAIL_HOURS * 3600000;
-      var isSettled = settlesAt <= state.history.totals.anchorTs;
-      var tdSettlement = document.createElement('td');
-      tdSettlement.textContent = isSettled ? 'Available' : 'Pending · ' + fmtClock(settlesAt);
-      tdSettlement.title = isSettled ? 'Cleared after the 24-hour pending rail' : 'Clears 24 hours after the event';
-      tr.appendChild(tdSettlement);
-
-      var tdPolicy = document.createElement('td');
-      tdPolicy.textContent = 'EARN-2026.09 · T' + row.tier;
-      tdPolicy.title = '65% base share; 24-hour pending rail. See Payout model.';
-      tr.appendChild(tdPolicy);
+      var tdTier = document.createElement('td');
+      tdTier.textContent = 'T' + row.tier;
+      tr.appendChild(tdTier);
 
       body.appendChild(tr);
     }
 
     $('ledgerFoot').textContent = 'Showing ' + shown + ' of ' + ledger.length +
-      ' rows · each entry records the event, rate, calculation, settlement timing, and policy version. Adjustments appear as their own rows. Policy EARN-2026.09 · 65% base share · 24-hour pending rail.';
+      ' demo rows · 70% base + 10% launch boost · 5% referral bonuses on base · five days pending.';
   }
 
   /* ------------------------------------------------------------------
@@ -597,13 +552,15 @@
     }
 
     D.fetchLiveCampaigns(feedUrl).then(function (res) {
+      // A disconnected/replaced feed must not be restored by an old request.
+      if (!state.profile || state.profile.adFeedUrl !== feedUrl) return;
       var campaigns = (res && res.campaigns) || [];
       var error = (res && res.error) || null;
-      if (campaigns.length) {
-        state.liveCampaigns = campaigns;      // cached for offline reloads
+      if (!error) {
+        state.liveCampaigns = campaigns;      // an empty successful feed clears stale campaigns
         saveState();
         renderLiveBanner(campaigns.length);
-      } else if (error) {
+      } else {
         renderLiveBanner(state.liveCampaigns ? state.liveCampaigns.length : 0, error);
       }
       renderSponsors();
@@ -685,6 +642,24 @@
         .catch(function () { /* keep the last known id */ });
     }
 
+    /* Coarse region for the delivery report: the country subtag of the user's
+       own locale, e.g. 'en-IN' → 'IN'. Deliberately locale-derived rather than
+       IP-derived — the advertiser report labels regions "device-reported, not
+       verified", and this keeps that claim true. Returns '' when the locale
+       carries no region, so the server's 'unknown' bucket stays honest instead
+       of being handed a guess. */
+    function currentRegion() {
+      try {
+        var langs = (navigator.languages && navigator.languages.length)
+          ? navigator.languages : [navigator.language || ''];
+        for (var i = 0; i < langs.length; i++) {
+          var m = /[-_]([A-Za-z]{2})(?:[-_]|$)/.exec(String(langs[i] || ''));
+          if (m) return m[1].toUpperCase();
+        }
+      } catch (e) { /* locale unavailable — report no region at all */ }
+      return '';
+    }
+
     function trackImpression() {
       if (state.paused || document.hidden) return;   // visible + not paused only
       if (!trackedCampaignId) return;                // nothing served → nothing to report
@@ -696,7 +671,9 @@
             deviceId: dev, type: 'impression', campaignId: trackedCampaignId, minutes: 1,
             /* which platform this placement happened on (mac | pwa | web-mac …) —
                the public /stats mix is built from this field */
-            platform: (typeof D.currentPlatform === 'function') ? D.currentPlatform() : 'web'
+            platform: (typeof D.currentPlatform === 'function') ? D.currentPlatform() : 'web',
+            /* which coarse region — the second axis of the same mix */
+            region: currentRegion()
           })
         }).catch(function () { /* best-effort — silent */ });
       } catch (e) { /* best-effort — silent */ }
@@ -740,7 +717,6 @@
       var p;
       try { p = loadTrackedCampaign(); } catch (e) { p = null; }
       Promise.resolve(p).then(function () {
-        trackImpression();
         fetchEarnings();
       });
     }
@@ -756,13 +732,28 @@
 
   function applyPaused(paused) {
     state.paused = paused;
+    if (!paused) state.snoozedUntil = 0;
     saveState();
     if (paused) {
       if (menubarDemo) menubarDemo.pause();
-      $('dashStatus').textContent = 'Ads paused — not earning. Resume any time.';
+      $('dashStatus').textContent = state.snoozedUntil
+        ? 'Demo snoozed until ' + new Date(state.snoozedUntil).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + '. Resume any time.'
+        : 'Demo paused. Resume any time.';
     } else {
-      if (menubarDemo) menubarDemo.resume();
-      $('dashStatus').textContent = 'Ads running — earning.';
+      var setupBlocked = computeTotals().lifetime >= D.MODEL.PAYOUT_SETUP_GATE &&
+        state.profile.payoutRail !== 'stripe' && state.profile.payoutRail !== 'whop';
+      if (menubarDemo) { if (setupBlocked) menubarDemo.pause(); else menubarDemo.resume(); }
+      $('dashStatus').textContent = setupBlocked ? 'Demo earning paused at $5 — choose a simulated rail on Payouts.' : 'Demo running — simulated earnings only.';
+    }
+    // The status-area preview reflects the same switch: its dot turns amber and
+    // the hint says so, instead of the chip silently keeping its green dot.
+    var previewChip = $('demoSponsorChip');
+    if (previewChip) previewChip.setAttribute('data-paused', paused ? 'true' : 'false');
+    var previewHint = $('mbPreviewHint');
+    if (previewHint) {
+      previewHint.textContent = paused
+        ? 'paused — the chip is frozen, as on a real menu bar'
+        : 'rotates every few seconds · simulated data';
     }
     var btn = $('pauseToggle');
     btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
@@ -788,20 +779,14 @@
   }
 
   function doPayout() {
-    var t = computeTotals();
-    var amount = Math.round((t.available - paidOutTotal() + (state.balanceOffset || 0)) * 100) / 100;
-    var payoutError = $('payoutError');
-    if (!(amount >= D.MODEL.PAYOUT_MINIMUM)) {
-      var shortfall = Math.max(0, D.MODEL.PAYOUT_MINIMUM - amount);
-      payoutError.textContent = 'Withdrawal is not ready. Build ' + shortfall.toFixed(2) + ' more credits to reach the 10-credit minimum; your current balance is preserved.';
-      payoutError.hidden = false; $('payoutBtn').setAttribute('aria-invalid', 'true'); payoutError.scrollIntoView({ block: 'nearest' }); return;
-    }
-    payoutError.hidden = true; $('payoutBtn').setAttribute('aria-invalid', 'false');
-    state.paidOut.push({ ts: Date.now(), amount: amount });
-    state.balanceOffset = 0;
+    var input = $('payoutAmount');
+    var result = D.withdrawDemo(state, input && input.value ? input.value : 'max');
+    if (result.error) { toast(result.error); return; }
     saveState();
     renderBalances();
-    toast('Payout simulated: ' + money(amount) + ' sent on the instant stablecoin rail. $0 fees. (demo)');
+    if (input) input.value = '';
+    toast('Demo withdrawal: ' + money(result.payout.amount) + ' via simulated ' +
+      (result.payout.rail === 'stripe' ? 'Stripe' : 'Whop') + '. No money sent.');
   }
 
   /* ------------------------------------------------------------------
@@ -813,7 +798,10 @@
   function startTicker() {
     stopTicker();
     ticker = window.setInterval(function () {
+      if (state.paused && state.snoozedUntil && Date.now() >= state.snoozedUntil) applyPaused(false);
       if (state.paused || document.hidden) return;
+      if (computeTotals().lifetime >= D.MODEL.PAYOUT_SETUP_GATE &&
+          state.profile.payoutRail !== 'stripe' && state.profile.payoutRail !== 'whop') return;
       state.balanceOffset = Math.round((state.balanceOffset + 0.01) * 100) / 100;
       renderBalances();
     }, 12000); // demo cadence: a cent every 12 s so the dashboard feels live
@@ -828,35 +816,28 @@
      Payout simulator — live recompute, BOTH click caps respected.
      ------------------------------------------------------------------ */
   function bindSim() {
-    var minutes = $('simMinutes'), cpm = $('simCpm'), ctr = $('simCtr'), streak = $('simStreak');
-    if (!minutes || !cpm || !ctr || !streak) return; // simulator markup absent
+    var minutes = $('simMinutes'), cpm = $('simCpm'), launch = $('simLaunch'), referred = $('simReferred');
+    if (!minutes || !cpm || !launch || !referred) return;
     function recompute() {
       var p = D.projectMonthly({
-        minutes: Number(minutes.value),
-        cpm: Number(cpm.value),
-        ctr: Number(ctr.value),
-        streak: streak.checked
+        minutes: Number(minutes.value), cpm: Number(cpm.value),
+        launch: launch.checked, referred: referred.checked
       });
       $('simMinutesOut').textContent = minutes.value;
       $('simCpmOut').textContent = '$' + Number(cpm.value).toFixed(2);
-      $('simCtrOut').textContent = Number(ctr.value).toFixed(1) + '%';
       $('simMonthly').textContent = money(p.monthly);
       $('simBase').textContent = money(p.base);
-      $('simClick').textContent = money(p.clickBonus);
-      $('simStreakBonus').textContent = money(p.streakBonus);
+      $('simLaunchBonus').textContent = money(p.launchBonus);
+      $('simReferredBonus').textContent = money(p.referredBonus);
       $('simTotal').textContent = money(p.monthly);
       $('simEta').textContent = p.firstPayoutEtaDays
-        ? 'first payout: ' + p.firstPayoutEtaLabel + ' at this run rate (min $2)'
-        : 'first payout: — (move a slider — zero minutes earns zero)';
-      $('simCapNote').textContent = p.capsApplied
-        ? ('capped: ' + p.cappedClicks + ' of ' + p.rawClicks + ' clicks · binding: ' + p.bindingCap)
-        : '(' + p.cappedClicks + ' verified clicks/mo, inside caps)';
-      $('simStreakNote').textContent = p.streakPct > 0 ? '(+' + p.streakPct + '%)' : '(inactive)';
+        ? 'first payout: ' + p.firstPayoutEtaLabel + ' including 5 days pending ($10 minimum)'
+        : 'first payout: — (zero minutes earns zero)';
     }
     minutes.addEventListener('input', recompute);
     cpm.addEventListener('input', recompute);
-    ctr.addEventListener('input', recompute);
-    streak.addEventListener('change', recompute);
+    launch.addEventListener('change', recompute);
+    referred.addEventListener('change', recompute);
     recompute();
   }
 
@@ -880,12 +861,17 @@
 
     renderAll();
     bindSim();
+    if (state.snoozedUntil && Date.now() >= state.snoozedUntil) state.paused = false;
     applyPaused(!!state.paused);
 
     $('pauseToggle').addEventListener('click', function () {
+      state.snoozedUntil = state.paused ? 0 : D.snoozeUntil($('snoozeDuration').value);
       applyPaused(!state.paused);
     });
     $('payoutBtn').addEventListener('click', doPayout);
+    if ($('payoutMax')) $('payoutMax').addEventListener('click', function () {
+      $('payoutAmount').value = computeTotals().available.toFixed(2);
+    });
 
     // Live-advertiser bridge: connected feed → banner + LIVE sponsor rows
     // (+ the landing demo rotation on index.html via demo.js). Display only.

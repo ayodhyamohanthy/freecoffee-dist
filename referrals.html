@@ -4,24 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Referrals — FreeCoffee</title>
-<meta name="description" content="FreeCoffee referral program — 10% of referee base earnings for 12 months, gated on 60 verified minutes. Demo, simulated data.">
+<meta name="description" content="FreeCoffee referral program — 5% of base earnings to each person for the referred user's first 30 days, with 14-day last-click attribution. Demo, simulated data.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeCoffee">
 <meta property="og:title" content="Referrals — FreeCoffee">
-<meta property="og:description" content="Earn 10% of referee base earnings for 12 months, gated on 60 verified minutes.">
+<meta property="og:description" content="Earn 5% of base earnings to each person for the referred user's first 30 days, with 14-day last-click attribution.">
 <meta property="og:url" content="https://freecoffee.tech/referrals.html">
 <meta property="og:image" content="https://freecoffee.tech/assets/icons/icon-512.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Referrals — FreeCoffee">
-<meta name="twitter:description" content="Earn 10% of referee base earnings for 12 months, gated on 60 verified minutes.">
+<meta name="twitter:description" content="Earn 5% of base earnings to each person for the referred user's first 30 days, with 14-day last-click attribution.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#F7F6F3">
+<meta name="theme-color" content="#000000">
 <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="assets/css/styles.css?v=1002010">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002013">
 </head>
 <body data-page="referrals" class="theme-light">
 
@@ -99,7 +99,7 @@
         <span class="crumb current" aria-current="page">Referrals</span>
       </nav>
       <div class="topbar-mid">
-        <p class="promo-pill">10% of referee base earnings for 12 months — gated on real use</p>
+        <p class="promo-pill">5% to each person · first 30 days · 14-day last-click attribution</p>
       </div>
       <div class="topbar-tools">
         <a class="topbar-link" href="index.html#faq">
@@ -117,8 +117,9 @@
       <div class="dash-head">
         <div>
           <h1>Referrals</h1>
-          <p class="dash-sub">You earn <strong>10% of your referee's base earnings for 12 months</strong> —
-            gated on them logging ≥60 verified minutes in their first 30 days. Demo data, seeded (seed 42).</p>
+          <p class="dash-sub">You receive <strong>5% of the referred user's base earnings in their first 30 days</strong>.
+            They receive another 5%, funded by the platform. Attribution uses the last eligible click within 14 days.
+            The numbers below are seeded demo data, not real referrals.</p>
         </div>
       </div>
 
@@ -127,8 +128,8 @@
         <!-- ============ REFERRAL LINK (2/3) ============ -->
         <section class="card" aria-label="Your referral link">
           <h2 style="font-size:1.15rem">Your referral link</h2>
-          <p class="section-sub" style="margin-bottom:0">Anyone who installs FreeCoffee through this link counts as
-            your referee — the demo's two referees arrived exactly this way.</p>
+          <p class="section-sub" style="margin-bottom:0">Share this attributed link. The last eligible referral click within 14 days receives credit.
+            The two users below are fictional examples, not people who used your link.</p>
           <div class="linkbox">
             <input class="input" type="text" id="referralLink" readonly
                    value="https://freecoffee.local/r/demo-user" aria-label="Referral URL">
@@ -143,15 +144,13 @@
           <p class="footnote" id="refRealNote" hidden style="margin-top:12px"></p>
           <p class="footnote" style="margin-top:12px">Link mechanics: the code is generated in your
             browser and is <strong>not</strong> your device id — the device id is the only identifier
-            the platform holds, so a share link must never carry it. Anyone arriving through this link
-            is bound to you server-side, and their 10% is <strong>held until they log 60 verified
-            minutes inside 30 days</strong>. Release, term and voiding are computed in
-            <code>backend/src/worker.js</code> — not here. Every platform artifact for this same code
+            the platform holds, so a share link must never carry it. The browser remembers the latest eligible click for 14 days.
+            When a backend is configured, it handles referral attribution and the 30-day bonus period.
+            Earnings stay pending for five days; withdrawals require $10 available and setup unlocks at $5. Every platform artifact for this same code
             lives on the <a href="flywheel.html">flywheel</a> page.</p>
           <p class="footnote" style="margin-top:12px">Demo referees below (seeded ledger):
-            <strong>astra.dev</strong> (verified, 74 minutes) and <strong>quill@mac</strong> (41 of 60
-            gate minutes). The real numbers live in the line above, and they only appear once a
-            backend URL is configured.</p>
+            <strong>astra.dev</strong> (day 9 of 30) and <strong>quill@mac</strong> (day 3 of 30).
+            Backend-reported numbers appear separately when a configured backend responds.</p>
         </section>
 
         <!-- ============ REWARDS (1/3) ============ -->
@@ -160,13 +159,13 @@
             <h2 style="font-size:1.15rem">Rewards</h2>
             <div class="tier-rows" style="margin-top:12px">
               <div class="tier-line">
-                <p class="tier-label"><strong>10% of referee base earnings, 12 months.</strong>
+                <p class="tier-label"><strong>5% of referred-user base earnings to each person, first 30 days.</strong>
                   Accrues daily against their simulated flights, straight into your ledger as
                   <span class="type-chip t-referral">referral</span> rows.</p>
               </div>
               <div class="tier-line">
-                <p class="tier-label"><strong>The gate: ≥60 verified minutes in their first 30 days.</strong>
-                  No gate-passing, no payout — which keeps the program worth funding and referral spam worthless.</p>
+                <p class="tier-label"><strong>14-day last-click attribution.</strong>
+                  The last eligible referral link wins. Both bonuses end after the referred user's first 30 days.</p>
               </div>
             </div>
             <p class="footnote" style="margin-top:12px">Referral earnings come out of the platform side, never out
@@ -182,12 +181,12 @@
             <p class="stat-label">referred users</p>
           </div>
           <div class="card stat-card">
-            <p class="stat-num" id="refEarnings">$2.82</p>
+            <p class="stat-num" id="refEarnings">—</p>
             <p class="stat-label">referral earnings · all time</p>
           </div>
           <div class="card stat-card">
-            <p class="stat-num" id="refGate">1 of 2</p>
-            <p class="stat-label">referees past the 60-min gate</p>
+            <p class="stat-num" id="refGate">2 of 2</p>
+            <p class="stat-label">demo users in their first 30 days</p>
           </div>
         </section>
 
@@ -197,24 +196,24 @@
           <div class="table-scroll" style="margin-top:12px">
             <table class="rail-table">
               <thead>
-                <tr><th scope="col">Referee</th><th scope="col">Gate status</th><th scope="col" class="num">Accrued</th></tr>
+                <tr><th scope="col">Referee</th><th scope="col">Bonus period</th><th scope="col" class="num">Accrued</th></tr>
               </thead>
               <tbody>
                 <tr>
                   <th scope="row">astra.dev</th>
-                  <td><span class="pill pill-ok">Verified</span>&nbsp; 74 verified minutes in first 30 days</td>
-                  <td class="num" style="text-align:right; font-family:var(--mono)">$2.24</td>
+                  <td><span class="pill pill-ok">Demo</span>&nbsp; Day 9 of 30</td>
+                  <td class="num" style="text-align:right; font-family:var(--mono)">—</td>
                 </tr>
                 <tr>
                   <th scope="row">quill@mac</th>
-                  <td><span class="pill pill-gold">In 30-day gate</span>&nbsp; 41 of 60 verified minutes</td>
-                  <td class="num" style="text-align:right; font-family:var(--mono)">$0.58</td>
+                  <td><span class="pill pill-gold">Demo</span>&nbsp; Day 3 of 30</td>
+                  <td class="num" style="text-align:right; font-family:var(--mono)">—</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p class="footnote" id="refFoot">Numbers come from the same seeded ledger as the dashboard —
-            referral rows are 10% of each referee's daily base earnings.</p>
+            referral rows are 5% of each referee's daily base earnings.</p>
         </section>
 
     </main>
@@ -228,7 +227,7 @@
 
 <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
 
-<script src="assets/js/demo.js?v=1002010"></script>
+<script src="assets/js/demo.js?v=1002013"></script>
 <script>
 /* Referrals — verify the displayed stats against the seeded ledger. */
 (function () {
@@ -315,9 +314,8 @@
         var note = $('refRealNote');
         note.textContent = 'REAL (backend) for code "' + kit.code + '": ' +
           d.totals.referees + ' referee' + (d.totals.referees === 1 ? '' : 's') + ' · ' +
-          d.totals.gated + ' past the 60-minute gate · ' + d.totals.minutes +
-          ' verified minutes · released ' + money(d.totals.accrued) +
-          ' · still gated ' + money(d.totals.held) + ' (held credit is never paid early).';
+          'credited ' + money(d.totals.accrued) + ' · pending ' + money(d.totals.held) +
+          '. Backend records are separate from the demo; provider connectivity is not implied.';
         note.hidden = false;
       });
     }
@@ -345,12 +343,14 @@
       $('refEarnings').textContent = '$' + (Math.round(sum * 100) / 100).toFixed(2);
       $('refUsers').textContent = String(refs.length);
       $('refGate').textContent = gated + ' of ' + refs.length;
+      var cells = document.querySelectorAll('.rail-table tbody tr td.num');
+      for (var r = 0; r < cells.length && r < refs.length; r++) cells[r].textContent = money(refs[r].accrued);
       var footBits = [];
       for (var j = 0; j < refs.length; j++) {
         footBits.push(refs[j].name + ' $' + (Number(refs[j].accrued) || 0).toFixed(2));
       }
       $('refFoot').textContent = 'Numbers come from the same seeded ledger as the dashboard — ' +
-        'referral rows are 10% of each referee\'s daily base earnings. ' +
+        'referral rows are 5% of each referee\'s daily base earnings. ' +
         footBits.join(' · ') + '.';
     } catch (e) { /* static values already match seed 42 */ }
   }

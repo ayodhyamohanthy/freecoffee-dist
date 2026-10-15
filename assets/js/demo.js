@@ -11,12 +11,6 @@
    epoch (ANCHOR_TS = 2026-09-06T00:00:00Z), never to Date.now() — so
    generateHistory(42) returns byte-identical JSON on every call.
 
-   Ledger unit: one row = one verified *flight* of minute-long Mac status area
-   placements for a sponsor (10–25 impressions), settled at the winning
-   CPM bid. cut = count × bid × 65% ÷ 1000. This keeps every number on
-   the CPM scale used by the payout model ($6 CPM ⇒ $3.90 base per
-   1,000 impressions).
-
    Coffee conversion: balances also display as "≈ N cups" — 1 cup = $5,
    floor(balance / 5).
    ========================================================================== */
@@ -49,39 +43,28 @@
      Model constants — mirror the copy on payouts.html exactly.
      ------------------------------------------------------------------ */
   var MODEL = {
-    BASE_SHARE: 0.65,             // transparent 65% of auction revenue, always-on
-    BASE_SHARE_COMMITTED: 0.70,   // publicly committed at $50k/mo platform revenue
-    COMMIT_THRESHOLD_MONTHLY: 50000,
-    CLICK_BONUS: 0.05,            // $ per verified click
-    CLICK_MAX_PER_DAY: 5,
-    CLICK_CAP_SHARE: 0.25,        // ≤25% of verified monthly impressions
-    CLICK_MIN_DELAY_S: 10,        // verification: ≥10s after impression
-    CLICK_MIN_DWELL_S: 2,         // verification: ≥2s dwell
+    VERSION: 3,
+    BASE_SHARE: 0.70,
+    LAUNCH_BOOST: 0.10,
+    REFERRED_RATE: 0.05,
+    REFERRAL_DAYS: 30,
+    REFERRAL_ATTRIBUTION_DAYS: 14,
+    PAYOUT_PENDING_DAYS: 5,
+    PAYOUT_SETUP_GATE: 5,
     TIERS: {
       1: { name: 'Tier 1', regions: 'US, CA, UK, CH, EEA', floorCPM: 4.0 },
       2: { name: 'Tier 2', regions: 'AU, NZ, JP, KR, SG, AE', floorCPM: 2.5 },
       3: { name: 'Tier 3', regions: 'Rest of world', floorCPM: 1.25 }
     },
-    REFERRAL_RATE: 0.10,          // 10% of referee base earnings
-    REFERRAL_MONTHS: 12,
-    REFERRAL_GATE_MIN: 60,        // verified minutes in first 30 days
-    STREAK_STEP_DAYS: 5,          // +1% per 5 consecutive active days
-    STREAK_BONUS_PER_STEP: 0.01,
-    STREAK_CAP: 0.10,             // max +10%
-    STREAK_MIN_MINUTES: 30,       // verified min/day to count as active
-    PAYOUT_MINIMUM: 10.0,         // $10 minimum
-    PAYOUT_RAIL_HOURS: 24,        // standard rail
+    REFERRAL_RATE: 0.05,
+    PAYOUT_MINIMUM: 10.0,
     CLAWBACK_DAYS: 90,            // fraud clawback window
     CUP_PRICE: CUP_PRICE,         // $5 per cup for the "≈ N cups" hint
     // Worked example, displayed as-is on payouts.html.
     WORKED_EXAMPLE: {
       impressions: 1000, cpm: 6.0,
-      revenue: 6.0, userBase: 3.90, bonusCeiling: 0.55, platformKeeps: 1.55
-    },
-    SUSTAINABILITY: {
-      marginAt6CPM: 27,           // ≈27% platform margin at $6 CPM
-      marginAt2CPM: 20,           // ≈20% platform margin at $2 CPM
-      breakevenCPM: 0.70          // break-even ≈ $0.70 CPM
+      revenue: 6.0, userBase: 4.20, launchBoost: 0.60,
+      referrerBonus: 0.21, referredBonus: 0.21, platformKeeps: 0.78
     },
     // Competitor benchmark block removed from copy — the product stands on
     // its own published economics (AD_ECON + SUSTAINABILITY above).
@@ -118,6 +101,63 @@
   function round2(n) { return Math.round(n * 100) / 100; }
 
   /* "≈ N cups" — 1 cup costs $5. */
+  function normalizeState(state) {
+    state = state && typeof state === 'object' ? state : {};
+    if (!state.history || !state.history.model || state.history.model.VERSION !== MODEL.VERSION) {
+      state.history = generateHistory(SEED);
+      state.paidOut = [];
+      state.balanceOffset = 0;
+    }
+    if (!Array.isArray(state.paidOut)) state.paidOut = [];
+    if (!state.profile || typeof state.profile !== 'object') state.profile = {};
+    return state;
+  }
+
+  function demoBalances(state) {
+    state = normalizeState(state);
+    var hist = state.history;
+    var lifetime = 0, pending = 0, week = 0, paid = 0;
+    hist.ledger.forEach(function (row) {
+      lifetime += row.cut;
+      if (row.ts > hist.totals.anchorTs - MODEL.PAYOUT_PENDING_DAYS * DAY_MS) pending += row.cut;
+      if (row.ts >= hist.totals.anchorTs - 7 * DAY_MS) week += row.cut;
+    });
+    state.paidOut.forEach(function (row) { paid += Number(row.amount) || 0; });
+    var offset = Math.max(0, Number(state.balanceOffset) || 0);
+    return {
+      lifetime: round2(lifetime + offset), pending: round2(pending + offset),
+      available: Math.max(0, round2(lifetime - pending - paid)),
+      week: round2(week), paid: round2(paid), rows: hist.ledger.length
+    };
+  }
+
+  function withdrawDemo(state, requested) {
+    var totals = demoBalances(state);
+    var rail = state.profile.payoutRail;
+    if (totals.lifetime < MODEL.PAYOUT_SETUP_GATE) return { error: 'Payout setup unlocks at $5 in demo earnings.' };
+    if (rail !== 'stripe' && rail !== 'whop') return { error: 'Choose a simulated Stripe or Whop rail on Payouts first.' };
+    var amount = requested === 'max' ? totals.available : Number(requested);
+    if (!isFinite(amount) || amount < MODEL.PAYOUT_MINIMUM || Math.abs(amount * 100 - Math.round(amount * 100)) > 1e-7) {
+      return { error: 'Enter at least $10.00, using no more than two decimal places.' };
+    }
+    amount = round2(amount);
+    if (amount > totals.available) return { error: 'Amount exceeds available demo funds. Pending earnings cannot be withdrawn.' };
+    var payout = { ts: Date.now(), amount: amount, rail: rail, simulated: true };
+    state.paidOut.push(payout);
+    return { payout: payout };
+  }
+
+  function snoozeUntil(duration, now) {
+    var start = typeof now === 'number' ? now : Date.now();
+    if (duration === 'restday') {
+      var end = new Date(start);
+      end.setHours(24, 0, 0, 0);
+      return end.getTime();
+    }
+    var minutes = { '30m': 30, '2h': 120, '6h': 360 }[duration];
+    return minutes ? start + minutes * 60000 : 0;
+  }
+
   function cups(balance) {
     return Math.max(0, Math.floor((Number(balance) || 0) / CUP_PRICE));
   }
@@ -344,16 +384,27 @@
         var tier = drawTier();
         var ts = dayStart + cursorHour * 3600000 + cursorMin * 60000;
 
-        // Exact cut for this flight: count × bid × 65% ÷ 1000.
         var cut = round2(count * bid * MODEL.BASE_SHARE / 1000);
 
         ledger.push({
           ts: ts, timeLabel: fmtTime(ts),
           sponsor: sp.name, type: 'impression',
           bid: bid, cut: cut, tier: tier, count: count,
-          note: 'flight of ' + count + ' verified minute-long placements · 65% base share'
+          note: 'demo flight of ' + count + ' minute-long placements · 70% base share'
         });
-        lifetime += cut;
+        var boost = round2(count * bid * MODEL.LAUNCH_BOOST / 1000);
+        var referred = round2(cut * MODEL.REFERRED_RATE);
+        ledger.push({
+          ts: ts, timeLabel: fmtTime(ts), sponsor: sp.name, type: 'launch',
+          bid: bid, cut: boost, tier: tier, count: count,
+          note: 'demo launch boost · 10% of auction revenue, platform-funded'
+        });
+        ledger.push({
+          ts: ts, timeLabel: fmtTime(ts), sponsor: sp.name, type: 'referred',
+          bid: cut, cut: referred, tier: tier, count: count,
+          note: 'demo referred-user bonus · 5% of base earnings in first 30 days, platform-funded'
+        });
+        lifetime += cut + boost + referred;
         impressions += count;
         filled += count;
 
@@ -362,65 +413,21 @@
         while (cursorMin >= 60) { cursorMin -= 60; cursorHour++; }
       }
 
-      // Verified clicks: 1–2 on ~70% of days (far inside both caps).
-      if (d > 0 && rand() < 0.7) {
-        var clicksToday = 1 + Math.floor(rand() * 2);
-        for (i = 0; i < clicksToday; i++) {
-          var ctier = drawTier();
-          var csp = drawSponsor();
-          var cbid = round2(csp.bid * (0.95 + rand() * 0.1));
-          var cts = dayStart + (11 + Math.floor(rand() * 10)) * 3600000 +
-                    Math.floor(rand() * 60) * 60000;
-          ledger.push({
-            ts: cts, timeLabel: fmtTime(cts),
-            sponsor: csp.name, type: 'click',
-            bid: cbid, cut: MODEL.CLICK_BONUS, tier: ctier, count: 1,
-            note: 'verified click · ≥10s after impression, ≥2s dwell · $0.05'
-          });
-          lifetime += MODEL.CLICK_BONUS;
-          clicks++;
-        }
-      }
     }
 
-    // Streak: the first 5 days form one completed active block (+1% of
-    // that block's base earnings); days 5–8 are the in-progress block.
-    var streakBlocks = 1;
-    var streakBonusTotal = 0;
-    var blockBase = 0;
     var t;
-    for (t = 0; t < ledger.length; t++) {
-      var r0 = ledger[t];
-      if (r0.type === 'impression' && r0.ts < ANCHOR_TS - (DAYS - 5) * DAY_MS) blockBase += r0.cut;
-    }
-    blockBase = round2(blockBase);
-    if (blockBase > 0) {
-      var sTs = ANCHOR_TS - (DAYS - 5) * DAY_MS + 23 * 3600000 + 30 * 60000;
-      var sCut = round2(blockBase * MODEL.STREAK_BONUS_PER_STEP);
-      ledger.push({
-        ts: sTs, timeLabel: fmtTime(sTs),
-        sponsor: '—', type: 'streak',
-        bid: 0, cut: sCut, tier: 1, count: 1,
-        note: 'streak block complete · 5 consecutive active days (≥30 verified min) → +1% of block base'
-      });
-      lifetime += sCut;
-      streakBonusTotal += sCut;
-    }
-
-    // Referral rows: 10% of each referee's daily base earnings.
-    // Referee A passed the 60-minute gate; Referee B is inside the 30-day gate.
     var referrals = [
-      { name: 'astra.dev', verified: true,  dailyBase: 2.55,
-        status: 'Verified · 74 verified minutes in first 30 days' },
-      { name: 'quill@mac', verified: false, dailyBase: 1.90,
-        status: 'In 30-day gate · 41 of 60 verified minutes' }
+      { name: 'astra.dev', verified: true, dailyBase: 2.55, days: DAYS,
+        status: 'Demo · day 9 of 30' },
+      { name: 'quill@mac', verified: true, dailyBase: 1.90, days: 3,
+        status: 'Demo · day 3 of 30' }
     ];
     var rr;
     for (rr = 0; rr < referrals.length; rr++) {
       var refName = referrals[rr].name;
-      var refDays = referrals[rr].verified ? DAYS : 3; // B joined 3 days ago
+      var refDays = Math.min(referrals[rr].days, MODEL.REFERRAL_DAYS);
       for (i = 0; i < refDays; i++) {
-        var rDay = ANCHOR_TS - (DAYS - i) * DAY_MS;
+        var rDay = ANCHOR_TS - (refDays - i) * DAY_MS;
         var wob = 0.85 + rand() * 0.3;
         var rBase = round2(referrals[rr].dailyBase * wob);
         var rTs = rDay + 21 * 3600000 + Math.floor(rand() * 60) * 60000;
@@ -429,8 +436,7 @@
           ts: rTs, timeLabel: fmtTime(rTs),
           sponsor: refName + ' (referral)', type: 'referral',
           bid: rBase, cut: rCut, tier: 1, count: 1,
-          note: 'referral · 10% of referee base earnings · 12-month term · ' +
-                (referrals[rr].verified ? 'gate passed' : 'gate pending (≥60 verified min in 30 days)')
+          note: 'demo referral · 5% of referred-user base earnings · first 30 days · platform-funded'
         });
         lifetime += rCut;
       }
@@ -443,7 +449,7 @@
     var CUTOFF = ANCHOR_TS;
     var pendingSum = 0;
     for (t = 0; t < ledger.length; t++) {
-      if (ledger[t].ts >= CUTOFF - DAY_MS) pendingSum += ledger[t].cut;
+      if (ledger[t].ts > CUTOFF - MODEL.PAYOUT_PENDING_DAYS * DAY_MS) pendingSum += ledger[t].cut;
     }
     var lifetimeRounded = round2(lifetime);
     var pendingRounded = round2(pendingSum);
@@ -489,9 +495,6 @@
       clicks: clicks,
       impressions: impressions,
       rows: ledger.length,
-      streakBlocks: streakBlocks,
-      streakBonusTotal: round2(streakBonusTotal),
-      streakProgressDays: DAYS - 1 - MODEL.STREAK_STEP_DAYS * streakBlocks, // in-progress days
       referrals: referrals,
       anchorTs: ANCHOR_TS,
       cutoffTs: CUTOFF,
@@ -509,25 +512,11 @@
     };
   }
 
-  /* ------------------------------------------------------------------
-     Payout-simulator projection (shared math, documented on payouts.html).
-
-     impressions: one minute-long placement per active minute →
-       monthly impressions = active minutes/day × 30.
-     base: 65% of auction revenue (worked example: $6 CPM ⇒ $3.90 per
-       1,000 impressions). Tier floors top up blended monthly earnings
-       when auctions run low — a platform-funded guarantee, not modeled
-       line-by-line here.
-     click bonus: impressions × CTR, then BOTH caps bind:
-       5/day × 30 days AND ≤25% of monthly impressions. $0.05 each.
-     streak: +1% per 5 active days, cap +10%, applied to base, only when
-       the day clears 30 verified active minutes.
-     ------------------------------------------------------------------ */
   function projectMonthly(opts) {
     var minutes = Math.max(0, Math.min(600, Number(opts.minutes) || 0));
     var cpm = Math.max(1, Math.min(8, Number(opts.cpm) || 1));
-    var ctrPct = Math.max(0, Math.min(3, Number(opts.ctr) || 0));
-    var streakOn = !!opts.streak;
+    var launchOn = opts.launch !== false;
+    var referredOn = !!opts.referred;
 
     var DAYS = 30;
     var dailyImpressions = Math.round(minutes);        // 1 impression per active minute
@@ -535,40 +524,21 @@
     var gross = impressions * cpm / 1000;
     var base = gross * MODEL.BASE_SHARE;
 
-    var rawClicks = impressions * (ctrPct / 100);
-    var capPerMonth = MODEL.CLICK_MAX_PER_DAY * DAYS;   // 5/day cap → 150/mo
-    var capShare = MODEL.CLICK_CAP_SHARE * impressions; // ≤25% of impressions
-    var cappedClicks = Math.min(rawClicks, capPerMonth, capShare);
-    var clickBonus = cappedClicks * MODEL.CLICK_BONUS;
-
-    var streakPct = 0;
-    if (streakOn && minutes >= MODEL.STREAK_MIN_MINUTES) {
-      streakPct = Math.min(
-        Math.floor(DAYS / MODEL.STREAK_STEP_DAYS) * MODEL.STREAK_BONUS_PER_STEP,
-        MODEL.STREAK_CAP
-      );
-    }
-    var streakBonus = base * streakPct;
-
-    var monthly = round2(base + clickBonus + streakBonus);
+    var launchBonus = launchOn ? gross * MODEL.LAUNCH_BOOST : 0;
+    var referredBonus = referredOn ? base * MODEL.REFERRED_RATE : 0;
+    var monthly = round2(base + launchBonus + referredBonus);
     var daily = monthly / DAYS;
-    var etaDays = daily > 0 ? Math.max(1, Math.ceil(MODEL.PAYOUT_MINIMUM / daily)) : null;
+    var etaDays = daily > 0 ? Math.ceil(MODEL.PAYOUT_MINIMUM / daily) + MODEL.PAYOUT_PENDING_DAYS : null;
 
     return {
       monthly: monthly,
       daily: round2(daily),
       gross: round2(gross),
       base: round2(base),
-      clickBonus: round2(clickBonus),
-      streakBonus: round2(streakBonus),
-      streakPct: Math.round(streakPct * 100),
+      launchBonus: round2(launchBonus),
+      referredBonus: round2(referredBonus),
       impressions: impressions,
       dailyImpressions: dailyImpressions,
-      rawClicks: Math.round(rawClicks),
-      cappedClicks: Math.round(cappedClicks),
-      capsApplied: rawClicks > Math.min(capPerMonth, capShare) + 1e-9,
-      bindingCap: (rawClicks <= Math.min(capPerMonth, capShare) + 1e-9) ? null
-        : (capShare < capPerMonth ? '25% of verified monthly impressions' : '5 clicks/day'),
       firstPayoutEtaDays: etaDays,
       firstPayoutEtaLabel: etaDays === null ? '—'
         : (etaDays === 1 ? '~1 day' : '~' + etaDays + ' days')
@@ -592,6 +562,11 @@
     var chartEl = document.getElementById('demoChart');
     var weekSum = document.getElementById('demoWeekSum');
     var bar = document.getElementById('demoMenuBar');
+    /* Popover mock mirrors the bar chip. These used to be hardcoded figures in
+       the HTML, which let the popover and the live-ticking chip disagree. */
+    var popTotal = document.getElementById('popBalance');
+    var popAvailable = document.getElementById('popAvailable');
+    var popPending = document.getElementById('popPending');
     if (!chip && !clock && !balance && !chartEl) return null;
 
     var reduced = false;
@@ -602,10 +577,12 @@
     // Balance starts at the seeded ledger's lifetime so the landing demo
     // and the dashboard tell the same story.
     var balanceCents = 226;
+    var pendingCents = 0;                 // seeded pending bucket (mirrors the popover split)
     var history = null;
     try {
       history = generateHistory(SEED);
       balanceCents = Math.round((history.totals.available + history.totals.pending) * 100);
+      pendingCents = Math.round(history.totals.pending * 100);
     } catch (e) { /* keep fallback */ }
 
     // Popover web mock: 7 inset bars (weekday letter + value label) from
@@ -671,37 +648,79 @@
     function chipName(c) { return (c && (c.sponsor || c.name)) || ''; }
     function chipTag(c) { return (c && (c.tagline || c.tag)) || ''; }
 
+    /* Monogram for the chip tile: the campaign's logoText when the feed
+       supplied one, else word initials — the same rule as the native chip. */
+    function chipMonogram(name, sp) {
+      var t = (sp && typeof sp.logoText === 'string') ? sp.logoText.replace(/^\s+|\s+$/g, '') : '';
+      if (t) return t.slice(0, 2).toUpperCase();
+      var parts = String(name || '').split(/\s+/).filter(Boolean);
+      var initials = parts.map(function (w) { return w.charAt(0); }).join('');
+      return (initials.slice(0, 2) || 'FC').toUpperCase();
+    }
+
     function renderChip() {
       var useLive = liveCampaigns.length > 0;
       var sp = useLive ? liveCampaigns[idx % liveCampaigns.length] : order[idx % order.length];
+      var name = chipName(sp);
+      var sub = chipTag(sp);
+      var liveCpm = Number(sp && sp.cpm);
+
+      /* Two markup shapes are supported:
+           • structured menu-bar chip — .mb-chip-mark / .mb-chip-copy
+             (title + description INSIDE the bar, like the native pill)
+           • legacy single-line chip  — one text node
+         The structured path is preferred; the fallback keeps any older page
+         working instead of throwing on a missing node. */
+      var head = null, small = null, mark = null;
+      if (chip && chip.querySelector) {
+        head = chip.querySelector('.mb-chip-copy strong');
+        small = chip.querySelector('.mb-chip-copy small');
+        mark = chip.querySelector('.mb-chip-mark');
+      }
+      var structured = !!(head && small);
+
       if (chip) {
-        chip.textContent = chipName(sp);
-        if (useLive) {
-          chip.setAttribute('title', 'LIVE CAMPAIGN — ' + chipName(sp));
-          if (sp.accent && /^#[0-9a-fA-F]{6}$/.test(sp.accent)) {
-            chip.style.backgroundColor = sp.accent;
-          } else {
-            chip.style.backgroundColor = '';
+        if (structured) {
+          head.textContent = name;
+          small.textContent = sub;
+          if (mark) {
+            mark.textContent = chipMonogram(name, sp);
+            // A live campaign's validated accent tints the TILE, not the whole
+            // pill (a full-colour bar chip looks like a badge, not an ad slot).
+            if (useLive && sp.accent && /^#[0-9a-fA-F]{6}$/.test(sp.accent)) {
+              mark.style.backgroundColor = sp.accent;
+            } else {
+              mark.style.backgroundColor = '';
+            }
           }
         } else {
-          chip.setAttribute('title', 'Current winning sponsor');
-          chip.style.backgroundColor = '';
+          chip.textContent = name + (sub ? ' — ' + sub : '');
+        }
+        chip.setAttribute('title', useLive
+          ? 'LIVE CAMPAIGN — ' + name + (sub ? ' — ' + sub : '')
+          : 'Current winning sponsor (fictional demo sponsor)');
+        if (!structured) {
+          chip.style.backgroundColor = (useLive && sp.accent && /^#[0-9a-fA-F]{6}$/.test(sp.accent))
+            ? sp.accent : '';
         }
       }
+
       if (tag) {
-        // Micro-label before the tagline: "LIVE CAMPAIGN · $X.XX CPM" when a
-        // real feed is connected (the winning bid is always visible), the
-        // fictional-sponsor title otherwise.
         tag.textContent = '';
         if (useLive) {
+          // Micro-label first: the winning bid is always visible, and the
+          // destination rule is stated rather than implied.
           var label = document.createElement('span');
           label.className = 'mb-live-label';
-          var liveCpm = Number(sp.cpm);
           label.textContent = 'LIVE CAMPAIGN · $' + (isFinite(liveCpm) ? liveCpm : 0).toFixed(2) + ' CPM';
           tag.appendChild(label);
-          tag.appendChild(document.createTextNode(chipTag(sp)));
+          tag.appendChild(document.createTextNode(structured
+            ? 'validated https destination · highest bid wins the minute'
+            : sub));
         } else {
-          tag.appendChild(document.createTextNode(chipTag(sp)));
+          tag.appendChild(document.createTextNode(structured
+            ? 'Fictional demo sponsor (simulated) — display only, nothing is collected.'
+            : sub));
         }
       }
     }
@@ -718,6 +737,14 @@
       var dollars = balanceCents / 100;
       if (balance) balance.textContent = '$' + dollars.toFixed(2);
       if (cupsEl) cupsEl.textContent = '≈ ' + cups(dollars) + ' cups of coffee';
+      // Popover mock: same numbers as the bar chip, with available + pending
+      // always summing to the total (the demo ledger's own invariant).
+      var pendingDollars = pendingCents / 100;
+      if (popTotal) popTotal.textContent = '$' + dollars.toFixed(2);
+      if (popPending) popPending.textContent = '$' + pendingDollars.toFixed(2);
+      if (popAvailable) {
+        popAvailable.textContent = '$' + Math.max(0, dollars - pendingDollars).toFixed(2);
+      }
     }
 
     function tickBalance() {
@@ -848,8 +875,9 @@
   var DEVICE_STORE_KEY = 'freecoffee:device';
 
   function deviceId() {
-    if (typeof window === 'undefined' || !window.localStorage) return '';
+    if (typeof window === 'undefined') return '';
     try {
+      if (!window.localStorage) return '';
       var existing = window.localStorage.getItem(DEVICE_STORE_KEY);
       if (existing && /^[a-f0-9-]{8,64}$/i.test(existing)) return existing;
       var id;
@@ -869,8 +897,9 @@
   }
 
   function backendBase() {
-    if (typeof window === 'undefined' || !window.localStorage) return '';
+    if (typeof window === 'undefined') return '';
     try {
+      if (!window.localStorage) return '';
       var raw = window.localStorage.getItem('freecoffee:v1');
       var s = raw ? JSON.parse(raw) : null;
       var url = (s && s.profile && typeof s.profile.backendUrl === 'string')
@@ -899,9 +928,6 @@
                                and claim it server-side when a backend is set
        shareKit()              one attributed artifact per platform
 
-     Nothing here computes money — the server owns the 10% referral share,
-     the 60-verified-minute gate, and the 12-month term
-     (backend/src/worker.js).
      ------------------------------------------------------------------ */
   var REFCODE_KEY = 'freecoffee:refcode';
   var REFCAPTURE_KEY = 'freecoffee:refcapture';
@@ -910,14 +936,15 @@
   var DIST_REPO = 'https://github.com/ayodhyamohanthy/freecoffee-dist';
   var DMG_URL = DIST_REPO + '/releases/latest/download/FreeCoffee.dmg';
   var BREW_CMD = 'brew install --cask freecoffee';
-  var SHARE_TEXT = 'FreeCoffee: advertisers bid for minute-long placements in the empty stretch of your Mac status area. You keep 65%, cash out at a low threshold — and the network is still empty (day zero), so early users shape the auction.';
+  var SHARE_TEXT = 'FreeCoffee demo: explore Mac status area sponsorships with a 70% base share, a platform-funded 10% launch boost, and 5% referral bonuses for each person in the first 30 days. $10 payout minimum after a 5-day pending period; setup unlocks at $5. Preview only — no real payouts.';
   var HN_TEXT = 'FreeCoffee – your Mac status area pays for the coffee';
 
   /* The user's own share code: 8 hex chars, generated once and kept locally.
      Hex-only so it always satisfies the server's code rules. */
   function referralCode() {
-    if (typeof window === 'undefined' || !window.localStorage) return '';
+    if (typeof window === 'undefined') return '';
     try {
+      if (!window.localStorage) return '';
       var existing = window.localStorage.getItem(REFCODE_KEY);
       if (existing && REF_CODE_RE.test(existing)) return existing;
       var hex = '0123456789abcdef';
@@ -1001,11 +1028,6 @@
   /* ------------------------------------------------------------------
      Capture — read ?ref / ?utm_source on arrival, on ANY page.
 
-     The capture is stored locally first (so it survives a reload and so every
-     page works with no backend configured), then claimed server-side when a
-     backend URL is set. The claim is idempotent: the server keeps the FIRST
-     code a device ever claimed, so a later link can never steal a referral.
-
      Returns the capture ({code, platform, at}) or null when the visit carried
      no usable ref. Never throws, never blocks the page.
      ------------------------------------------------------------------ */
@@ -1017,10 +1039,15 @@
       code = (qs.get('ref') || '').replace(/^\s+|\s+$/g, '').toLowerCase();
       platform = (qs.get('utm_source') || '').replace(/^\s+|\s+$/g, '').toLowerCase();
     } catch (e) { return null; }
-    if (!REF_CODE_RE.test(code)) return null;          // nothing to claim
-    if (code === referralCode()) return null;          // the user's own link
-
-    var capture = { code: code, platform: platform, at: Date.now() };
+    var capture;
+    if (!REF_CODE_RE.test(code) || code === referralCode()) {
+      capture = inboundRef();
+      if (!capture) return null;
+      code = capture.code;
+      platform = capture.platform;
+    } else {
+      capture = { code: code, platform: platform, at: Date.now() };
+    }
     try {
       if (window.localStorage) window.localStorage.setItem(REFCAPTURE_KEY, JSON.stringify(capture));
     } catch (e) { /* storage blocked — the claim below still runs */ }
@@ -1053,12 +1080,15 @@
 
   /* The last capture this browser saw (claimed or not) — for the flywheel page. */
   function inboundRef() {
-    if (typeof window === 'undefined' || !window.localStorage) return null;
+    if (typeof window === 'undefined') return null;
     try {
+      if (!window.localStorage) return null;
       var raw = window.localStorage.getItem(REFCAPTURE_KEY);
       if (!raw) return null;
       var parsed = JSON.parse(raw);
-      return (parsed && REF_CODE_RE.test(String(parsed.code || ''))) ? parsed : null;
+      return (parsed && REF_CODE_RE.test(String(parsed.code || '')) &&
+        isFinite(parsed.at) && parsed.at <= Date.now() &&
+        Date.now() - parsed.at < MODEL.REFERRAL_ATTRIBUTION_DAYS * DAY_MS) ? parsed : null;
     } catch (e) { return null; }
   }
 
@@ -1191,6 +1221,10 @@
     mulberry32: mulberry32,
     generateHistory: generateHistory,
     projectMonthly: projectMonthly,
+    normalizeState: normalizeState,
+    demoBalances: demoBalances,
+    withdrawDemo: withdrawDemo,
+    snoozeUntil: snoozeUntil,
     fetchLiveCampaigns: fetchLiveCampaigns,
     pickAd: pickAd,
     deviceId: deviceId,

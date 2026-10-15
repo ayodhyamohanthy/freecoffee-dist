@@ -16,12 +16,12 @@
 <meta name="twitter:description" content="Choose Stripe or Whop, check your balance, track withdrawals. Demo.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#F7F6F3">
+<meta name="theme-color" content="#000000">
 <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="assets/css/styles.css?v=1002010">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002013">
 </head>
 <body data-page="payouts" class="theme-light">
 
@@ -99,7 +99,7 @@
         <span class="crumb current" aria-current="page">Payouts</span>
       </nav>
       <div class="topbar-mid">
-        <p class="promo-pill">$2 minimum · $0 fees · instant stablecoin rail available</p>
+        <p class="promo-pill">Demo · $10 minimum · 5 days pending · setup at $5</p>
       </div>
       <div class="topbar-tools">
         <a class="topbar-link" href="index.html#faq">
@@ -117,8 +117,8 @@
       <div class="dash-head">
         <div>
           <h1>Payouts</h1>
-          <p class="dash-sub">Connect a payout rail, watch your balance clear, and withdraw once it crosses
-            the $2 minimum. How the money is computed lives on the
+          <p class="dash-sub">Choose a simulated payout rail after $5 in earnings, then try withdrawing at
+            the $10 minimum. How the money is computed lives on the
             <a href="model.html">payout model</a> page — every number here comes straight from your
             seeded demo ledger, stored only in this browser.</p>
         </div>
@@ -127,10 +127,9 @@
       <!-- ============ CHOOSE RAIL ============ -->
       <section class="card" aria-labelledby="rail-h" style="margin-bottom:16px">
         <h2 id="rail-h" style="font-size:1.15rem">Choose how you get paid</h2>
-        <p class="section-sub" style="margin-bottom:20px">Connect a rail once — payouts settle to it
-          automatically after that. <strong>Demo note:</strong> these are demo connections until the
-          platform backend's payout integration ships; nothing is sent to Stripe or Whop and no account
-          is created.</p>
+        <p class="section-sub" style="margin-bottom:20px">Choose one simulated rail. Setup unlocks at $5 in demo earnings; it is not a fee.
+          <strong>No provider is connected:</strong> nothing is sent to Stripe or Whop, no account is created,
+          and no money moves. Earnings have a five-day pending period before becoming available.</p>
 
         <div class="rail-cols">
           <span class="rail-div" aria-hidden="true"></span>
@@ -138,14 +137,13 @@
           <!-- Stripe -->
           <div class="rail-col">
             <p class="wordmark wordmark-stripe">Stripe</p>
-            <p class="rail-copy">Connect Stripe to receive instant payouts to your bank account.</p>
-            <a class="btn btn-stripe" id="stripeBtn" target="_blank" rel="noopener"
-               href="https://dashboard.stripe.com/accept?state=pending">Set up with Stripe →</a>
+            <p class="rail-copy">Use Stripe as the label for demo withdrawals. No bank account is linked.</p>
+            <button type="button" class="btn btn-stripe" id="stripeBtn">Choose simulated Stripe</button>
             <p class="rail-status">
               <button type="button" class="status-pill" id="stripeStatus"
-                      aria-label="Stripe connection status — click to mark connected (demo)">
+                      aria-label="Stripe simulation selection — click to choose this demo rail">
                 <span class="status-dot" aria-hidden="true"></span>
-                <span class="status-text">Not connected</span>
+                <span class="status-text">Not selected</span>
               </button>
             </p>
           </div>
@@ -153,14 +151,13 @@
           <!-- Whop -->
           <div class="rail-col">
             <p class="wordmark wordmark-whop">Whop</p>
-            <p class="rail-copy">Connect Whop for instant stablecoin payouts.</p>
-            <a class="btn btn-whop" id="whopBtn" target="_blank" rel="noopener"
-               href="https://whop.com/">Set up with Whop →</a>
+            <p class="rail-copy">Use Whop as the label for demo withdrawals. No wallet or account is linked.</p>
+            <button type="button" class="btn btn-whop" id="whopBtn">Choose simulated Whop</button>
             <p class="rail-status">
               <button type="button" class="status-pill" id="whopStatus"
-                      aria-label="Whop connection status — click to mark connected (demo)">
+                      aria-label="Whop simulation selection — click to choose this demo rail">
                 <span class="status-dot" aria-hidden="true"></span>
-                <span class="status-text">Not connected</span>
+                <span class="status-text">Not selected</span>
               </button>
             </p>
           </div>
@@ -176,7 +173,7 @@
         </div>
         <div class="balcard-divs cols-3" style="margin-top:14px">
           <div class="balcell">
-            <p class="balcap">Total balance</p>
+            <p class="balcap">Lifetime demo earnings</p>
             <p class="balnum" id="statLifetimeCell">$0.00</p>
             <p class="balfoot" id="statCups">≈ 0 cups of coffee · 1 cup = $5.00</p>
           </div>
@@ -188,7 +185,7 @@
           <div class="balcell">
             <p class="balcap">Pending</p>
             <p class="balnum" id="statPending">$0.00</p>
-            <p class="balfoot">clears within 24 hours</p>
+            <p class="balfoot">5-day hold · fixed demo clock</p>
           </div>
         </div>
         <p class="footnote" id="balFoot" style="margin-top:14px"></p>
@@ -214,7 +211,7 @@
             </tbody>
           </table>
         </div>
-        <p class="footnote">Simulated payouts from the dashboard's “Simulate instant payout” button land here.
+        <p class="footnote">Simulated payouts from the dashboard's “Simulate withdrawal” button land here.
           Demo rail connections don't move real money — no withdrawal is sent to Stripe or Whop.</p>
       </section>
 
@@ -230,7 +227,7 @@
 
 <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
 
-<script src="assets/js/demo.js?v=1002010"></script>
+<script src="assets/js/demo.js?v=1002013"></script>
 <script>
 /* Payouts page — rail connection state + balance + withdrawal history.
    All state in freecoffee:v1 (the same store dashboard.js owns):
@@ -279,18 +276,26 @@
     if (!btn) return;
     var text = btn.querySelector('.status-text');
     btn.classList.toggle('connected', !!connected);
-    if (text) text.textContent = connected ? 'Connected (demo)' : 'Not connected';
+    if (text) text.textContent = connected ? 'Selected for demo' : 'Not selected';
   }
 
   function connect(rail) {
-    writeState({ profile: Object.assign({}, readState().profile || {}, { payoutRail: rail }) });
+    var state = window.FreeCoffeeDemo.normalizeState(readState());
+    if (window.FreeCoffeeDemo.demoBalances(state).lifetime < window.FreeCoffeeDemo.MODEL.PAYOUT_SETUP_GATE) {
+      toast('Setup unlocks at $5 in demo earnings. No setup fee is charged.');
+      return;
+    }
+    writeState({ profile: Object.assign({}, state.profile, { payoutRail: rail }) });
     paintRail();
     toast((rail === 'stripe' ? 'Stripe' : 'Whop') +
-      ' marked connected — demo connection only, nothing was sent to the provider.');
+      ' selected for simulation. No provider connected; no money sent.');
   }
 
   function paintRail() {
-    var rail = (readState().profile || {}).payoutRail || '';
+    var state = window.FreeCoffeeDemo.normalizeState(readState());
+    var rail = state.profile.payoutRail || '';
+    var locked = window.FreeCoffeeDemo.demoBalances(state).lifetime < window.FreeCoffeeDemo.MODEL.PAYOUT_SETUP_GATE;
+    ['stripeBtn', 'whopBtn', 'stripeStatus', 'whopStatus'].forEach(function (id) { $(id).disabled = locked; });
     paintPill($('stripeStatus'), rail === 'stripe');
     paintPill($('whopStatus'), rail === 'whop');
   }
@@ -307,16 +312,16 @@
     var D = window.FreeCoffeeDemo;
     if (!D || typeof D.generateHistory !== 'function') return;
     try {
-      var h = D.generateHistory(D.SEED);
-      var t = h.totals;
-      // Mirror the dashboard: withdrawals already paid out reduce what's available.
-      var avail = Math.max(0, Math.round((t.available - paidOutTotal()) * 100) / 100);
+      var state = D.normalizeState(readState());
+      writeState(state);
+      var t = D.demoBalances(state);
+      var avail = t.available;
       $('statLifetimeCell').textContent = money(t.lifetime);
       $('statAvailable').textContent = money(avail);
       $('statPending').textContent = money(t.pending);
       $('statCups').textContent = '≈ ' + D.cups(t.lifetime) + ' cups of coffee · 1 cup = $5.00';
       $('balFoot').textContent = t.rows + ' rows in ledger · withdrawals reduce the available balance shown above. ' +
-        'Withdraw the available amount from the Overview page once it crosses the $2 minimum.';
+        'Withdraw the available amount from the Overview page once it crosses the $10 minimum.';
     } catch (e) { /* static $0.00 fallback stays */ }
   }
 
@@ -357,7 +362,7 @@
       tr2.appendChild(tdDate);
 
       var tdMethod = document.createElement('td');
-      tdMethod.textContent = 'Instant stablecoin';
+      tdMethod.textContent = p.rail === 'stripe' ? 'Stripe (simulated)' : p.rail === 'whop' ? 'Whop (simulated)' : 'Legacy simulation';
       tr2.appendChild(tdMethod);
 
       var tdAmt = document.createElement('td');
@@ -368,7 +373,7 @@
       var tdStatus = document.createElement('td');
       var pill = document.createElement('span');
       pill.className = 'pill pill-ok';
-      pill.textContent = 'Completed ✓';
+      pill.textContent = 'Simulated — no money sent';
       tdStatus.appendChild(pill);
       tr2.appendChild(tdStatus);
 

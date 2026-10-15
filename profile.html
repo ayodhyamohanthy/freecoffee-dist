@@ -16,12 +16,12 @@
 <meta name="twitter:description" content="Account, payout rails, connected Mac, and ad-feed settings. Demo.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#F7F6F3">
+<meta name="theme-color" content="#000000">
 <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="assets/css/styles.css?v=1002010">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002013">
 </head>
 <body data-page="profile" class="theme-light">
 
@@ -122,15 +122,14 @@
         </div>
       </div>
 
-      <div class="dash-cols" style="grid-template-columns: 1.7fr 1fr">
+      <div class="dash-cols dash-cols-17">
 
         <!-- ============ ACCOUNT FORM ============ -->
         <section class="card" id="account" aria-label="Account">
           <h2 style="font-size:1.15rem">Account</h2>
           <p class="section-sub" style="margin-bottom:20px">How your demo account appears locally.</p>
 
-          <form id="profileForm" novalidate aria-describedby="profileErrorSummary">
-            <div class="form-error-summary" id="profileErrorSummary" role="alert" tabindex="-1" hidden><strong>Check the highlighted fields.</strong><ul id="profileErrorList"></ul></div>
+          <form id="profileForm" novalidate>
             <div class="field">
               <label class="field-label" for="displayName">Display name</label>
               <input class="input" type="text" id="displayName" name="displayName"
@@ -140,7 +139,7 @@
               <label class="field-label" for="email">Email</label>
               <input class="input" type="email" id="email" name="email"
                      value="demo@freecoffee.local" placeholder="you@example.com" autocomplete="email">
-              <p class="footnote" style="margin-top:6px">Demo only — this address never leaves your browser.</p><p class="field-error" id="emailError" role="alert" hidden></p>
+              <p class="footnote" style="margin-top:6px">Demo only — this address never leaves your browser.</p>
             </div>
             <div class="field">
               <label class="field-label" for="coffeePref">Coffee preference</label>
@@ -160,7 +159,7 @@
                        aria-describedby="adFeedUrlHint">
                 <button type="button" class="btn btn-ghost" id="testFeedBtn">Test</button>
               </div>
-              <p class="field-error" id="adFeedUrlError" role="alert" hidden></p><p class="footnote" id="adFeedUrlHint" style="margin-top:6px">Optional — plug in a real ad campaign feed
+              <p class="footnote" id="adFeedUrlHint" style="margin-top:6px">Optional — plug in a real ad campaign feed
                 (affiliate network, offerwall, direct sponsor): an HTTPS URL returning a JSON array of campaigns.
                 See the <a href="advertisers.html">feed contract</a>. Leave empty to stay on the fictional demo sponsors.
                 Live campaigns display with a LIVE marker and never add to the simulated ledger.</p>
@@ -173,11 +172,9 @@
                        aria-describedby="backendUrlHint">
                 <button type="button" class="btn btn-ghost" id="testBackendBtn">Test</button>
               </div>
-              <p class="field-error" id="backendUrlError" role="alert" hidden></p><p class="footnote" id="backendUrlHint" style="margin-top:6px">Optional — the production backend
-                (Cloudflare Worker, <code>backend/README.md</code>) that settles <strong>real</strong> earnings
-                server-side. When set, the dashboard reports verified impressions once a minute and shows a separate
-                REAL EARNINGS (backend) panel; the simulated ledger is never touched. Leave empty to stay 100%
-                offline demo.</p>
+              <p class="footnote" id="backendUrlHint" style="margin-top:6px">Optional — a configured backend can supply separate records for inspection.
+                The dashboard preview does not report impressions or verify provider connectivity.
+                Stripe and Whop remain simulated choices. Leave empty to use the offline demo.</p>
             </div>
             <div class="field">
               <label class="field-label" for="minCpm">MIN CPM FLOOR ($)</label>
@@ -187,24 +184,6 @@
               <p class="footnote" id="minCpmHint" style="margin-top:6px">Only show campaigns paying at least this much
                 per 1,000 verified minutes. Campaigns below the floor are hidden everywhere (Mac status area, dashboard rows,
                 banner). Highest CPM always wins the placement.</p>
-            </div>
-            <div class="field" id="privacySettings">
-              <span class="field-label" id="privacyModeLabel">Ad privacy</span>
-              <p class="footnote" style="margin:6px 0 12px">Choose one clear mode. Personalization, when enabled, stays on this Mac.</p>
-              <div class="prefs-row" role="radiogroup" aria-labelledby="privacyModeLabel">
-                <label class="pref"><input type="radio" name="privacyMode" value="non-personalized" checked><span>Non-personalized<span class="pref-sub">Ads use campaign context, not local interests</span></span></label>
-                <label class="pref"><input type="radio" name="privacyMode" value="on-mac"><span>Personalized on this Mac<span class="pref-sub">Local signals shape ads; nothing leaves the device</span></span></label>
-                <label class="pref"><input type="radio" name="privacyMode" value="off"><span>Off<span class="pref-sub">Turn off sponsored placements</span></span></label>
-              </div>
-              <details id="privacyAdvanced" style="margin-top:12px">
-                <summary class="btn btn-ghost btn-sm">Advanced</summary>
-                <p class="footnote" style="margin:10px 0">Used only with “Personalized on this Mac”. These controls stay collapsed by default.</p>
-                <div class="prefs-row" role="group" aria-label="Advanced local personalization categories">
-                  <label class="pref"><input type="checkbox" id="privacyAppCategory" checked><span>App category<span class="pref-sub">Broad kind of app in use</span></span></label>
-                  <label class="pref"><input type="checkbox" id="privacyTimeContext" checked><span>Time context<span class="pref-sub">Time of day and weekday, processed locally</span></span></label>
-                  <label class="pref"><input type="checkbox" id="privacyAdHistory"><span>Ad history<span class="pref-sub">Recent sponsor views stored on this Mac</span></span></label>
-                </div>
-              </details>
             </div>
             <div class="field">
               <span class="field-label" id="emailPrefsLabel">Email preferences</span>
@@ -237,8 +216,8 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/></svg>
               </span>
               <span class="act-body">
-                <p class="act-title"><span class="pill pill-warn">Not set up</span></p>
-                <p class="act-sub">Cash out your balance once this is done.</p>
+                <p class="act-title"><span class="pill pill-warn" id="profileRailStatus">No simulated rail selected</span></p>
+                <p class="act-sub">Demo setup unlocks at $5 in earnings. Withdraw from $10 available after five days pending.</p>
               </span>
             </div>
             <a class="btn btn-primary" id="setupPayoutBtn" href="payouts.html" style="margin-top:12px">Set up</a>
@@ -251,8 +230,8 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
               </span>
               <span class="act-body">
-                <p class="act-title"><span class="pill pill-ok">Connected</span></p>
-                <p class="act-sub">This Mac · macOS 26</p>
+                <p class="act-title"><span class="pill pill-ok">Browser demo</span></p>
+                <p class="act-sub">No native device connection verified</p>
                 <p class="act-sub">Device ID <code id="deviceIdCode">…</code>
                   <button type="button" class="btn btn-ghost btn-sm" id="copyDeviceIdBtn" style="margin-left:8px">Copy</button></p>
               </span>
@@ -271,7 +250,7 @@ FreeCoffee is a local demo — a static site served at http://127.0.0.1:8090 and
 Do this:
 1. Open http://127.0.0.1:8090/dashboard.html ( Earn › Overview ).
 2. Read the TOTAL BALANCE card: lifetime, available, pending, and the "≈ N cups" hint (1 cup = $5).
-3. Skim the ledger table: every row shows the winning bid and my exact 65% cut.
+3. Skim the ledger table: every row shows the winning bid and my exact 70% base cut plus separate platform-funded bonus rows.
 4. Check referrals at http://127.0.0.1:8090/referrals.html.
 5. Report the numbers back to me. Do not modify anything — the demo stores its state only in my browser's localStorage under freecoffee:v1.
 
@@ -293,7 +272,7 @@ Disclaimer: FreeCoffee demo — simulated data.</textarea>
 
 <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
 
-<script src="assets/js/demo.js?v=1002010"></script>
+<script src="assets/js/demo.js?v=1002013"></script>
 <script>
 /* Profile page — all state in freecoffee:v1. */
 (function () {
@@ -350,6 +329,8 @@ Disclaimer: FreeCoffee demo — simulated data.</textarea>
   function init() {
     var s = readState();
     var p = s.profile || {};
+    $('profileRailStatus').textContent = p.payoutRail === 'stripe' ? 'Stripe selected (demo)' :
+      p.payoutRail === 'whop' ? 'Whop selected (demo)' : 'No simulated rail selected';
     $('displayName').value = p.displayName || 'Demo User';
     $('email').value = p.email || 'demo@freecoffee.local';
     $('coffeePref').value = p.coffeePref || 'flat-white';
@@ -359,12 +340,6 @@ Disclaimer: FreeCoffee demo — simulated data.</textarea>
     var minCpmNum = Number(p.minCpm);
     $('minCpm').value = (p.minCpm === 0 || p.minCpm === '0' ||
                          (isFinite(minCpmNum) && minCpmNum !== 0)) ? String(minCpmNum) : '';
-    var privacyMode = p.privacyMode || 'non-personalized';
-    var privacyChoice = document.querySelector('input[name="privacyMode"][value="' + privacyMode + '"]');
-    if (privacyChoice) privacyChoice.checked = true;
-    $('privacyAppCategory').checked = p.privacyAppCategory !== false;
-    $('privacyTimeContext').checked = p.privacyTimeContext !== false;
-    $('privacyAdHistory').checked = !!p.privacyAdHistory;
     $('prefWeekly').checked = p.prefWeekly !== false;
     $('prefPayout').checked = p.prefPayout !== false;
     $('prefProduct').checked = !!p.prefProduct;
@@ -387,31 +362,17 @@ Disclaimer: FreeCoffee demo — simulated data.</textarea>
       // (e.g. payouts.html → payoutRail) survive a profile save.
       var prev = readState().profile || {};
       var backend = $('backendUrl').value.replace(/^\s+|\s+$/g, '').replace(/\/+$/, '');
-      var feed = $('adFeedUrl').value.replace(/^\s+|\s+$/g, '');
-      var email = $('email').value.trim();
-      var errors = [];
-      function fieldError(id, message) {
-        var input = $(id), error = $(id + 'Error'); input.setAttribute('aria-invalid', message ? 'true' : 'false');
-        if (error) { error.textContent = message || ''; error.hidden = !message; }
-        if (message) errors.push({ id: id, message: message });
+      if (backend && !/^https:\/\//i.test(backend)) {
+        toast('Backend URL must be an https:// URL (or empty for the offline demo).');
+        return;
       }
-      fieldError('email', email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'Enter a complete email address, such as name@example.com.' : '');
-      fieldError('adFeedUrl', feed && !/^https:\/\//i.test(feed) ? 'Use an https:// campaign-feed URL, or leave this field empty.' : '');
-      fieldError('backendUrl', backend && !/^https:\/\//i.test(backend) ? 'Use an https:// backend URL, or leave this field empty.' : '');
-      var summary = $('profileErrorSummary'), list = $('profileErrorList'); list.textContent = '';
-      for (var ei = 0; ei < errors.length; ei++) { var li = document.createElement('li'), link = document.createElement('a'); link.href = '#' + errors[ei].id; link.textContent = errors[ei].message; li.appendChild(link); list.appendChild(li); }
-      summary.hidden = errors.length === 0; if (errors.length) { summary.focus(); return; }
       var next = Object.assign({}, prev, {
         displayName: $('displayName').value.trim() || 'Demo User',
-        email: email || 'demo@freecoffee.local',
+        email: $('email').value.trim() || 'demo@freecoffee.local',
         coffeePref: $('coffeePref').value,
-        adFeedUrl: feed,
+        adFeedUrl: $('adFeedUrl').value.replace(/^\s+|\s+$/g, ''),
         backendUrl: backend,
         minCpm: minCpmVal,
-        privacyMode: (document.querySelector('input[name="privacyMode"]:checked') || {}).value || 'non-personalized',
-        privacyAppCategory: $('privacyAppCategory').checked,
-        privacyTimeContext: $('privacyTimeContext').checked,
-        privacyAdHistory: $('privacyAdHistory').checked,
         prefWeekly: $('prefWeekly').checked,
         prefPayout: $('prefPayout').checked,
         prefProduct: $('prefProduct').checked,
@@ -473,8 +434,8 @@ Disclaimer: FreeCoffee demo — simulated data.</textarea>
     });
 
     $('unlinkMacBtn').addEventListener('click', function () {
-      var ok = window.confirm('Unlink this Mac from the FreeCoffee demo?\n\nThe Mac status area app will stop accruing simulated earnings until re-linked. (demo)');
-      if (ok) toast('Mac unlinked (demo) — nothing was actually changed.');
+      var ok = window.confirm('Preview unlinking a device?\n\nThis demo has no native device connection. No app or account will be changed.');
+      if (ok) toast('Unlink preview complete — no device or account was changed.');
       else toast('Unlink cancelled.');
     });
 

@@ -25,8 +25,8 @@
 /* eslint-disable no-restricted-globals */
 'use strict';
 
-var ASSET_V = '1002010';                  // must match ?v= in the HTML asset URLs
-var CACHE = 'freecoffee-v1002010';
+var ASSET_V = '1002013';                  // must match ?v= in the HTML asset URLs
+var CACHE = 'freecoffee-v1002013';
 
 var PRECACHE = [
   './',
@@ -58,7 +58,7 @@ var FALLBACK_URL = new URL('./index.html', self.location.href).toString();
 function putSafe(cache, request, response) {
   try {
     if (!response || !response.ok) return;
-    cache.put(request, response);
+    return cache.put(request, response).catch(function () { return null; });
   } catch (e) { /* opaque or oversized — non-fatal */ }
 }
 

@@ -16,12 +16,12 @@
 <meta name="twitter:description" content="Your earnings overview: balance, ledger, sponsors, and the live payout simulator. Demo data.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#F7F6F3">
+<meta name="theme-color" content="#000000">
 <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="assets/css/styles.css?v=1002010">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002013">
 </head>
 <body data-page="dashboard" class="theme-light">
 
@@ -87,7 +87,7 @@
       <span class="prog prog-thin" aria-hidden="true"><span class="prog-fill" style="width:25%"></span></span>
       <div class="check-item" style="margin-top:10px">
         <span class="check-box done" aria-hidden="true"></span>
-        <span><a href="index.html#download">Install the FreeCoffee app</a></span>
+        <span><a href="install-guide.html">Install the FreeCoffee app</a></span>
       </div>
       <div class="check-item">
         <span class="check-box" aria-hidden="true"></span>
@@ -99,17 +99,16 @@
       </div>
       <div class="check-item">
         <span class="check-box" aria-hidden="true"></span>
-        <span><a href="index.html#download">Keep the Mac awake to earn</a></span>
+        <span><a href="install-guide.html">Keep the Mac awake to earn</a></span>
       </div>
     </section>
 
     <!-- dismissible promo banner — dark card with amber progress -->
     <section class="side-card promo-banner" id="promoCard" aria-label="Promotion">
       <button type="button" class="side-dismiss" data-dismiss="promoCard" aria-label="Dismiss promotion">✕</button>
-      <p class="promo-title">Reach 70% base share 🚀</p>
-      <p class="promo-sub">Platform revenue is climbing — 65% today, 70% at $50k/mo.</p>
-      <span class="prog" aria-hidden="true"><span class="prog-fill" style="width:65%"></span></span>
-      <p class="prog-meta"><span>65% base share</span><span>target 70%</span></p>
+      <p class="promo-title">70% base share</p>
+      <p class="promo-sub">Plus a platform-funded 10% launch boost. All figures here are simulated.</p>
+      <p class="prog-meta"><span>70% base</span><span>+10% launch</span></p>
     </section>
 
     <!-- user chip -->
@@ -132,7 +131,7 @@
         <span class="crumb current" aria-current="page">Overview</span>
       </nav>
       <div class="topbar-mid">
-        <p class="promo-pill">Ads running — you keep 65% of every winning bid</p>
+        <p class="promo-pill">Demo · 70% base share + platform-funded 10% launch boost</p>
       </div>
       <div class="topbar-tools">
         <a class="topbar-link" href="index.html#faq">
@@ -142,13 +141,20 @@
         <a class="topbar-icon-btn" href="profile.html" aria-label="Account profile">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
         </a>
+        <label class="visually-hidden" for="snoozeDuration">Demo snooze duration</label>
+        <select class="select" id="snoozeDuration">
+          <option value="30m">30 minutes</option>
+          <option value="2h">2 hours</option>
+          <option value="6h">6 hours</option>
+          <option value="restday">Rest of day</option>
+        </select>
         <button type="button" id="pauseToggle" class="toggle-btn" aria-pressed="false">
           <span class="toggle-track" aria-hidden="true"><span class="toggle-knob"></span></span>
           <span id="pauseToggleLabel">Pause ads</span>
         </button>
         <button type="button" id="installBtn" class="btn btn-ghost" hidden>Install app</button>
         <span class="footnote install-hint" id="installHint" hidden>On iPhone: Share → Add to Home Screen</span>
-        <button type="button" id="payoutBtn" class="btn btn-primary" disabled aria-describedby="payoutError">Simulate instant payout</button><p class="field-error" id="payoutError" role="alert" hidden></p>
+        <button type="button" id="payoutBtn" class="btn btn-primary" disabled>Simulate withdrawal</button>
       </div>
     </header>
 
@@ -160,7 +166,7 @@
           <p class="dash-sub">Demo account · simulated auction data · seeded deterministically (seed 42).
             Stored only in this browser — nothing is uploaded.</p>
         </div>
-        <p class="dash-status" id="dashStatus">Ads running — earning.</p>
+        <p class="dash-status" id="dashStatus">Demo running — simulated earnings only.</p>
       </div>
 
       <p class="storage-note" id="storageNote" hidden>
@@ -171,7 +177,7 @@
       <section class="card balcard" aria-label="Balances">
         <div class="balcard-top">
           <div>
-            <p class="micro">Total balance</p>
+            <p class="micro">Lifetime demo earnings</p>
             <p class="balcard-total" id="statLifetime">$0.00</p>
             <p class="cups-hint" id="statCups">≈ 0 cups of coffee</p>
           </div>
@@ -188,11 +194,9 @@
             <p class="balfoot">ready to pay out</p>
           </div>
           <div class="balcell">
-            <p class="balcap">Pending · 24h rail</p>
-            <p class="balnum" id="statPending">0.00 credits</p>
-            <p class="balfoot" id="pendingEstimate">First estimate: calculating settlement window…</p>
-            <p class="balfoot" id="pendingEstimateWhy">The range will show what can change before settlement.</p>
-            <p class="balfoot" id="pendingEstimateActual">Estimate vs actual appears after settlement.</p>
+            <p class="balcap">Pending · 5-day hold</p>
+            <p class="balnum" id="statPending">$0.00</p>
+            <p class="balfoot">5-day review · fixed demo clock</p>
           </div>
           <div class="balcell">
             <p class="balcap">This week</p>
@@ -214,6 +218,47 @@
             <span class="prog-fill" id="payoutProg" style="width:0%"></span>
           </span>
           <p class="prog-meta"><span>payout minimum $10.00</span><span id="payoutProgMin">$10.00</span></p>
+          <label class="field-label" for="payoutAmount">Demo withdrawal amount (USD)</label>
+          <div class="linkbox">
+            <input class="input" id="payoutAmount" type="number" min="10" step="0.01" placeholder="Leave empty for maximum" aria-describedby="withdrawHint">
+            <button class="btn btn-ghost" id="payoutMax" type="button">Max</button>
+          </div>
+          <p class="footnote" id="withdrawHint">Use “Simulate withdrawal” above. $10 minimum; pending funds are excluded. <a href="payouts.html">Choose a simulated rail</a> after $5 in earnings. The demo clock is fixed; new ticker earnings stay pending.</p>
+        </div>
+      </section>
+
+      <!-- ============ MAC STATUS AREA PREVIEW ============
+           The same component the native app ships, driven by the demo ledger.
+           "Pause ads" above freezes it, so the control does something real. -->
+      <section aria-label="Mac status area preview" style="margin-top:20px">
+        <div class="chart-head">
+          <h2>Your Mac status area</h2>
+          <p class="chart-hint" id="mbPreviewHint">rotates every few seconds · simulated data</p>
+        </div>
+        <div class="menubar-demo">
+          <div class="menubar-frame">
+            <div class="menubar" id="demoMenuBar" data-live="true" role="img" aria-label="Simulated macOS menu bar with a rotating sponsor chip and growing balance">
+              <div class="mb-left">
+                <span class="mb-logo" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z" fill="currentColor"/><path d="M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z" fill="currentColor"/><rect x="7" y="10.6" width="13.5" height="1.6" rx=".8" fill="currentColor"/></svg></span>
+                <span class="mb-item mb-strong">☕ FreeCoffee</span>
+                <span class="mb-item">File</span>
+                <span class="mb-item">Ads</span>
+                <span class="mb-item">Edit</span>
+              </div>
+              <div class="mb-right">
+                <span class="mb-sponsor" id="demoSponsorChip" title="Current winning sponsor">
+                  <span class="mb-chip-mark" aria-hidden="true">NL</span>
+                  <span class="mb-chip-copy"><strong>Northline</strong><small>Shipping software, on schedule</small></span>
+                  <i class="mb-chip-dot" aria-hidden="true"></i>
+                </span>
+                <span class="mb-balance" id="demoBalance" title="Simulated balance">$0.00</span>
+                <span class="mb-item mb-icon" aria-hidden="true">◐</span>
+                <span class="mb-clock" id="demoClock">--:--</span>
+              </div>
+            </div>
+          </div>
+          <p class="menubar-sponsor-tag" id="demoSponsorTag">Fictional demo sponsor (simulated) — display only, nothing is collected.</p>
+          <p class="menubar-footnote">Fictional sponsors (Northline, Ledgerly, Fernhill Coffee, Breeze VPN, Kite Studio). <a href="index.html#privacy">The data boundary</a>.</p>
         </div>
       </section>
 
@@ -240,20 +285,18 @@
           <section class="card" aria-label="Earnings ledger">
             <div class="ledger-head">
               <h2>Ledger</h2>
-              <p class="ledger-hint">newest first · every number shows its derivation, settlement timing, and policy version · max 100 shown</p>
+              <p class="ledger-hint">newest first · every row shows the winning bid and your exact cut · max 100 shown</p>
             </div>
             <div class="table-scroll ledger-scroll">
               <table class="ledger-table" id="ledgerTable">
                 <thead>
                   <tr>
-                    <th scope="col">Ad shown</th>
+                    <th scope="col">Time</th>
                     <th scope="col">Sponsor</th>
-                    <th scope="col">Event</th>
-                    <th scope="col" class="num">Rate</th>
-                    <th scope="col">Derivation</th>
-                    <th scope="col" class="num cut-col">Your earnings</th>
-                    <th scope="col">Settlement</th>
-                    <th scope="col">Policy</th>
+                    <th scope="col">Type</th>
+                    <th scope="col" class="num">Winning bid</th>
+                    <th scope="col" class="num cut-col">Your cut</th>
+                    <th scope="col">Tier</th>
                   </tr>
                 </thead>
                 <tbody id="ledgerBody">
@@ -285,7 +328,7 @@
                 </span>
                 <span class="act-body">
                   <p class="act-title">Payouts not set up</p>
-                  <p class="act-sub">Connect Stripe or Whop to cash out over $2.</p>
+                  <p class="act-sub" id="payoutSetupStatus">Select simulated Stripe or Whop after $5 in earnings; withdraw from $10 available.</p>
                 </span>
                 <a class="btn btn-primary btn-sm" href="payouts.html">Set up</a>
               </div>
@@ -318,8 +361,8 @@
            Populated/updated by dashboard.js → initRealEarnings(). -->
       <section class="card sim" id="realEarnPanel" aria-label="Real earnings, settled server-side" hidden>
         <h2>REAL EARNINGS (backend)</h2>
-        <p class="section-sub">Live placements reported to the platform backend — real, settled
-          server-side, and entirely separate from the simulated ledger above.</p>
+        <p class="section-sub">Records returned by your configured backend, separate from the demo ledger.
+          This preview does not report impressions or establish a payout-provider connection.</p>
         <div style="margin-bottom:6px">
           <p class="micro">Settled total</p>
           <p class="balcard-total" id="realEarnTotal">$0.00</p>
@@ -362,15 +405,16 @@
               <input type="range" id="simCpm" min="1" max="8" step="0.25" value="6">
               <p class="slider-hint">Auction-settled placements settle at the winning CPM (live campaigns)</p>
             </div>
-            <div class="slider-row">
-              <label for="simCtr">Click-through rate <output id="simCtrOut" for="simCtr">1.2%</output></label>
-              <input type="range" id="simCtr" min="0" max="3" step="0.1" value="1.2">
-              <p class="slider-hint">$0.05 per verified click — max 5/day, ≤25% of monthly impressions</p>
+            <div class="slider-row slider-row-toggle">
+              <label class="check-label" for="simLaunch">
+                <input type="checkbox" id="simLaunch" checked>
+                Launch boost <span class="hint-inline">(10% of auction revenue, platform-funded)</span>
+              </label>
             </div>
             <div class="slider-row slider-row-toggle">
-              <label class="check-label" for="simStreak">
-                <input type="checkbox" id="simStreak" checked>
-                Maintain the streak <span class="hint-inline">(+1% per 5 active days, cap +10%)</span>
+              <label class="check-label" for="simReferred">
+                <input type="checkbox" id="simReferred" checked>
+                Referred-user bonus <span class="hint-inline">(5% of base for first 30 days)</span>
               </label>
             </div>
           </div>
@@ -381,14 +425,13 @@
             <table class="mini-table" aria-label="Projection breakdown">
               <caption class="visually-hidden">Monthly projection breakdown</caption>
               <tbody>
-                <tr><th scope="row">Base (65% of auction)</th><td class="num" id="simBase">$0.00</td></tr>
-                <tr><th scope="row">Click bonus <span id="simCapNote" class="hint-inline"></span></th><td class="num" id="simClick">$0.00</td></tr>
-                <tr><th scope="row">Streak bonus <span id="simStreakNote" class="hint-inline"></span></th><td class="num" id="simStreakBonus">$0.00</td></tr>
+                <tr><th scope="row">Base (70% of auction)</th><td class="num" id="simBase">$0.00</td></tr>
+                <tr><th scope="row">Launch boost</th><td class="num" id="simLaunchBonus">$0.00</td></tr>
+                <tr><th scope="row">Referred-user bonus</th><td class="num" id="simReferredBonus">$0.00</td></tr>
                 <tr class="mini-total"><th scope="row">Monthly total</th><td class="num" id="simTotal">$0.00</td></tr>
               </tbody>
             </table>
-            <p class="footnote">First-payout ETA assumes the same run rate until the $2 minimum is hit.
-              Impression floors: 1,000 impressions @ $6 CPM = $6.00 → you keep $3.90 base.</p>
+            <p class="footnote">Illustrative first-30-day projection, not guaranteed earnings. ETA includes five days pending and assumes payout setup. 1,000 impressions @ $6 CPM = $4.20 base + $0.60 launch boost; a referred user gets another $0.21. Referrer income is excluded.</p>
           </div>
         </div>
       </section>
@@ -404,8 +447,8 @@
 
 <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
 
-<script src="assets/js/demo.js?v=1002010"></script>
-<script src="assets/js/dashboard.js?v=1002010"></script>
+<script src="assets/js/demo.js?v=1002013"></script>
+<script src="assets/js/dashboard.js?v=1002013"></script>
 <script>
 /* Sidebar dismiss cards — persisted per card in freecoffee:v1 (shellPrefs). */
 (function () {
