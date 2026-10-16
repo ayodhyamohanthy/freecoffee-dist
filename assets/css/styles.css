@@ -1855,7 +1855,7 @@ body.theme-light .codeblock { background: #0b0b0b; border-color: var(--line); }
   background: #ffffff; color: #0a0a0a;
   border: 1px solid #e4e4e4; border-radius: 30px;
 }
-.fc-receipt h3, .fc-wallet h3, .fc-controlpanel h3, .fc-agentpanel h2,
+.fc-receipt h3, .fc-wallet h3, .fc-controlpanel h3, .fc-agentpanel h2, .fc-agentpanel h3,
 .fc-proof article h3, .fc-adunit h3, .fc-count h3,
 .fc-receipt p, .fc-wallet p, .fc-controlpanel p, .fc-agentpanel p, .fc-agentpanel li,
 .fc-proof article p, .fc-adunit p, .fc-adunit small, .fc-count p,
