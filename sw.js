@@ -25,8 +25,8 @@
 /* eslint-disable no-restricted-globals */
 'use strict';
 
-var ASSET_V = '1002013';                  // must match ?v= in the HTML asset URLs
-var CACHE = 'freecoffee-v1002013';
+var ASSET_V = '1002015';                  // must match ?v= in the HTML asset URLs
+var CACHE = 'freecoffee-v1002015';
 
 var PRECACHE = [
   './',
@@ -41,6 +41,9 @@ var PRECACHE = [
   './referrals.html',
   './flywheel.html',
   './advertisers.html',
+  './faq.html',
+  './ad-policy.html',
+  './terms.html',
   './app/Info-howto.md',
   './manifest.webmanifest',
   // Versioned exactly as the pages request them — an unversioned entry here

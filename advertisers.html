@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Advertise — FreeCoffee</title><meta name="description" content="Submit a compact creative, bid on a four-hour block, and receive verified proof of play."><link rel="stylesheet" href="assets/css/styles.css?v=1002013"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#000000"><link rel="apple-touch-icon" href="assets/icons/icon-192.png"></head><body class="fc-public theme-light"><a class="skip-link" href="#main">Skip to content</a><div class="fc-announce"><span>Built in public · launch access opening in stages</span><a href="advertisers.html">Ad slots open →</a></div><header class="fc-nav"><a class="fc-wordmark" href="index.html">freecoffee.tech</a><button class="fc-menu" aria-label="Open menu" onclick="this.parentElement.classList.toggle('open')">Menu</button><nav><a href="index.html#earn">Earn</a><a href="advertisers.html">Advertise</a><a href="agents.html">Agents</a><a href="install-guide.html">Download</a><a href="index.html#faq">FAQ</a><a class="fc-pill" href="profile.html">Sign in</a></nav></header><main id="main"><section class="fc-hero fc-adhero"><div><p class="fc-eye">FOUR-HOUR MAC AD SLOTS</p><h1>Your brand, in a <em>quieter place.</em></h1><p>Reach Mac users through compact ad slots they chose to see.</p><div class="fc-actions"><a class="fc-primary" href="campaigns.html">Submit an ad</a><a href="#picker">Browse slots</a></div><div class="fc-auction"><small>NEXT AUCTION</small><p>Inventory opens in stages. Reserve and close time appear only when a real slot is available.</p></div></div><div class="fc-adunit"><span class="fc-logo">FC</span><p><b>One clear headline</b><small>One quiet line of useful context</small></p><i></i></div></section>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Advertise — FreeCoffee</title><meta name="description" content="Submit a compact creative, bid on a four-hour block, and receive verified proof of play."><link rel="stylesheet" href="assets/css/styles.css?v=1002015"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#000000"><link rel="apple-touch-icon" href="assets/icons/icon-192.png"></head><body class="fc-public theme-light"><a class="skip-link" href="#main">Skip to content</a><div class="fc-announce"><span>Built in public · launch access opening in stages</span><a href="advertisers.html">Ad slots open →</a></div><header class="fc-nav"><a class="fc-wordmark" href="index.html">freecoffee.tech</a><button class="fc-menu" aria-label="Open menu" onclick="this.parentElement.classList.toggle('open')">Menu</button><nav><a href="index.html#earn">Earn</a><a href="advertisers.html">Advertise</a><a href="agents.html">Agents</a><a href="install-guide.html">Download</a><a href="index.html#faq">FAQ</a><a class="fc-pill" href="profile.html">Sign in</a></nav></header><main id="main"><section class="fc-hero fc-adhero"><div><p class="fc-eye">FOUR-HOUR MAC AD SLOTS</p><h1>Your brand, in a <em>quieter place.</em></h1><p>Reach Mac users through compact ad slots they chose to see.</p><div class="fc-actions"><a class="fc-primary" href="campaigns.html">Submit an ad</a><a href="#picker">Browse slots</a></div><div class="fc-auction"><small>NEXT AUCTION</small><p>Inventory opens in stages. Reserve and close time appear only when a real slot is available.</p></div></div><div class="fc-adunit"><span class="fc-logo">FC</span><p><b>One clear headline</b><small>One quiet line of useful context</small></p><i></i></div></section>
 <section class="fc-dark fc-split" id="slots"><div><p class="fc-eye">SLOT AUCTION</p><h2>How a slot works.</h2><p>Every day is six four-hour blocks, in UTC. Set your CPM on the blocks you want — the highest bid on a block takes every impression in it.</p></div><dl class="fc-ledger"><span>Slot <b>4 hours · 6 per day, UTC</b></span><span>Auction <b>Highest CPM wins</b></span><span>Winner pays <b>Their winning bid</b></span><span>Tie-break <b>Earliest bid wins</b></span><span>Minimum bid <b>$2 CPM</b></span><span>Revenue split <b>70% viewers · platform-funded 10% launch boost</b></span></dl></section>
 <section class="fc-flow" id="picker">
   <p class="fc-eye">LIVE INVENTORY</p>
@@ -53,7 +53,7 @@
         </div>
         <div class="field">
           <label class="field-label" for="slotTagline">Tagline</label>
-          <input class="input" id="slotTagline" name="tagline" maxlength="90" placeholder="Single-origin beans &mdash; 20% off" autocomplete="off">
+          <input class="input" id="slotTagline" name="tagline" maxlength="80" placeholder="Single-origin beans &mdash; 20% off" autocomplete="off">
         </div>
         <div class="field">
           <label class="field-label" for="slotClickUrl">Destination URL</label>
@@ -61,7 +61,7 @@
         </div>
         <div class="field">
           <label class="field-label" for="slotCpm">Your CPM (USD)</label>
-          <input class="input" id="slotCpm" name="cpm" type="number" min="2" max="100" step="0.5" value="6" required>
+          <input class="input" id="slotCpm" name="cpm" type="number" min="1" max="100" step="0.5" value="6" required>
         </div>
         <div class="field">
           <label class="field-label" for="slotBidder">Contact email</label>
@@ -92,7 +92,7 @@
     <tbody>
       <tr><th scope="row">id</th><td>string</td><td>Unique per campaign, max 40 chars. Required when publishing through the backend &mdash; the id is the earnings pay-key, and duplicates are dropped.</td></tr>
       <tr><th scope="row">sponsor</th><td>string</td><td>Brand name, max 40 chars. Required &mdash; entries without it are skipped.</td></tr>
-      <tr><th scope="row">tagline</th><td>string</td><td>One line, max 90 chars.</td></tr>
+      <tr><th scope="row">tagline</th><td>string</td><td>One line, max 80 chars.</td></tr>
       <tr><th scope="row">clickUrl</th><td>string</td><td>Must be <code>https://</code>. Anything else is stripped before the campaign is accepted.</td></tr>
       <tr><th scope="row">cpm</th><td>number</td><td>Clamped to 0&ndash;100. This is the rate a verified minute is paid against.</td></tr>
       <tr><th scope="row">logoText</th><td>string</td><td>Up to 2 characters, used for the tile.</td></tr>
@@ -118,7 +118,7 @@
     <p>After the first $100 <b>$15 min &middot; standard share</b></p>
   </div>
 </section>
-<section class="fc-faq" id="policy"><h2>Advertiser questions.</h2><details><summary>What does the ad contain?</summary><p>A logo tile, headline, one-line description, and reviewed destination.</p></details><details><summary>How does bidding work?</summary><p>You set a CPM on each four-hour block you want. The highest CPM on a block takes every impression in it and pays the bid they set. Ties go to whoever bid first.</p></details><details><summary>What if I lose?</summary><p>Nothing is charged. You only pay for the blocks you win, at the CPM you bid.</p></details><details><summary>How is delivery verified?</summary><p>Only eligible, valid display contributes to the signed aggregate receipt.</p></details><details><summary>What happens on underdelivery?</summary><p>The receipt records it and the frozen policy determines a make-good or refund.</p></details></section><section class="fc-dark fc-close"><h2>See how your brand fits.</h2><p>Preview the real unit before you submit. Campaigns sent through the open queue are reviewed by a human before they serve. A winning slot bid enters the serving list directly — so bid on creative you would stand behind in public.</p><a class="fc-primary" href="campaigns.html">Submit an ad</a></section></main><footer class="fc-footer"><a class="fc-wordmark" href="index.html">freecoffee.tech</a><p>A quieter ad slot for Mac. A transparent share for people who choose it.</p><nav><a href="index.html#earn">Earn</a><a href="advertisers.html">Advertise</a><a href="agents.html">Agents</a><a href="install-guide.html">Download</a><a href="index.html#faq">FAQ</a><a href="index.html#privacy">Privacy</a><a href="advertisers.html#policy">Ad policy</a><a href="mailto:hello@freecoffee.tech">Support</a></nav><small>Payout availability varies by region. Built in public.</small></footer><script>
+<section class="fc-faq" id="policy"><h2>Advertiser questions.</h2><details><summary>What does the ad contain?</summary><p>A logo tile, headline, one-line description, and reviewed destination.</p></details><details><summary>How does bidding work?</summary><p>You set a CPM on each four-hour block you want. The highest CPM on a block takes every impression in it and pays the bid they set. Ties go to whoever bid first.</p></details><details><summary>What if I lose?</summary><p>Nothing is charged. You only pay for the blocks you win, at the CPM you bid.</p></details><details><summary>How is delivery verified?</summary><p>Only eligible, valid display contributes to the signed aggregate receipt.</p></details><details><summary>What happens on underdelivery?</summary><p>The receipt records it and the frozen policy determines a make-good or refund.</p></details></section><section class="fc-dark fc-close"><h2>See how your brand fits.</h2><p>Preview the real unit before you submit. Campaigns sent through the open queue are reviewed by a human before they serve. A winning slot bid enters the serving list directly — so bid on creative you would stand behind in public.</p><a class="fc-primary" href="campaigns.html">Submit an ad</a></section></main><footer class="fc-footer"><a class="fc-wordmark" href="index.html">freecoffee.tech</a><p>A quieter ad slot for Mac. A transparent share for people who choose it.</p><nav><a href="index.html#earn">Earn</a><a href="advertisers.html">Advertise</a><a href="agents.html">Agents</a><a href="install-guide.html">Download</a><a href="faq.html">FAQ</a><a href="faq.html#privacy">Privacy</a><a href="ad-policy.html">Ad policy</a><a href="terms.html">Terms</a><a href="mailto:hello@freecoffee.tech">Support</a></nav><small>Payout availability varies by region. Built in public.</small></footer><script>
 /* Slot-auction picker — GET /slots?month=YYYY-MM to read inventory,
    POST /slots/bid to place one bid across any number of picked blocks.
 
@@ -289,7 +289,7 @@
       else p.textContent = 'open · no bids';
     }
     chip.title = started ? 'This block has already started.' :
-      (taken ? 'Someone currently holds the top bid. You can outbid it.' : 'No bids yet — the floor is $2 CPM.');
+      (taken ? 'Someone currently holds the top bid. You can outbid it.' : 'No bids yet — the floor is $1 CPM.');
   }
   function renderEditor() {
     if (!focusDay) { editor.hidden = true; return; }
@@ -473,7 +473,7 @@
     if (!id) return setNote('Campaign ID is required.', false);
     if (!sponsor) return setNote('Brand name is required.', false);
     if (!/^https:\/\//i.test(url)) return setNote('Destination URL must start with https://', false);
-    if (!(cpm >= 2)) return setNote('The minimum bid is $2 CPM.', false);
+    if (!(cpm >= 1)) return setNote('The minimum bid is $1 CPM.', false);
     if (!bidder) return setNote('A contact email is required — it is the only identifier we hold against a bid.', false);
 
     bidBtn.disabled = true;
