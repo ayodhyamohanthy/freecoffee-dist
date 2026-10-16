@@ -2188,3 +2188,34 @@ body.theme-light:not(.fc-public) .topbar-tools .toggle-btn span { white-space: n
 @media (min-width: 721px) and (max-width: 1500px) {
   body.theme-light:not(.fc-public) .topbar-tools .topbar-link { display: none; }
 }
+/* Phone navigation: content first, sidebar becomes a slide-in drawer */
+.nav-menu-btn, .nav-scrim { display: none; }
+@media (max-width: 980px) {
+  body.theme-light:not(.fc-public) .shell { display: block; }
+  body.theme-light:not(.fc-public) .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; height: 100%; width: min(304px, 86vw);
+    z-index: 70; overflow-y: auto; transform: translateX(-102%); visibility: hidden;
+    transition: transform .22s ease, visibility 0s linear .22s;
+    border-right: 1px solid #d9d6ca; border-bottom: 0; box-shadow: none;
+  }
+  body.nav-open .sidebar { transform: none; visibility: visible; transition: transform .22s ease; box-shadow: 0 0 40px rgba(32,37,33,.25); }
+  body.theme-light:not(.fc-public) .nav-scrim { display: block; position: fixed; inset: 0; z-index: 60; background: rgba(32,37,33,.45); opacity: 0; pointer-events: none; transition: opacity .2s; }
+  body.nav-open .nav-scrim { opacity: 1; pointer-events: auto; }
+  body.nav-open { overflow: hidden; }
+  body.theme-light:not(.fc-public) .nav-menu-btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px; border: 1px solid #b9b6aa; border-radius: 8px; background: #fffefa; color: #202521; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; flex: none; }
+  body.theme-light:not(.fc-public) .topbar { flex-wrap: nowrap; gap: 10px; padding: 10px 16px; }
+  body.theme-light:not(.fc-public) .topbar .crumbs { flex: 1; overflow: hidden; }
+  body.theme-light:not(.fc-public) .topbar .crumb:not(.current), body.theme-light:not(.fc-public) .topbar .crumb-sep { display: none; }
+  body.theme-light:not(.fc-public) .topbar .topbar-mid { display: none; }
+  body.theme-light:not(.fc-public) .topbar-tools { width: auto; flex-wrap: nowrap; }
+  body.theme-light:not(.fc-public) .topbar-tools .topbar-link { display: none; }
+  body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) { flex-wrap: wrap; row-gap: 8px; }
+  body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) .topbar-tools { display: contents; }
+  body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) .topbar-icon-btn { order: 2; }
+  body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) .crumbs { order: 1; }
+  body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) .nav-menu-btn { order: 0; }
+  body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) .select,
+  body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) .toggle-btn,
+  body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) #payoutBtn { order: 3; }
+  body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) #payoutBtn { flex: 1 1 100%; }
+}

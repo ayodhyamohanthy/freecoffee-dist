@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flywheel — FreeCoffee</title>
+<meta name="description" content="FreeCoffee's growth loop: every platform you are already on carries an attributed link, 5% of base earnings goes to each person for the referred user's first 30 days with 14-day last-click attribution, and the same verification feeds the public advertiser proof. Demo — simulated data.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeCoffee">
+<meta property="og:title" content="Flywheel — FreeCoffee">
+<meta property="og:description" content="One growth loop: attributed links on every platform you already use, verified minutes, buyer proof.">
+<meta property="og:url" content="https://freecoffee.tech/flywheel.html">
+<meta property="og:image" content="https://freecoffee.tech/assets/icons/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Flywheel — FreeCoffee">
+<meta name="twitter:description" content="One growth loop: attributed links on every platform you already use, verified minutes, buyer proof.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100D'/%3E%3Cpath d='M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z' fill='%23E0A93E'/%3E%3Cpath d='M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z' fill='%23E0A93E'/%3E%3Crect x='7' y='10.6' width='13.5' height='1.6' rx='.8' fill='%23E0A93E'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#000000">
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="stylesheet" href="assets/css/styles.css?v=1002036">
+</head>
+<body data-page="flywheel" class="theme-light">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <a class="side-logo" href="index.html" aria-label="FreeCoffee home">
+      <svg class="logo" width="22" height="22" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path d="M8 13h11a1 1 0 0 1 1 1v5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-5a1 1 0 0 1 1-1z" fill="currentColor"/>
+        <path d="M20 14h2.2a2.4 2.4 0 0 1 0 4.8H20v-1.6h2.2a.8.8 0 0 0 0-1.6H20z" fill="currentColor"/>
+        <rect x="7" y="10.6" width="13.5" height="1.6" rx=".8" fill="currentColor"/>
+      </svg>
+      <span>FreeCoffee</span>
+      <span class="side-demo">Demo</span>
+    </a>
+
+    <nav class="side-nav" aria-label="Main">
+      <p class="side-label">Earn</p>
+      <a class="side-item" href="dashboard.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a class="side-item" href="payouts.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 8A2.5 2.5 0 0 1 6 5.5h12A2.5 2.5 0 0 1 20.5 8v8a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 16z"/><path d="M15.5 11.5h5v3h-5a1.5 1.5 0 1 1 0-3z"/></svg>
+        Payouts
+      </a>
+      <a class="side-item" href="referrals.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 3.8a3.2 3.2 0 0 1 0 8.4"/><path d="M17.6 15.4c1.9.8 2.9 2.4 2.9 4.6"/></svg>
+        Referrals
+      </a>
+      <a class="side-item active" href="flywheel.html" aria-current="page">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.2 12a8.2 8.2 0 1 1-2.4-5.8"/><path d="M20.4 3.6v4.2h-4.2"/><path d="M12 8.4V12l3 1.8"/></svg>
+        Flywheel
+      </a>
+      <p class="side-label">Advertise</p>
+      <a class="side-item" href="campaigns.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11l16-6v14L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+        Campaigns
+      </a>
+      <a class="side-item" href="agents.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="7" width="16" height="12" rx="2.5"/><path d="M12 7V3.5"/><circle cx="12" cy="2.6" r="1.1"/><circle cx="9" cy="13" r="1.2"/><circle cx="15" cy="13" r="1.2"/><path d="M9.2 16.2h5.6"/></svg>
+        Agents (MCP)
+      </a>
+      <p class="side-label">Account</p>
+      <a class="side-item" href="profile.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+        Profile
+      </a>
+      <a class="side-item" href="model.html">
+        <svg class="side-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h8M18 7h2M4 17h3M13 17h7"/><circle cx="15" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg>
+        Payout model
+      </a>
+    </nav>
+
+    <a class="user-chip" href="profile.html" aria-label="Account profile">
+      <span class="user-tile" aria-hidden="true">FC</span>
+      <span class="user-meta">
+        <span class="user-name">Demo User</span><br>
+        <span class="user-mail">demo@freecoffee.local</span>
+      </span>
+    </a>
+  </aside>
+<!-- ============ MAIN ============ -->
+  <div class="shell-main">
+
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a class="crumb" href="dashboard.html">Earn</a>
+        <span class="crumb-sep" aria-hidden="true">›</span>
+        <span class="crumb current" aria-current="page">Flywheel</span>
+      </nav>
+      <div class="topbar-mid">
+        <p class="promo-pill">One loop — every platform you are already on</p>
+      </div>
+      <div class="topbar-tools">
+        <a class="topbar-link" href="index.html#faq">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false" style="vertical-align:-2px;margin-right:5px"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2 1-1.2 1.9"/><path d="M12 16.6h.01"/></svg>
+          Support
+        </a>
+        <a class="topbar-icon-btn" href="profile.html" aria-label="Account profile">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <main id="main" class="shell-content">
+
+      <div class="dash-head">
+        <div>
+          <h1>The flywheel</h1>
+          <p class="dash-sub">Growth here is not a funnel you refill — it is a loop you turn.
+            Every platform you are already on carries <strong>your</strong> attributed link, the
+            backend verifies the minutes, and that same verification is the proof advertisers buy.
+            <strong>Nothing here is a projection:</strong> each stage below says whether it is live
+            today or still waiting on the platform backend.</p>
+        </div>
+      </div>
+
+      <!-- ============ THE LOOP ============ -->
+      <section class="card" aria-label="The loop">
+        <h2 style="font-size:1.15rem">The loop, in five stages</h2>
+        <p class="section-sub" style="margin-bottom:0">Every stage is code you can read: two live in
+          the browser (<code>assets/js/demo.js</code>) and three are enforced server-side
+          (<code>backend/src/worker.js</code>).</p>
+
+        <div class="loop">
+          <div class="loop-step">
+            <h3>Capture</h3>
+            <p>Every page reads <code>?ref=</code> on arrival and remembers the referrer locally —
+              even before a backend exists.</p>
+          </div>
+          <div class="loop-step">
+            <h3>Activate</h3>
+            <p>The last eligible referral click within 14 days receives attribution. Bonuses apply
+              to base earnings in the referred user's first 30 days.</p>
+          </div>
+          <div class="loop-step">
+            <h3>Earn</h3>
+            <p>The user keeps 70% base plus a platform-funded 10% launch boost. Referrals add 5% of base
+              to each person for the first 30 days, also platform-funded.</p>
+          </div>
+          <div class="loop-step">
+            <h3>Share</h3>
+            <p>The moment a balance moves, this page turns it into an artifact for whichever
+              platform they are already on.</p>
+          </div>
+          <div class="loop-step">
+            <h3>Advertise</h3>
+            <p><code>/stats</code> publishes verified minutes, the platform mix and held-vs-released
+              referral cost. That is the buyer's proof — no dashboard theatre.</p>
+          </div>
+        </div>
+
+        <p class="loop-back"><strong>The back-edge is the whole point:</strong> more verified minutes
+          → a more valuable auction → higher winning bids → bigger user balances → more sharing →
+          more verified minutes. A funnel leaks at every step; a loop pays the people who close it.</p>
+      </section>
+<!-- ============ YOUR LINK ============ -->
+      <section class="card" aria-label="Your share kit" style="margin-top:16px">
+        <h2 style="font-size:1.15rem">Your share kit</h2>
+        <p class="section-sub" style="margin-bottom:0">One code, one link, ten artifacts. The code is
+          generated in this browser and is deliberately <strong>not</strong> your device id — the
+          device id is the only identifier the platform holds and
+          <code>GET /earnings/{deviceId}</code> is public, so a share link must never carry it.</p>
+
+        <p class="footnote" id="refInbound" hidden style="margin-top:12px"></p>
+
+        <div class="linkbox">
+          <input class="input" type="text" id="refCode" readonly value="your-code"
+                 aria-label="Your referral code">
+          <button type="button" class="btn btn-ghost" id="copyCodeBtn">Copy code</button>
+        </div>
+
+        <div class="linkbox">
+          <input class="input" type="text" id="refLink" readonly
+                 value="https://freecoffee.tech/index.html?ref=your-code" aria-label="Your attributed link">
+          <button type="button" class="btn btn-primary" id="copyRefBtn">Copy link</button>
+          <button type="button" class="btn btn-ghost" id="shareNativeBtn" hidden>Share…</button>
+        </div>
+
+        <p class="footnote" id="refBackend" style="margin-top:12px"></p>
+      </section>
+
+      <!-- ============ LOOP STATUS (real numbers only) ============ -->
+      <section class="stat-grid" aria-label="Your loop status" style="margin-top:16px; margin-bottom:0">
+        <div class="card stat-card">
+          <p class="stat-num" id="refUsers">—</p>
+          <p class="stat-label">referees bound to your code</p>
+        </div>
+        <div class="card stat-card">
+          <p class="stat-num" id="refGated">—</p>
+          <p class="stat-label">eligible users reported by backend</p>
+        </div>
+        <div class="card stat-card">
+          <p class="stat-num" id="refHeld">—</p>
+          <p class="stat-label">pending referral credit</p>
+        </div>
+      </section>
+      <p class="footnote" id="refStatsNote" style="margin-top:10px">No backend URL configured, so
+        there is nothing to report yet — these read <strong>—</strong> rather than a fake zero.
+        Set one in <a href="profile.html">Profile → BACKEND API URL</a> and they fill in from
+        <code>GET /referrals/{code}</code>.</p>
+
+      <!-- ============ PLATFORM CAPTURE SURFACES ============ -->
+      <div class="dash-head" style="margin-top:24px">
+        <div>
+          <h2 style="font-size:1.15rem">Where your people already are</h2>
+          <p class="dash-sub">Each artifact below is real: copy it, and whoever acts on it lands
+            with <strong>your</strong> code attached — or, where a platform does not carry a
+            referrer at all, this page says so instead of pretending.</p>
+        </div>
+      </div>
+
+      <div class="plat-grid">
+<!-- 1 · mac -->
+        <section class="card" aria-label="Mac app">
+          <div class="plat-head">
+            <h3>Mac app (.dmg)</h3>
+            <span class="pill pill-ok">attributed</span>
+          </div>
+          <p class="footnote" style="margin-top:6px">The strongest artifact you have: it is the
+            product, and the ref rides in the download URL, so the install arrives already
+            credited to you.</p>
+          <div class="plat-art">
+            <input class="input" type="text" id="artMac" readonly aria-label="Attributed Mac download link"
+                   value="https://github.com/ayodhyamohanthy/freecoffee-dist/releases/latest/download/FreeCoffee.dmg">
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="artMac">Copy</button>
+            <a class="btn btn-primary btn-sm" id="openMac" href="https://github.com/ayodhyamohanthy/freecoffee-dist/releases/latest/download/FreeCoffee.dmg" rel="noopener">Download</a>
+          </div>
+        </section>
+
+        <!-- 2 · homebrew -->
+        <section class="card" aria-label="Homebrew">
+          <div class="plat-head">
+            <h3>Homebrew</h3>
+            <span class="pill pill-gold">no referrer</span>
+          </div>
+          <p class="footnote" style="margin-top:6px">A <code>brew install</code> cannot carry a
+            referrer — Homebrew has no query string to put it in. Share the .dmg above when the
+            credit matters; share the command when the friction matters. We will not pretend the
+            two are the same.</p>
+          <div class="plat-art">
+            <div class="code-block">
+              <button type="button" class="btn btn-ghost btn-sm copy-btn" data-copy="artBrew">Copy</button>
+              <pre id="artBrew">brew install --cask freecoffee</pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3 · pwa -->
+        <section class="card" aria-label="Web app">
+          <div class="plat-head">
+            <h3>Web app (PWA)</h3>
+            <span class="pill pill-ok">attributed</span>
+          </div>
+          <p class="footnote" style="margin-top:6px">Your link opens the installable web app on any
+            machine — the same Mac status area placement mock, the same ledger, no DMG needed. Install
+            prompts differ per browser; the page handles that itself.</p>
+          <div class="plat-art">
+            <input class="input" type="text" id="artPwa" readonly aria-label="Attributed PWA link"
+                   value="https://freecoffee.tech/index.html">
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="artPwa">Copy</button>
+            <a class="btn btn-primary btn-sm" id="openPwa" href="index.html" rel="noopener">Open</a>
+          </div>
+        </section>
+
+        <!-- 4 · github -->
+        <section class="card" aria-label="GitHub">
+          <div class="plat-head">
+            <h3>GitHub</h3>
+            <span class="pill pill-gold">link only</span>
+          </div>
+          <p class="footnote" style="margin-top:6px">The public release repo (the dev repo is
+            private). GitHub serves the repo page itself, so the <code>ref</code> is not applied
+            until someone follows the link from there — useful reach, honest attribution.</p>
+          <div class="plat-art">
+            <input class="input" type="text" id="artGithub" readonly aria-label="Attributed GitHub link"
+                   value="https://github.com/ayodhyamohanthy/freecoffee-dist">
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="artGithub">Copy</button>
+            <a class="btn btn-primary btn-sm" id="openGithub" href="https://github.com/ayodhyamohanthy/freecoffee-dist" rel="noopener">Open</a>
+          </div>
+        </section>
+
+        <!-- 5 · agent -->
+        <section class="card" aria-label="AI agent">
+          <div class="plat-head">
+            <h3>AI agent (MCP)</h3>
+            <span class="pill pill-ok">attributed</span>
+          </div>
+          <p class="footnote" style="margin-top:6px">Hand the URL to an agent and it can read the
+            ledger, publish a validated campaign, or check delivery from the tool manifest. Same
+            attribution rules as a human visit.</p>
+          <div class="plat-art">
+            <input class="input" type="text" id="artAgent" readonly aria-label="Attributed agents link"
+                   value="https://freecoffee.tech/agents.html">
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="artAgent">Copy</button>
+            <a class="btn btn-primary btn-sm" id="openAgent" href="agents.html" rel="noopener">Open</a>
+          </div>
+        </section>
+<!--PLATFORMS-->
+<!-- 6 · x -->
+        <section class="card" aria-label="X">
+          <div class="plat-head">
+            <h3>X</h3>
+            <span class="pill pill-ok">attributed</span>
+          </div>
+          <p class="footnote" style="margin-top:6px">Opens the composer with the pitch and your
+            attributed link pre-filled. Audience: indie Mac developers — the people who both use
+            this and buy the next campaign slot.</p>
+          <div class="plat-art">
+            <input class="input" type="text" id="artX" readonly aria-label="Attributed X link">
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="artX">Copy</button>
+            <a class="btn btn-primary btn-sm" id="openX" href="https://twitter.com/intent/tweet" rel="noopener">Compose</a>
+          </div>
+        </section>
+
+        <!-- 7 · linkedin -->
+        <section class="card" aria-label="LinkedIn">
+          <div class="plat-head">
+            <h3>LinkedIn</h3>
+            <span class="pill pill-ok">attributed</span>
+          </div>
+          <p class="footnote" style="margin-top:6px">Share-to-feed with your link. Audience: the
+            advertiser side — marketers and founders who buy desktop placements.</p>
+          <div class="plat-art">
+            <input class="input" type="text" id="artLinkedin" readonly aria-label="Attributed LinkedIn link">
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="artLinkedin">Copy</button>
+            <a class="btn btn-primary btn-sm" id="openLinkedin" href="https://www.linkedin.com/sharing/share-offsite/" rel="noopener">Share</a>
+          </div>
+        </section>
+
+        <!-- 8 · reddit -->
+        <section class="card" aria-label="Reddit">
+          <div class="plat-head">
+            <h3>Reddit</h3>
+            <span class="pill pill-ok">attributed</span>
+          </div>
+          <p class="footnote" style="margin-top:6px">Submit with your link. Post where the honest
+            day-zero framing is the interesting part — a Mac status area auction with an empty room is a
+            better story than a fake one.</p>
+          <div class="plat-art">
+            <input class="input" type="text" id="artReddit" readonly aria-label="Attributed Reddit link">
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="artReddit">Copy</button>
+            <a class="btn btn-primary btn-sm" id="openReddit" href="https://www.reddit.com/submit" rel="noopener">Submit</a>
+          </div>
+        </section>
+
+        <!-- 9 · hacker news -->
+        <section class="card" aria-label="Hacker News">
+          <div class="plat-head">
+            <h3>Hacker News</h3>
+            <span class="pill pill-ok">attributed</span>
+          </div>
+          <p class="footnote" style="margin-top:6px">Submit the site. One caveat worth knowing:
+            HN discussions of this shape go well when the numbers are published — which is exactly
+            what <code>model.html</code> and <code>/stats</code> are for.</p>
+          <div class="plat-art">
+            <input class="input" type="text" id="artHn" readonly aria-label="Attributed Hacker News link">
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="artHn">Copy</button>
+            <a class="btn btn-primary btn-sm" id="openHn" href="https://news.ycombinator.com/submit" rel="noopener">Submit</a>
+          </div>
+        </section>
+
+        <!-- 10 · email -->
+        <section class="card" aria-label="Email">
+          <div class="plat-head">
+            <h3>Email</h3>
+            <span class="pill pill-ok">attributed</span>
+          </div>
+          <p class="footnote" style="margin-top:6px">The highest-converting artifact in the kit, and
+            the one <a href="COLD-START-OUTREACH.md">COLD-START-OUTREACH.md</a> already scripts.
+            Opens your mail client with the pitch and the link ready to send.</p>
+          <div class="plat-art">
+            <input class="input" type="text" id="artEmail" readonly aria-label="Attributed email link">
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="artEmail">Copy</button>
+            <a class="btn btn-primary btn-sm" id="openEmail" href="mailto:" rel="noopener">Compose</a>
+          </div>
+        </section>
+      </div>
+<!-- ============ WHAT IS ACTUALLY LIVE ============ -->
+      <section class="card" aria-label="What is live today" style="margin-top:16px">
+        <h2 style="font-size:1.15rem">What is live today — and what is not</h2>
+        <p class="section-sub" style="margin-bottom:0">A flywheel you cannot audit is a slogan.
+          Every row below points at the code that does the thing, so you can check it rather than
+          trust it.</p>
+        <div class="table-scroll" style="margin-top:12px">
+          <table class="rail-table">
+            <thead>
+              <tr><th scope="col">Stage</th><th scope="col">Status</th><th scope="col">Where it lives</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Capture <code>?ref=</code> on any page</th>
+                <td><span class="pill pill-ok">Live</span></td>
+                <td><code>demo.js → captureInboundRef()</code> — memory stays local</td>
+              </tr>
+              <tr>
+                <th scope="row">Register a code / claim a code</th>
+                <td><span class="pill pill-ok">Live</span> when a backend URL is set</td>
+                <td><code>POST /referral</code> — 14-day last-click attribution</td>
+              </tr>
+              <tr>
+                <th scope="row">First 30 days of referred-user earnings</th>
+                <td><span class="pill pill-ok">Live</span> server-side</td>
+                <td><code>applyReferralAccrual()</code> — credit is held, not paid</td>
+              </tr>
+              <tr>
+                <th scope="row">5% of base to each person, 30 days, platform-funded</th>
+                <td><span class="pill pill-ok">Live</span> server-side</td>
+                <td><code>applyReferralCredit()</code> — never out of the referred user's 70% base</td>
+              </tr>
+              <tr>
+                <th scope="row">Per-platform attribution (mac, pwa, agent…)</th>
+                <td><span class="pill pill-ok">Live</span> on every report</td>
+                <td><code>/track</code> → <code>platform</code>, rolled up in <code>aggregateStats()</code></td>
+              </tr>
+              <tr>
+                <th scope="row">Advertiser proof: mix + held vs released referral cost</th>
+                <td><span class="pill pill-ok">Live</span>, aggregate-only, no token</td>
+                <td><code>GET /stats</code> → <code>platforms[]</code>, <code>referralSpend</code></td>
+              </tr>
+              <tr>
+                <th scope="row">Payout rails (Stripe / Whop)</th>
+                <td><span class="pill pill-gold">Simulated</span></td>
+                <td><a href="payouts.html">payouts.html</a> — the rail choice is stored, no money moves</td>
+              </tr>
+              <tr>
+                <th scope="row">Real advertiser campaigns</th>
+                <td><span class="pill pill-gold">0 live</span></td>
+                <td>Feed is empty until the first review passes — <a href="advertisers.html">advertisers.html</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="footnote">The same rule as everywhere else in this repo: no counter moves without a
+          matching real state change. The public mix stays empty while the network is empty.</p>
+      </section>
+
+      <!-- ============ WHY THIS IS A LOOP ============ -->
+      <section class="card sim" aria-label="Why this compounds" style="margin-top:16px">
+        <h2 style="font-size:1.15rem">Why it compounds instead of leaking</h2>
+        <div class="tier-rows" style="margin-top:12px">
+          <div class="tier-line">
+            <p class="tier-label"><strong>Every user is a distribution surface.</strong> Ten artifacts
+              from one code, on platforms they already open daily — no ad spend to acquire the
+              second user.</p>
+          </div>
+          <div class="tier-line">
+            <p class="tier-label"><strong>Rewards follow earnings.</strong> Both 5% bonuses apply only to the referred user's
+              base earnings in their first 30 days. No base earnings means no referral bonus.</p>
+          </div>
+          <div class="tier-line">
+            <p class="tier-label"><strong>Verification is the same asset twice.</strong> The minutes
+              that pay users are the minutes advertisers buy — one measurement, two customers, and
+              the public mix is checkable by both.</p>
+          </div>
+          <div class="tier-line">
+            <p class="tier-label"><strong>Day zero is the wedge.</strong> An empty auction with
+              published economics is worth joining early; the first advertiser gets 100% share of
+              voice on terms nobody can fake.</p>
+          </div>
+        </div>
+        <p class="footnote">The loop's honest bottleneck is simple: campaign #1.
+          Until a real campaign clears review, stages 1–4 turn and stage 5 waits —
+          <a href="advertisers.html#launchOffer">the launch offer</a> is the wedge that starts it.</p>
+      </section>
+
+    </main>
+
+    <footer class="shell-foot">
+      <p><a href="referrals.html">Referrals</a> · <a href="advertisers.html">For advertisers</a> ·
+        <a href="model.html">Payout model</a> · <a href="agents.html">Agents</a> ·
+        <a href="index.html">Landing</a></p>
+      <p class="disclaimer" style="border-top:0;padding-top:0">FreeCoffee demo — simulated data.
+        Referral and platform numbers come only from a configured backend.</p>
+    </footer>
+  </div>
+</div>
+<div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
+
+<script src="assets/js/appnav.js?v=1002036"></script>
+<script src="assets/js/demo.js?v=1002036"></script>
+<script>
+/* Flywheel page — the share kit is built from the demo engine, so every
+   artifact carries the visitor's own code. All money stays server-side; this
+   script only DISPLAYS what GET /referrals/{code} reports. */
+(function () {
+  'use strict';
+  var D = window.FreeCoffeeDemo;
+  function $(id) { return document.getElementById(id); }
+
+  function money(n) {
+    var v = Number(n) || 0;
+    return '$' + (Math.round(v * 100) / 100).toFixed(2);
+  }
+
+  function toast(msg) {
+    var region = $('toastRegion');
+    if (!region) return;
+    var t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    region.appendChild(t);
+    window.setTimeout(function () { t.classList.add('show'); }, 10);
+    window.setTimeout(function () {
+      t.classList.remove('show');
+      window.setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 300);
+    }, 3800);
+  }
+
+  function copyText(text, okMsg) {
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) { /* non-fatal */ }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { toast(okMsg); }, fallback);
+    } else {
+      fallback();
+      toast(okMsg);
+    }
+  }
+
+  var ART_IDS = {
+    mac: 'artMac', pwa: 'artPwa', github: 'artGithub', agent: 'artAgent',
+    x: 'artX', linkedin: 'artLinkedin', reddit: 'artReddit', hn: 'artHn', email: 'artEmail'
+  };
+
+  function wireCopyButtons() {
+    var btns = document.querySelectorAll('[data-copy]');
+    for (var i = 0; i < btns.length; i++) {
+      (function (btn) {
+        btn.addEventListener('click', function () {
+          var src = document.getElementById(btn.getAttribute('data-copy'));
+          if (!src) return;
+          var val = (src.tagName === 'INPUT' || src.tagName === 'TEXTAREA') ? src.value : src.textContent;
+          copyText(String(val).replace(/^\s+|\s+$/g, ''), 'Copied — share it wherever your people are.');
+        });
+      })(btns[i]);
+    }
+  }
+
+  function loadStats(code) {
+    var q = D.fetchReferrals(code);
+    if (!q || typeof q.then !== 'function') return;
+    q.then(function (d) {
+      if (!d || !d.totals) return;
+      $('refUsers').textContent = String(d.totals.referees);
+      $('refGated').textContent = String(d.totals.gated);
+      $('refHeld').textContent = money(d.totals.held);
+      $('refStatsNote').textContent = 'Released into your ledger: ' + money(d.totals.accrued) +
+        ' · verified minutes across your referees: ' + d.totals.minutes +
+        (d.totals.referees
+          ? '. Pending credit follows backend review; no payout provider is connected by this preview.'
+          : '. No one has claimed your code yet — the link has to travel first.');
+    });
+  }
+
+  function init() {
+    if (!D || typeof D.shareKit !== 'function') return;
+    var kit = D.shareKit();
+    if (!kit || !kit.code) return;             // storage blocked → static page only
+
+    $('refCode').value = kit.code;
+    $('refLink').value = kit.link;
+
+    for (var i = 0; i < kit.platforms.length; i++) {
+      var p = kit.platforms[i];
+      if (!p.href) continue;                   // Homebrew carries no referrer
+      var input = ART_IDS[p.id] ? $(ART_IDS[p.id]) : null;
+      if (input) input.value = p.href;
+      var open = $('open' + p.id.charAt(0).toUpperCase() + p.id.slice(1));
+      if (open) open.href = p.href;
+    }
+
+    wireCopyButtons();
+    $('copyCodeBtn').addEventListener('click', function () { copyText(kit.code, 'Referral code copied.'); });
+    $('copyRefBtn').addEventListener('click', function () { copyText(kit.link, 'Attributed link copied.'); });
+
+    var native = $('shareNativeBtn');
+    if (native && navigator.share) {
+      native.hidden = false;
+      native.addEventListener('click', function () {
+        try {
+          navigator.share({ title: 'FreeCoffee', text: kit.text, url: kit.link })
+            .catch(function () { /* dismissed */ });
+        } catch (e) { /* unsupported after all */ }
+      });
+    }
+
+    var base = D.backendBase();
+    if (!base) {
+      $('refBackend').textContent = 'No backend URL configured yet: your code and link work ' +
+        'locally, an inbound ?ref is remembered on this device, and nothing is sent anywhere. ' +
+        'Claims start counting the moment you set one (Profile → BACKEND API URL).';
+    } else {
+      $('refBackend').textContent = 'Backend URL configured — requesting code registration and referral records. ' +
+        'This does not connect Stripe or Whop or confirm payout availability.';
+      var reg = D.registerReferralCode();
+      if (reg && typeof reg.then === 'function') reg.then(function () { loadStats(kit.code); });
+      loadStats(kit.code);
+    }
+
+    var inbound = D.inboundRef();
+    if (inbound) {
+      var line = $('refInbound');
+      line.hidden = false;
+      line.textContent = 'This device arrived through code "' + inbound.code + '"' +
+        (inbound.platform ? ' (' + inbound.platform + ')' : '') +
+        (inbound.claimed
+          ? ' — claim acknowledged by the configured backend.'
+          : ' — remembered locally and claimed as soon as a backend URL is set.');
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script>
+/* Service worker registration — shared inline snippet on all pages.
+   Skipped on file:// (no SW support there); failures are non-fatal. */
+if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+  try {
+    navigator.serviceWorker.register('sw.js').then(function (reg) {
+      console.info('FreeCoffee: service worker registered (scope ' + reg.scope + ')');
+    }).catch(function (err) {
+      console.info('FreeCoffee: service worker registration failed: ' + err);
+    });
+  } catch (err) {
+    console.info('FreeCoffee: service worker registration failed: ' + err);
+  }
+}
+</script>
+</body>
+</html>
