@@ -1966,7 +1966,7 @@ body.fc-public, body.fc-public.theme-light {
 .fc-placement { background: var(--mint); border-top: 1px solid #d3dcd8; border-bottom: 1px solid #d3dcd8; }
 .fc-cream { background: var(--teal); border-top: 1px solid #c8dcdb; border-bottom: 1px solid #c8dcdb; }
 .fc-dark { background: var(--ink); color: #f7f5ee; }
-.fc-dark h2, .fc-dark h3, .fc-dark .fc-steps b, .fc-dark .fc-steps span { color: #f7f5ee; }
+.fc-dark h1, .fc-dark h2, .fc-dark h3, .fc-dark .fc-steps b, .fc-dark .fc-steps span { color: #f7f5ee; }
 .fc-dark p, .fc-dark .fc-eye { color: #c9d0ca; }
 .fc-dark .fc-steps li { border-top: 1px solid rgba(255,255,255,.14); }
 .fc-dark .fc-steps li:last-child { border-bottom: 1px solid rgba(255,255,255,.14); }
