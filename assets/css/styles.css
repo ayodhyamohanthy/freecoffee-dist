@@ -1910,7 +1910,11 @@ body.theme-light .codeblock { background: #0b0b0b; border-color: var(--line); }
    JS hooks stay as they were.
    ========================================================================== */
 @font-face { font-family: "Archivo Variable"; font-style: normal; font-display: swap; font-weight: 100 900; src: url("../fonts/archivo-var.woff2") format("woff2"); }
-.fc-public {
+body.fc-public, body.fc-public.theme-light {
+  --bg: #f7f5ee; --bg-raised: #fffefa; --panel: #fffefa; --panel-2: #f3f1e8; --pop: #fffefa;
+  --line: #d9d6ca; --line-strong: #b9b6aa; --text: #202521; --text-dim: #5f665f; --text-faint: #7a8179;
+  --cream: #202521; --figure: #202521; --caramel: #202521; --cta: #f6c944; --cta-hover: #e9b92e; --on-cta: #202521;
+  --gold-bright: #f6c944; --gold-deep: #d9a92b; --gold-dim: rgba(246,201,68,.18);
   --ink: #202521; --paper: #f7f5ee; --mint: #edf3f0; --teal: #e4f1f0; --card: #fffefa;
   --soft: #5f665f; --rule: #d9d6ca; --gold: #f6c944; --gold-d: #e9b92e;
   background: var(--paper); color: var(--ink);
@@ -2079,3 +2083,23 @@ body.theme-light .codeblock { background: #0b0b0b; border-color: var(--line); }
   .fc-lbar > b { display: none; }
   .fc-lchip { margin-left: auto; }
 }
+
+@media (max-width: 720px) {
+  .fc-lchip small { display: none; }
+  .fc-lchip { padding: 3px 8px; }
+  .fc-lbar span:not(.fc-lchip):not(.fc-lclock):not(.fc-lapple) { display: none; }
+}
+
+.fc-public { background: var(--paper); color: var(--ink); }
+.fc-dark { --text: #f7f5ee; --text-dim: #c9d0ca; --text-faint: #aab2ac; --line: rgba(255,255,255,.18); --figure: #f7f5ee; }
+.fc-dark dt, .fc-dark dd, .fc-dark li, .fc-dark span { color: #f7f5ee; }
+.fc-dark dt { color: #c9d0ca; }
+.fc-dark .fc-receipt *, .fc-dark .fc-wallet * { color: var(--ink); }
+.slot-day.is-open { background: #fff; border-color: var(--ink); }
+.slot-day:hover { border-color: var(--ink); }
+.slot-dot.is-bid { background: var(--ink); }
+.slot-chip:hover:not(:disabled) { border-color: var(--ink); }
+.fc-dark .fc-ledger b { color: #f7f5ee; }
+.fc-dark .fc-ledger span { color: #c9d0ca; border-bottom-color: rgba(255,255,255,.18); }
+.fc-dark .fc-receipt *, .fc-dark .fc-wallet *, .fc-dark .fc-count *, .fc-dark .fc-auction *, .fc-dark .fc-adunit *, .fc-dark .fc-controlpanel *, .fc-dark .fc-agentpanel * { color: var(--ink); }
+.fc-dark .fc-receipt small, .fc-dark .fc-count small, .fc-dark .fc-auction small { color: var(--soft); }
