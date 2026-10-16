@@ -627,6 +627,12 @@
       var tmp = order[i]; order[i] = order[j]; order[j] = tmp;
     }
 
+    // Public landing page only: the example advertiser is skipwait.me, with
+    // its own name, tagline and icon. Display only; the ledger is untouched.
+    if (document.body && document.body.classList.contains('fc-public')) {
+      order = [{ name: 'skipwait.me', tag: 'Free job referrals. A warmer way in.', bid: 0, icon: 'assets/img/skipwait-icon.svg' }];
+    }
+
     var idx = 0;
     var paused = false;
     var chipTimer = null;
@@ -684,7 +690,15 @@
           head.textContent = name;
           small.textContent = sub;
           if (mark) {
-            mark.textContent = chipMonogram(name, sp);
+            if (sp && sp.icon) {
+              mark.textContent = '';
+              mark.style.backgroundImage = 'url(' + sp.icon + ')';
+              mark.style.backgroundSize = 'cover';
+              mark.style.backgroundColor = '#fff';
+            } else {
+              mark.style.backgroundImage = '';
+              mark.textContent = chipMonogram(name, sp);
+            }
             // A live campaign's validated accent tints the TILE, not the whole
             // pill (a full-colour bar chip looks like a badge, not an ad slot).
             if (useLive && sp.accent && /^#[0-9a-fA-F]{6}$/.test(sp.accent)) {
