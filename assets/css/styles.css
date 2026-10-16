@@ -1895,9 +1895,9 @@ body.theme-light .codeblock { background: #0b0b0b; border-color: var(--line); }
 ::-webkit-scrollbar-thumb:hover { background: #555555; }
 * { scrollbar-width: thin; scrollbar-color: #3a3a3a #000000; }
 
-.fc-auth{max-width:640px;margin:0 auto;padding:40px 24px 64px}
+.fc-auth{max-width:640px;margin:0;padding:8px 24px 64px;color:#fff}
 .fc-auth #auth-buttons{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
-.fc-auth .fc-primary{display:inline-block;border:0;cursor:pointer;font:inherit}
+.fc-auth .fc-primary{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 28px;border:0;cursor:pointer;font:inherit;line-height:1}
 .fc-auth-facts{margin:24px 0}
 .fc-auth-facts div{padding:14px 0;border-top:1px solid rgba(0,0,0,.15)}
 .fc-auth-facts dt{font-weight:700}
