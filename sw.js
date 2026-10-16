@@ -25,8 +25,8 @@
 /* eslint-disable no-restricted-globals */
 'use strict';
 
-var ASSET_V = '1002025';                  // must match ?v= in the HTML asset URLs
-var CACHE = 'freecoffee-v1002025';
+var ASSET_V = '1002026';                  // must match ?v= in the HTML asset URLs
+var CACHE = 'freecoffee-v1002026';
 
 var PRECACHE = [
   './',
@@ -73,7 +73,7 @@ self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(CACHE).then(function (cache) {
       var adds = PRECACHE.map(function (url) {
-        return cache.add(new URL(url, self.location.href).toString()).catch(function () {
+        return fetch(new Request(new URL(url, self.location.href).toString(), {cache: 'reload'})).then(function (r) { if (!r.ok) throw new Error('bad'); return cache.put(new URL(url, self.location.href).toString(), r); }).catch(function () {
           return null; // one bad URL must never fail the whole install
         });
       });
@@ -114,7 +114,7 @@ self.addEventListener('fetch', function (event) {
   if (request.mode === 'navigate' ||
       (request.headers.get('accept') || '').indexOf('text/html') !== -1) {
     event.respondWith(
-      fetch(request).then(function (response) {
+      fetch(request.url, {cache: 'reload', credentials: 'same-origin'}).then(function (response) {
         if (response && response.ok) {
           var copy = response.clone();
           caches.open(CACHE).then(function (cache) { putSafe(cache, request, copy); });
@@ -137,7 +137,7 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
       caches.open(CACHE).then(function (cache) {
         return cache.match(request).then(function (cached) {
-          var refresh = fetch(request).then(function (response) {
+          var refresh = fetch(request.url, {cache: 'reload'}).then(function (response) {
             if (response && response.ok) putSafe(cache, request, response.clone());
             return response;
           }).catch(function () { return null; });
