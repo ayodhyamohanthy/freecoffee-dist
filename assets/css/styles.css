@@ -2229,3 +2229,12 @@ body.theme-light:not(.fc-public) .topbar-tools .toggle-btn span { white-space: n
   .fc-public .mb-left, .fc-public .mb-right { gap: 8px; }
   .fc-public .mb-chip-copy small { display: none; }
 }
+.fc-public .mb-left { flex: 1 1 0; overflow: hidden; }
+.fc-public .mb-right { flex: 0 0 auto; }
+.fc-public .mb-sponsor { flex: 0 0 auto; }
+@media (max-width: 520px) {
+  .fc-public .mb-logo { display: none; }
+  .fc-public .mb-chip-copy { max-width: 96px; overflow: hidden; }
+  .fc-public .mb-chip-copy strong { overflow: hidden; text-overflow: ellipsis; display: block; }
+  .fc-public .mb-clock { display: none; }
+}
