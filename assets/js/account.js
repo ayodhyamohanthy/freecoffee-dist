@@ -22,6 +22,15 @@
     if(!j||!j.account){try{localStorage.removeItem(KEY);}catch(e){}showOut();return;}
     status.hidden=true;acct.hidden=false;
     $('acct-name').textContent=j.account.name;
+    fetch(API+'/me/bids',{headers:{authorization:'Bearer '+t}}).then(function(r){return r.ok?r.json():null;}).then(function(b){
+      var el=$('acct-bids');
+      if(!b||!b.bids||!b.bids.length){el.textContent='No bids yet. Bids you place on the advertisers page while signed in appear here.';return;}
+      el.textContent='';
+      var ul=document.createElement('ul');
+      b.bids.forEach(function(x){var li=document.createElement('li');li.textContent=x.sponsor+' ('+x.campaignId+'): $'+Number(x.cpm).toFixed(2)+' CPM on '+x.placed+' block'+(x.placed===1?'':'s')+', holding '+x.winningAtTime+' when placed, '+new Date(x.ts).toLocaleDateString();ul.appendChild(li);});
+      el.appendChild(ul);
+      var n=document.createElement('p');n.textContent=b.note;el.appendChild(n);
+    }).catch(function(){$('acct-bids').textContent='Could not load your bids.';});
     $('acct-meta').textContent='Signed in with '+(j.account.provider==='github'?'GitHub':'Google')+'.';
   }).catch(function(){status.textContent='Could not reach the sign-in service. Try again in a minute.';});
   $('btn-out').addEventListener('click',function(){
