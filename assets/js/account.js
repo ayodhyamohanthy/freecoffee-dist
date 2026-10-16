@@ -31,6 +31,28 @@
       el.appendChild(ul);
       var n=document.createElement('p');n.textContent=b.note;el.appendChild(n);
     }).catch(function(){$('acct-bids').textContent='Could not load your bids.';});
+    function renderLink(){
+      var el=$('acct-link');
+      fetch(API+'/me/link',{headers:{authorization:'Bearer '+t}}).then(function(r){return r.json();}).then(function(l){
+        el.textContent='';
+        var b=document.createElement('button');b.type='button';b.className='fc-primary';
+        if(l.link){
+          var p=document.createElement('p');p.textContent=l.link.label+', linked '+new Date(l.link.linkedAt).toLocaleDateString()+'. One Mac per account.';el.appendChild(p);
+          b.textContent='Unlink this Mac';
+          b.addEventListener('click',function(){fetch(API+'/me/link/unlink',{method:'POST',headers:{authorization:'Bearer '+t}}).then(renderLink);});
+        } else {
+          var q=document.createElement('p');q.textContent='No Mac linked. Make a one-time code, then enter it in the Mac app. The Mac app version that accepts codes has not been released yet, and linking does not change what you earn.';el.appendChild(q);
+          b.textContent='Make a link code';
+          b.addEventListener('click',function(){fetch(API+'/me/link-code',{method:'POST',headers:{authorization:'Bearer '+t}}).then(function(r){return r.json();}).then(function(c){
+            if(!c.ok){q.textContent='Could not make a code. Try again.';return;}
+            var out=document.createElement('p');out.className='fc-code';out.textContent=c.code;el.appendChild(out);
+            var n=document.createElement('p');n.textContent='Expires at '+new Date(c.expiresAt).toLocaleTimeString()+'. One use.';el.appendChild(n);b.hidden=true;
+          });});
+        }
+        el.appendChild(b);
+      }).catch(function(){el.textContent='Could not load link status.';});
+    }
+    renderLink();
     $('acct-meta').textContent='Signed in with '+(j.account.provider==='github'?'GitHub':'Google')+'.';
   }).catch(function(){status.textContent='Could not reach the sign-in service. Try again in a minute.';});
   $('btn-out').addEventListener('click',function(){

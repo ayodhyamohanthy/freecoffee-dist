@@ -1902,3 +1902,4 @@ body.theme-light .codeblock { background: #0b0b0b; border-color: var(--line); }
 .fc-auth-facts div{padding:14px 0;border-top:1px solid rgba(0,0,0,.15)}
 .fc-auth-facts dt{font-weight:700}
 .fc-auth-facts dd{margin:4px 0 0}
+.fc-auth .fc-code{font:700 28px/1.2 ui-monospace,Menlo,monospace;letter-spacing:.12em;margin:12px 0}
