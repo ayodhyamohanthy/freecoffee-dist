@@ -2238,3 +2238,10 @@ body.theme-light:not(.fc-public) .topbar-tools .toggle-btn span { white-space: n
   .fc-public .mb-chip-copy strong { overflow: hidden; text-overflow: ellipsis; display: block; }
   .fc-public .mb-clock { display: none; }
 }
+/* skipwait.me example chip: logo in the hero laptop and a larger tile in the strip */
+.fc-lchip { flex-direction: row; align-items: center; gap: 6px; }
+.fc-lchip img { width: 16px; height: 16px; border-radius: 4px; flex: none; background: #fff; }
+.fc-lcopy { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
+.fc-lcopy b { font-size: 9px; } .fc-lcopy small { font-size: 7.5px; opacity: .8; }
+.mb-chip-mark { width: 20px; height: 20px; }
+@media (max-width: 520px) { .fc-lcopy small { display: none; } }

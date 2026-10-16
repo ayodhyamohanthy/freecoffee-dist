@@ -629,7 +629,7 @@
 
     // Public landing page only: the example advertiser is skipwait.me, with
     // its own name, tagline and icon. Display only; the ledger is untouched.
-    if (document.body && document.body.classList.contains('fc-public')) {
+    if (chip) {
       order = [{ name: 'skipwait.me', tag: 'Free job referrals. A warmer way in.', bid: 0, icon: 'assets/img/skipwait-icon.svg' }];
     }
 
