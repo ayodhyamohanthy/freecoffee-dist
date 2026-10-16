@@ -2268,3 +2268,4 @@ body.theme-light:not(.fc-public) .topbar-tools .toggle-btn span { white-space: n
 @media (max-width: 420px) { .fc-public .menubar .mb-chip-copy { max-width: 62px; } .fc-public .menubar .mb-strong { font-size: .92em; } }
 .menubar .mb-clock { display: none; }
 @media (max-width: 420px) { .fc-public .menubar .mb-strong { font-size: .84em; } .fc-public .menubar .mb-left { gap: 6px; } }
+.menubar .mb-left .mb-item:last-child { display: none; }
