@@ -2198,9 +2198,9 @@ body.theme-light:not(.fc-public) .topbar-tools .toggle-btn span { white-space: n
     transition: transform .22s ease, visibility 0s linear .22s;
     border-right: 1px solid #d9d6ca; border-bottom: 0; box-shadow: none;
   }
-  body.nav-open .sidebar { transform: none; visibility: visible; transition: transform .22s ease; box-shadow: 0 0 40px rgba(32,37,33,.25); }
+  body.nav-open.theme-light:not(.fc-public) .sidebar { transform: none; visibility: visible; transition: transform .22s ease; box-shadow: 0 0 40px rgba(32,37,33,.25); }
   body.theme-light:not(.fc-public) .nav-scrim { display: block; position: fixed; inset: 0; z-index: 60; background: rgba(32,37,33,.45); opacity: 0; pointer-events: none; transition: opacity .2s; }
-  body.nav-open .nav-scrim { opacity: 1; pointer-events: auto; }
+  body.nav-open.theme-light:not(.fc-public) .nav-scrim { opacity: 1; pointer-events: auto; }
   body.nav-open { overflow: hidden; }
   body.theme-light:not(.fc-public) .nav-menu-btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px; border: 1px solid #b9b6aa; border-radius: 8px; background: #fffefa; color: #202521; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; flex: none; }
   body.theme-light:not(.fc-public) .topbar { flex-wrap: nowrap; gap: 10px; padding: 10px 16px; }
