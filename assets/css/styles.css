@@ -2245,3 +2245,9 @@ body.theme-light:not(.fc-public) .topbar-tools .toggle-btn span { white-space: n
 .fc-lcopy b { font-size: 9px; } .fc-lcopy small { font-size: 7.5px; opacity: .8; }
 .mb-chip-mark { width: 20px; height: 20px; }
 @media (max-width: 520px) { .fc-lcopy small { display: none; } }
+/* Advertisement marker: our own small curved arrow plus "Ad", shown on the sponsor chip */
+.adflag { display: inline-flex; align-items: flex-end; gap: 2px; flex: none; color: #f6c944; font: 700 8.5px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: .04em; text-transform: uppercase; margin-right: 2px; }
+.adflag b { font-weight: 700; }
+.adflag-arrow { display: block; }
+.fc-lchip .adflag { color: #202521; font-size: 7px; }
+.fc-lchip .adflag-arrow { width: 11px; height: 9px; }
