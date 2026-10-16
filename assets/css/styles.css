@@ -2174,3 +2174,12 @@ body.theme-light:not(.fc-public) .toggle-btn.on .toggle-knob { background: #f7f5
 body.theme-light:not(.fc-public) .toggle-btn.on { color: #202521; }
 body.theme-light:not(.fc-public) ::-webkit-scrollbar-track { background: #f7f5ee; }
 body.theme-light:not(.fc-public) ::-webkit-scrollbar-thumb { background: #c9c6ba; border-color: #f7f5ee; }
+/* top bar tools: one tidy row, styled snooze select */
+body.theme-light:not(.fc-public) .topbar-tools { flex-wrap: nowrap; }
+body.theme-light:not(.fc-public) .topbar-tools .select { height: 36px; padding: 0 28px 0 12px; font: inherit; font-size: 13px; color: #202521; background-color: #fffefa; border: 1px solid #b9b6aa; border-radius: 8px; width: auto; max-width: 140px; }
+body.theme-light:not(.fc-public) .topbar-tools .btn { white-space: nowrap; min-height: 36px; padding-top: 0; padding-bottom: 0; }
+body[data-page="dashboard"].theme-light .topbar-mid { display: none; }
+@media (max-width: 720px) {
+  body.theme-light:not(.fc-public) .topbar { flex-wrap: wrap; row-gap: 8px; padding: 10px 16px; }
+  body.theme-light:not(.fc-public) .topbar-tools { flex-wrap: wrap; justify-content: flex-start; width: 100%; }
+}
