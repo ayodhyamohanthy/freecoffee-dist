@@ -2251,3 +2251,12 @@ body.theme-light:not(.fc-public) .topbar-tools .toggle-btn span { white-space: n
 .adflag-arrow { display: block; }
 .fc-lchip .adflag { color: #202521; font-size: 7px; }
 .fc-lchip .adflag-arrow { width: 11px; height: 9px; }
+@media (max-width: 520px) {
+  .menubar { white-space: nowrap; }
+  .menubar .mb-left .mb-item:not(.mb-strong), .menubar .mb-logo, .menubar .mb-icon, .menubar .mb-chip-dot, .menubar .mb-clock { display: none; }
+  .menubar .mb-left { flex: 1 1 0; min-width: 0; overflow: hidden; }
+  .menubar .mb-right { flex: 0 0 auto; gap: 8px; }
+  .menubar .mb-chip-copy { max-width: 74px; overflow: hidden; }
+  .menubar .mb-chip-copy small { display: none; }
+  .menubar .mb-chip-copy strong { text-overflow: ellipsis; }
+}
