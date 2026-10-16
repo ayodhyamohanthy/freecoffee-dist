@@ -2260,3 +2260,4 @@ body.theme-light:not(.fc-public) .topbar-tools .toggle-btn span { white-space: n
   .menubar .mb-chip-copy small { display: none; }
   .menubar .mb-chip-copy strong { text-overflow: ellipsis; }
 }
+.menubar .mb-balance { color: #f2ede4; border-color: rgba(242,237,228,.35); }
