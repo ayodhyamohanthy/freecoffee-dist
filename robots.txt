@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /payouts.html
+Disallow: /profile.html
+Disallow: /referrals.html
+Disallow: /campaigns.html
+Disallow: /account.html
+
+Sitemap: https://freecoffee.tech/sitemap.xml
