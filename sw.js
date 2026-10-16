@@ -25,8 +25,8 @@
 /* eslint-disable no-restricted-globals */
 'use strict';
 
-var ASSET_V = '1002034';                  // must match ?v= in the HTML asset URLs
-var CACHE = 'freecoffee-v1002034';
+var ASSET_V = '1002035';                  // must match ?v= in the HTML asset URLs
+var CACHE = 'freecoffee-v1002035';
 
 var PRECACHE = [
   './',
