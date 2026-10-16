@@ -733,7 +733,9 @@
             : sub));
         } else {
           tag.appendChild(document.createTextNode(structured
-            ? 'Fictional demo sponsor (simulated) — display only, nothing is collected.'
+            ? (order.length === 1 && order[0].icon
+                ? 'Example advertiser, not a paid campaign — display only, nothing is collected.'
+                : 'Fictional demo sponsor (simulated) — display only, nothing is collected.')
             : sub));
         }
       }
