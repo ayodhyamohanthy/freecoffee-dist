@@ -2219,3 +2219,13 @@ body.theme-light:not(.fc-public) .topbar-tools .toggle-btn span { white-space: n
   body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) #payoutBtn { order: 3; }
   body.theme-light:not(.fc-public) .topbar:has(#pauseToggle) #payoutBtn { flex: 1 1 100%; }
 }
+/* Landing status-area demo: readable balance, no wrapping in the strip */
+.fc-public .menubar { white-space: nowrap; }
+.fc-public .mb-balance { color: #f2ede4; border-color: rgba(242,237,228,.35); }
+.fc-public .mb-left, .fc-public .mb-right { min-width: 0; }
+@media (max-width: 520px) {
+  .fc-public .mb-left .mb-item:not(.mb-strong) { display: none; }
+  .fc-public .mb-right .mb-icon { display: none; }
+  .fc-public .mb-left, .fc-public .mb-right { gap: 8px; }
+  .fc-public .mb-chip-copy small { display: none; }
+}
