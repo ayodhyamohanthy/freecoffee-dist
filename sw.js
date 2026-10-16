@@ -42,6 +42,7 @@ var PRECACHE = [
   './flywheel.html',
   './advertisers.html',
   './faq.html',
+  './privacy.html',
   './account.html',
   './assets/js/account.js?v=' + ASSET_V,
   './ad-policy.html',
