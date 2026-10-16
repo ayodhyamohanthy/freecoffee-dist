@@ -2261,3 +2261,8 @@ body.theme-light:not(.fc-public) .topbar-tools .toggle-btn span { white-space: n
   .menubar .mb-chip-copy strong { text-overflow: ellipsis; }
 }
 .menubar .mb-balance { color: #f2ede4; border-color: rgba(242,237,228,.35); }
+.menubar { white-space: nowrap; }
+.menubar .mb-item, .menubar .mb-clock { white-space: nowrap; }
+[data-live="false"] .mb-sponsor { opacity: .78; }
+.fc-lchip small { display: none; }
+@media (max-width: 420px) { .fc-public .menubar .mb-chip-copy { max-width: 62px; } .fc-public .menubar .mb-strong { font-size: .92em; } }
